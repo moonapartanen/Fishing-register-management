@@ -11,3 +11,5 @@ Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.csproj.GenerateResource.Cache
 Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.csproj.CoreCompileInputs.cache
 Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.exe
 Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.pdb
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MySql.Data.dll
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MySql.Data.xml
