@@ -1,0 +1,13 @@
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\Kalavale.exe.config
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\Kalavale.exe
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\Kalavale.pdb
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MetroFramework.Design.dll
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MetroFramework.dll
+Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MetroFramework.Fonts.dll
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.csprojResolveAssemblyReference.cache
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.Form1.resources
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.Properties.Resources.resources
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.csproj.GenerateResource.Cache
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.csproj.CoreCompileInputs.cache
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.exe
+Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.pdb
