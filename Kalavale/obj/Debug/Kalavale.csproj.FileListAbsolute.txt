@@ -13,3 +13,17 @@ Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.exe
 Z:\Kalavale\Kalavale\Kalavale\obj\Debug\Kalavale.pdb
 Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MySql.Data.dll
 Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MySql.Data.xml
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.exe.config
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.exe
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.pdb
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csprojResolveAssemblyReference.cache
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.MainForm.resources
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.Properties.Resources.resources
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.GenerateResource.Cache
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.exe
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.pdb
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.Design.dll
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.dll
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.Fonts.dll
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\MySql.Data.dll
+D:\Projects\Fishing-register-management\Kalavale\bin\Debug\MySql.Data.xml
