@@ -16,8 +16,24 @@ namespace Kalavale {
         public DBHelper() {
         }
 
-        public DataTable getResourcesByType(int idx) {
+        private DataTable Select(string query) {
             DataTable dt = new DataTable();
+
+            try {
+                using (MySqlConnection conn = new MySqlConnection(connString)) {
+                    conn.Open();
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn)) {
+                        adapter.Fill(dt);
+                    }
+                }
+            } catch (MySqlException e) {
+                MessageBox.Show(e.Message);
+            }
+
+            return dt;
+        }
+
+        public DataTable getResourcesByType(int idx) {
             string queryString = "";
 
             switch (idx) {
@@ -32,18 +48,17 @@ namespace Kalavale {
                     break;
             }
 
-            try {
-                using (MySqlConnection conn = new MySqlConnection(connString)) {
-                    conn.Open();
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(queryString, conn)) {
-                        adapter.Fill(dt);
-                    }
-                }
-            }catch(MySqlException e) {
-                MessageBox.Show(e.Message);
-            }
-            
-            return dt;
+            return Select(queryString);
+        }
+
+        public DataTable getWaterSystems() {
+            return Select("Select nimi FROM vesistot");
+        }
+
+        public DataTable getAreas(string ws) {
+            return Select("Select k.nimi FROM kalastusalueet AS k " +
+                "INNER JOIN vesistot AS v ON k.vesisto_id = v.id " +
+                "WHERE v.nimi = '" + ws + "'");
         }
 
         /*public void ManageDatabase(string query) {

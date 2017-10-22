@@ -27,5 +27,10 @@ namespace Kalavale {
             int index = cboItemTypeSelector.SelectedIndex;
             dgvItems.DataSource = dbh.getResourcesByType(index);
         }
+
+        private void btnAddSurvey_Click(object sender, EventArgs e) {
+            AddSurveyForm form = new AddSurveyForm();
+            form.Show();
+        }
     }
 }

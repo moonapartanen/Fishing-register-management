@@ -39,7 +39,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAddSurvey = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.panel1.SuspendLayout();
@@ -68,6 +70,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnAddSurvey);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -152,6 +155,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Valitse muokattava";
             // 
+            // btnAddSurvey
+            // 
+            this.btnAddSurvey.Location = new System.Drawing.Point(35, 30);
+            this.btnAddSurvey.Name = "btnAddSurvey";
+            this.btnAddSurvey.Size = new System.Drawing.Size(92, 23);
+            this.btnAddSurvey.TabIndex = 0;
+            this.btnAddSurvey.Text = "Lisää lomake";
+            this.btnAddSurvey.UseVisualStyleBackColor = true;
+            this.btnAddSurvey.Click += new System.EventHandler(this.btnAddSurvey_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,6 +175,7 @@
             this.Text = "KalaVale 1.0";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -183,6 +197,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cboItemTypeSelector;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddSurvey;
     }
 }
 
