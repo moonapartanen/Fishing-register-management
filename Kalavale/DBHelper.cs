@@ -21,7 +21,6 @@ namespace Kalavale {
 
             try {
                 using (MySqlConnection conn = new MySqlConnection(connString)) {
-                    conn.Open();
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn)) {
                         adapter.Fill(dt);
                     }
@@ -33,40 +32,20 @@ namespace Kalavale {
             return dt;
         }
 
-        public DataTable getResourcesByType(int idx) {
-            string queryString = "";
-
-            switch (idx) {
-                case 0:
-                    queryString = "SELECT nimi FROM kalat";
-                    break;
-                case 1:
-                    queryString = "SELECT nimi FROM pyydykset";
-                    break;
-                case 2:
-                    queryString = "SELECT nimi FROM kayttajat";
-                    break;
-            }
-
-            return Select(queryString);
+        public DataTable getResourcesByType(int type) {
+            return Select("SELECT * FROM resurssit WHERE tyyppi='" + type + "'");
         }
 
         public DataTable getWaterSystems() {
-            return Select("Select nimi FROM vesistot");
+            return Select("SELECT * FROM vesistot");
         }
 
-        public DataTable getAreas(string ws) {
-            return Select("Select k.nimi FROM kalastusalueet AS k " +
-                "INNER JOIN vesistot AS v ON k.vesisto_id = v.id " +
-                "WHERE v.nimi = '" + ws + "'");
+        public DataTable getFishingAreas(int id) {
+            return Select("SELECT * FROM kalastusalueet WHERE vesisto_id = '" + id + "'");
         }
 
-        /*public void ManageDatabase(string query) {
-            if (this.OpenConnection() == true) {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.ExecuteNonQuery();
-                this.CloseConnection();
-            }
-        }*/
+        public DataTable getQuestionTypes() {
+            return Select("SELECT * FROM kysymystyypit");
+        }
     }
 }

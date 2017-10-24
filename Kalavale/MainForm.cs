@@ -11,8 +11,8 @@ using MetroFramework.Forms;
 
 namespace Kalavale {
     public partial class MainForm : Form {
-        private string[] dbItemTypes = { "Kalat", "Pyydykset", "Käyttäjät" };
-        DBHelper dbh = new DBHelper();
+        private string[] _dbItemTypes = { "Kalat", "Pyydykset", "Käyttäjät" };
+        DBHelper _dbh = new DBHelper();
 
         public MainForm() {
             InitializeComponent();
@@ -20,12 +20,12 @@ namespace Kalavale {
 
         //cbo = combobox, dgv = datagridview
         private void Form1_Load(object sender, EventArgs e) {
-            cboItemTypeSelector.DataSource = dbItemTypes;
+            cboItemTypeSelector.DataSource = _dbItemTypes;
         }
 
         private void cmbDBM_SelectedIndexChanged(object sender, EventArgs e) {
             int index = cboItemTypeSelector.SelectedIndex;
-            dgvItems.DataSource = dbh.getResourcesByType(index);
+            dgvItems.DataSource = _dbh.getResourcesByType(index);
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {
