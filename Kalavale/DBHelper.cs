@@ -36,14 +36,6 @@ namespace Kalavale {
             return Select("SELECT * FROM resurssit INNER JOIN tyypit ON resurssit.tyyppi_id = tyypit.id WHERE tyypit.id ='" + type + "'");
         }
 
-        public DataTable getWaterSystems() {
-            return Select("SELECT * FROM vesistot");
-        }
-
-        public DataTable getFishingAreas(int id) {
-            return Select("SELECT * FROM kalastusalueet WHERE vesisto_id = '" + id + "'");
-        }
-
         public DataTable getQuestionTypes() {
             return Select("SELECT * FROM kysymystyypit");
         }

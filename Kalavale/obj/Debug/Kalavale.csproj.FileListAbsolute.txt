@@ -43,3 +43,18 @@ Z:\Projekti 3\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.Gen
 Z:\Projekti 3\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.CoreCompileInputs.cache
 Z:\Projekti 3\Fishing-register-management\Kalavale\obj\Debug\Kalavale.exe
 Z:\Projekti 3\Fishing-register-management\Kalavale\obj\Debug\Kalavale.pdb
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.exe.config
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.exe
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.pdb
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.Design.dll
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.dll
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\MetroFramework.Fonts.dll
+Z:\Projects\Fishing-register-management\Kalavale\bin\Debug\MySql.Data.xml
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csprojResolveAssemblyReference.cache
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.AddSurveyForm.resources
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.MainForm.resources
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.Properties.Resources.resources
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.GenerateResource.Cache
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.CoreCompileInputs.cache
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.exe
+Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.pdb

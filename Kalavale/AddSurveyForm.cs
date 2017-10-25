@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 namespace Kalavale {
     public partial class AddSurveyForm : Form {
         private DBHelper _dbh = new DBHelper();
+        private List<Question> _questions = new List<Question>();
 
         public AddSurveyForm() {
             InitializeComponent();
@@ -19,13 +20,9 @@ namespace Kalavale {
 
         private void AddSurveyForm_Load(object sender, EventArgs e) {
             cboQuestionTypeSelector.DataSource = _dbh.getQuestionTypes();
-            cboWaterSystemSelector.DataSource = _dbh.getWaterSystems();
-        }
-        
-        private void cboWaterSystemSelector_SelectedIndexChanged(object sender, EventArgs e) {
-            int waterSystemId = (int)cboWaterSystemSelector.SelectedValue;
-
-            lbvAreaSelector.DataSource = _dbh.getFishingAreas(waterSystemId);
+            BindingList<Question> bl = new BindingList<Question>(_questions);
+            lbvAddedQuestions.DataSource = bl;
+            lbvAddedQuestions.DisplayMember = "Type";
         }
 
         //TODO: parempi ratkaisu
@@ -36,11 +33,10 @@ namespace Kalavale {
             ResetQuestionFields();
 
             switch (questionType) {
-                case 4:
+                case 5:
                     lbvColumnOptions.DataSource = _dbh.getResourcesByType(1);
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
                     break;
-                case 5:
                 case 6:
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
                     break;
@@ -57,7 +53,31 @@ namespace Kalavale {
         }
 
         private void btnSaveQuestion_Click(object sender, EventArgs e) {
-            // TODO: validaatio ja kysymysten tallennus listaan olioina
+            // TODO: validaatio
+            Question q = new Question {
+                Number = (int)numQuestionOrderNumber.Value,
+                Type = (int)cboQuestionTypeSelector.SelectedValue,
+                Title = txtQuestionTitle.Text
+            };
+
+            if (q.Type == 5) {
+                q.Columns = GetSelectedItems(lbvColumnOptions);
+                q.Rows = GetSelectedItems(lbvRowOptions);
+            }else if(q.Type <= 8) {
+                q.Rows = GetSelectedItems(lbvRowOptions);
+            }
+
+            _questions.Add(q);
+        }
+
+        private List<int> GetSelectedItems(ListBox lb) {
+            List<int> list = new List<int>();
+
+            foreach (DataRowView item in lb.SelectedItems) {
+                list.Add(int.Parse(item["id"].ToString()));
+            }
+
+            return list;
         }
 
         // ...
