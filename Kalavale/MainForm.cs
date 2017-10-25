@@ -11,7 +11,7 @@ using MetroFramework.Forms;
 
 namespace Kalavale {
     public partial class MainForm : Form {
-        private string[] _dbItemTypes = { "Kalat", "Pyydykset", "Käyttäjät" };
+        private string[] _dbItemTypes = { "Kalat", "Pyydykset", "Haittatekijät", "Käyttäjät", "Vesistöt", "Kalastusalueet" };
         DBHelper _dbh = new DBHelper();
 
         public MainForm() {
@@ -26,6 +26,8 @@ namespace Kalavale {
         private void cmbDBM_SelectedIndexChanged(object sender, EventArgs e) {
             int index = cboItemTypeSelector.SelectedIndex;
             dgvItems.DataSource = _dbh.getResourcesByType(index + 1);
+
+            // TO DO: PIILOTETAAN TURHAT KOLUMNIT JA LISÄTÄÄN HEADERTEKSTIT
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {

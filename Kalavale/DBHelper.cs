@@ -33,7 +33,23 @@ namespace Kalavale {
         }
 
         public DataTable getResourcesByType(int type) {
-            return Select("SELECT * FROM resurssit INNER JOIN tyypit ON resurssit.tyyppi_id = tyypit.id WHERE tyypit.id ='" + type + "'");
+
+            switch (type)
+            {
+                case 4: 
+                    return Select("SELECT kayttajat.id, kayttajat.username, kayttajat.password, kayttajat.osoite, kayttajat.toimipaikka, kayttajat.postinumero, kalastusalueet.nimi FROM kayttajat INNER JOIN kalastusalueet ON kayttajat.kalastusalue_id = kalastusalueet.id");
+                    break;
+                case 5:
+                    return Select("SELECT * FROM vesistot");
+                    break;
+                case 6:
+                    return Select("SELECT kalastusalueet.id, kalastusalueet.nimi, vesistot.nimi FROM kalastusalueet INNER JOIN vesistot ON kalastusalueet.vesisto_id = vesistot.id");
+                    break;
+                default:
+                    return Select("SELECT * FROM resurssit INNER JOIN tyypit ON resurssit.tyyppi_id = tyypit.id WHERE tyypit.id ='" + type + "'");
+                    break;
+            }
+           
         }
 
         public DataTable getWaterSystems() {
