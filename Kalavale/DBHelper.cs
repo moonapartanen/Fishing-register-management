@@ -33,7 +33,7 @@ namespace Kalavale {
         }
 
         public DataTable getResourcesByType(int type) {
-            return Select("SELECT * FROM resurssit WHERE tyyppi='" + type + "'");
+            return Select("SELECT * FROM resurssit INNER JOIN tyypit ON resurssit.tyyppi_id = tyypit.id WHERE tyypit.id ='" + type + "'");
         }
 
         public DataTable getWaterSystems() {

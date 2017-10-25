@@ -25,7 +25,7 @@ namespace Kalavale {
 
         private void cmbDBM_SelectedIndexChanged(object sender, EventArgs e) {
             int index = cboItemTypeSelector.SelectedIndex;
-            dgvItems.DataSource = _dbh.getResourcesByType(index);
+            dgvItems.DataSource = _dbh.getResourcesByType(index + 1);
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {
