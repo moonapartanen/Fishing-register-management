@@ -38,18 +38,18 @@
             this.button1 = new System.Windows.Forms.Button();
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboResearchAreas = new System.Windows.Forms.ComboBox();
+            this.lblResearchArea = new System.Windows.Forms.Label();
+            this.lblCity = new System.Windows.Forms.Label();
+            this.lblPostalCode = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
+            this.tbCity = new System.Windows.Forms.TextBox();
+            this.tbPostalCode = new System.Windows.Forms.TextBox();
+            this.tbAddress = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.tbAddress = new System.Windows.Forms.TextBox();
-            this.tbPostalCode = new System.Windows.Forms.TextBox();
-            this.tbCity = new System.Windows.Forms.TextBox();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.lblPostalCode = new System.Windows.Forms.Label();
-            this.lblCity = new System.Windows.Forms.Label();
-            this.lblResearchArea = new System.Windows.Forms.Label();
-            this.cboResearchAreas = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -167,6 +167,97 @@
             this.panel1.Size = new System.Drawing.Size(310, 328);
             this.panel1.TabIndex = 0;
             // 
+            // cboResearchAreas
+            // 
+            this.cboResearchAreas.FormattingEnabled = true;
+            this.cboResearchAreas.Location = new System.Drawing.Point(17, 282);
+            this.cboResearchAreas.Name = "cboResearchAreas";
+            this.cboResearchAreas.Size = new System.Drawing.Size(191, 21);
+            this.cboResearchAreas.TabIndex = 12;
+            this.cboResearchAreas.Visible = false;
+            // 
+            // lblResearchArea
+            // 
+            this.lblResearchArea.AutoSize = true;
+            this.lblResearchArea.Location = new System.Drawing.Point(17, 265);
+            this.lblResearchArea.Name = "lblResearchArea";
+            this.lblResearchArea.Size = new System.Drawing.Size(67, 13);
+            this.lblResearchArea.TabIndex = 11;
+            this.lblResearchArea.Text = "Kalastusalue";
+            this.lblResearchArea.Visible = false;
+            // 
+            // lblCity
+            // 
+            this.lblCity.AutoSize = true;
+            this.lblCity.Location = new System.Drawing.Point(17, 215);
+            this.lblCity.Name = "lblCity";
+            this.lblCity.Size = new System.Drawing.Size(64, 13);
+            this.lblCity.TabIndex = 10;
+            this.lblCity.Text = "Toimipaikka";
+            this.lblCity.Visible = false;
+            // 
+            // lblPostalCode
+            // 
+            this.lblPostalCode.AutoSize = true;
+            this.lblPostalCode.Location = new System.Drawing.Point(17, 163);
+            this.lblPostalCode.Name = "lblPostalCode";
+            this.lblPostalCode.Size = new System.Drawing.Size(68, 13);
+            this.lblPostalCode.TabIndex = 9;
+            this.lblPostalCode.Text = "Postinumero:";
+            this.lblPostalCode.Visible = false;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Location = new System.Drawing.Point(17, 113);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(40, 13);
+            this.lblAddress.TabIndex = 8;
+            this.lblAddress.Text = "Osoite:";
+            this.lblAddress.Visible = false;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(17, 65);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(30, 13);
+            this.lblName.TabIndex = 7;
+            this.lblName.Text = "Nimi:";
+            this.lblName.Visible = false;
+            // 
+            // tbCity
+            // 
+            this.tbCity.Location = new System.Drawing.Point(17, 231);
+            this.tbCity.Name = "tbCity";
+            this.tbCity.Size = new System.Drawing.Size(191, 20);
+            this.tbCity.TabIndex = 5;
+            this.tbCity.Visible = false;
+            // 
+            // tbPostalCode
+            // 
+            this.tbPostalCode.Location = new System.Drawing.Point(17, 179);
+            this.tbPostalCode.Name = "tbPostalCode";
+            this.tbPostalCode.Size = new System.Drawing.Size(191, 20);
+            this.tbPostalCode.TabIndex = 4;
+            this.tbPostalCode.Visible = false;
+            // 
+            // tbAddress
+            // 
+            this.tbAddress.Location = new System.Drawing.Point(17, 129);
+            this.tbAddress.Name = "tbAddress";
+            this.tbAddress.Size = new System.Drawing.Size(191, 20);
+            this.tbAddress.TabIndex = 3;
+            this.tbAddress.Visible = false;
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(17, 81);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(191, 20);
+            this.tbName.TabIndex = 2;
+            this.tbName.Visible = false;
+            // 
             // cboItemTypeSelector
             // 
             this.cboItemTypeSelector.FormattingEnabled = true;
@@ -184,87 +275,6 @@
             this.label1.Size = new System.Drawing.Size(97, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Valitse muokattava";
-            // 
-            // tbName
-            // 
-            this.tbName.Location = new System.Drawing.Point(17, 81);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(191, 20);
-            this.tbName.TabIndex = 2;
-            // 
-            // tbAddress
-            // 
-            this.tbAddress.Location = new System.Drawing.Point(17, 129);
-            this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(191, 20);
-            this.tbAddress.TabIndex = 3;
-            // 
-            // tbPostalCode
-            // 
-            this.tbPostalCode.Location = new System.Drawing.Point(17, 179);
-            this.tbPostalCode.Name = "tbPostalCode";
-            this.tbPostalCode.Size = new System.Drawing.Size(191, 20);
-            this.tbPostalCode.TabIndex = 4;
-            // 
-            // tbCity
-            // 
-            this.tbCity.Location = new System.Drawing.Point(17, 231);
-            this.tbCity.Name = "tbCity";
-            this.tbCity.Size = new System.Drawing.Size(191, 20);
-            this.tbCity.TabIndex = 5;
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(17, 65);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(30, 13);
-            this.lblName.TabIndex = 7;
-            this.lblName.Text = "Nimi:";
-            // 
-            // lblAddress
-            // 
-            this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(17, 113);
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(40, 13);
-            this.lblAddress.TabIndex = 8;
-            this.lblAddress.Text = "Osoite:";
-            // 
-            // lblPostalCode
-            // 
-            this.lblPostalCode.AutoSize = true;
-            this.lblPostalCode.Location = new System.Drawing.Point(17, 163);
-            this.lblPostalCode.Name = "lblPostalCode";
-            this.lblPostalCode.Size = new System.Drawing.Size(68, 13);
-            this.lblPostalCode.TabIndex = 9;
-            this.lblPostalCode.Text = "Postinumero:";
-            // 
-            // lblCity
-            // 
-            this.lblCity.AutoSize = true;
-            this.lblCity.Location = new System.Drawing.Point(17, 215);
-            this.lblCity.Name = "lblCity";
-            this.lblCity.Size = new System.Drawing.Size(64, 13);
-            this.lblCity.TabIndex = 10;
-            this.lblCity.Text = "Toimipaikka";
-            // 
-            // lblResearchArea
-            // 
-            this.lblResearchArea.AutoSize = true;
-            this.lblResearchArea.Location = new System.Drawing.Point(17, 265);
-            this.lblResearchArea.Name = "lblResearchArea";
-            this.lblResearchArea.Size = new System.Drawing.Size(67, 13);
-            this.lblResearchArea.TabIndex = 11;
-            this.lblResearchArea.Text = "Kalastusalue";
-            // 
-            // cboResearchAreas
-            // 
-            this.cboResearchAreas.FormattingEnabled = true;
-            this.cboResearchAreas.Location = new System.Drawing.Point(17, 282);
-            this.cboResearchAreas.Name = "cboResearchAreas";
-            this.cboResearchAreas.Size = new System.Drawing.Size(191, 21);
-            this.cboResearchAreas.TabIndex = 12;
             // 
             // MainForm
             // 
@@ -287,28 +297,28 @@
 
         #endregion
 
-        public System.Windows.Forms.TabControl tabControl1;
-        public System.Windows.Forms.TabPage tabPage1;
-        public System.Windows.Forms.TabPage tabPage2;
-        public System.Windows.Forms.TabPage tabPage3;
-        public System.Windows.Forms.Button button3;
-        public System.Windows.Forms.Button button2;
-        public System.Windows.Forms.Button button1;
-        public System.Windows.Forms.DataGridView dgvItems;
-        public System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.ComboBox cboItemTypeSelector;
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Button btnAddSurvey;
-        public System.Windows.Forms.ComboBox cboResearchAreas;
-        public System.Windows.Forms.Label lblResearchArea;
-        public System.Windows.Forms.Label lblCity;
-        public System.Windows.Forms.Label lblPostalCode;
-        public System.Windows.Forms.Label lblAddress;
-        public System.Windows.Forms.Label lblName;
-        public System.Windows.Forms.TextBox tbCity;
-        public System.Windows.Forms.TextBox tbPostalCode;
-        public System.Windows.Forms.TextBox tbAddress;
-        public System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dgvItems;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox cboItemTypeSelector;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddSurvey;
+        private System.Windows.Forms.ComboBox cboResearchAreas;
+        private System.Windows.Forms.Label lblResearchArea;
+        private System.Windows.Forms.Label lblCity;
+        private System.Windows.Forms.Label lblPostalCode;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.TextBox tbCity;
+        private System.Windows.Forms.TextBox tbPostalCode;
+        private System.Windows.Forms.TextBox tbAddress;
+        private System.Windows.Forms.TextBox tbName;
     }
 }
 
