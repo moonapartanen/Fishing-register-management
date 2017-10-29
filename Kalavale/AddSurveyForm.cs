@@ -27,7 +27,6 @@ namespace Kalavale {
         private void cboQuestionTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int questionType = (int)cboQuestionTypeSelector.SelectedValue;
 
-            grpQuestionSettings.Enabled = true;
             ResetQuestionFields();
 
             switch (questionType) {
@@ -45,9 +44,6 @@ namespace Kalavale {
                 case 9:
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(3);
                     break;
-                default:
-                    grpQuestionSettings.Enabled = false;
-                    break;
             }
         }
 
@@ -60,10 +56,10 @@ namespace Kalavale {
             };
 
             if (q.Type == 5) {
-                q.Columns = GetSelectedItems(lbvColumnOptions);
-                q.Rows = GetSelectedItems(lbvRowOptions);
+                q.Columns = SelectedItemsToList(lbvColumnOptions);
+                q.Rows = SelectedItemsToList(lbvRowOptions);
             }else if(q.Type <= 9) {
-                q.Rows = GetSelectedItems(lbvRowOptions);
+                q.Rows = SelectedItemsToList(lbvRowOptions);
             }
 
             _questions.Add(q);
@@ -81,7 +77,7 @@ namespace Kalavale {
             _dbh.saveSurvey(s);
         }
 
-        private List<int> GetSelectedItems(ListBox lb) {
+        private List<int> SelectedItemsToList(ListBox lb) {
             List<int> list = new List<int>();
 
             foreach (DataRowView item in lb.SelectedItems) {
@@ -91,7 +87,6 @@ namespace Kalavale {
             return list;
         }
 
-        // TODO: parempi ratkaisu
         private void ResetQuestionFields() {
             lbvColumnOptions.DataSource = null;
             lbvRowOptions.DataSource = null;

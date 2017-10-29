@@ -11,66 +11,67 @@ using System.Data;
 namespace Kalavale {
     class DBHelper {
         //connectionstring app.configissa
-        private string connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
+        string connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
+        DataTable _resources, _questionTypes;
 
         public DBHelper() {
+            _resources = Select("SELECT id, nimi, resurssityyppi_id FROM resurssit");
+            _questionTypes = Select("SELECT id, nimi FROM kysymystyypit");
         }
 
         private DataTable Select(string query) {
-            DataTable dt = new DataTable();
-
-            try {
-                using (MySqlConnection conn = new MySqlConnection(connString)) {
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn)) {
-                        adapter.Fill(dt);
-                    }
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
+            using(DataTable dt = new DataTable()) {
+                try {
+                    adapter.Fill(dt);
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
                 }
-            } catch (MySqlException e) {
-                MessageBox.Show(e.Message);
-            }
 
-            return dt;
+                return dt;
+            }
         }
 
         private void Insert(string query) {
-            try {
-                using (MySqlConnection conn = new MySqlConnection(connString)) {
+            using (MySqlConnection conn = new MySqlConnection(connString)) 
+            using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
+                try {
                     conn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
                 }
-            } catch (MySqlException e) {
-                MessageBox.Show(e.Message);
             }
         }
 
         private long InsertWithOutput(string query) {
-            try {
-                using (MySqlConnection conn = new MySqlConnection(connString)) {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
+                try {
                     conn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
-                        cmd.ExecuteNonQuery();
-
-                        return cmd.LastInsertedId;
-                    }
+                    cmd.ExecuteNonQuery();
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
                 }
-            } catch (MySqlException e) {
-                MessageBox.Show(e.Message);
-            }
 
-            return -1;
+                return cmd.LastInsertedId;
+            }
+        }
+
+        public DataTable getUsers() {
+            return Select("SELECT id, nimi, osoite, postinumero, toimipaikka");
         }
 
         public DataTable getResourcesByType(int type) {
-            return Select("SELECT * FROM resurssit AS r INNER JOIN resurssityypit AS rt ON r.resurssityyppi_id = rt.id WHERE rt.id = " + type);
+            return _resources.Select("resurssityyppi_id = " + type).CopyToDataTable();
         }
 
         public DataTable getQuestionTypes() {
-            return Select("SELECT * FROM kysymystyypit");
+            return _questionTypes;
         }
 
-        //TODO: tämä viritys oikeaksi ratkaisuksi
+        //TODO: tämä viritys
         public void saveSurvey(Survey s) {
             long surveyId = InsertWithOutput("INSERT INTO kyselyt (nimi, luontipvm) VALUES ('" + s.Name + "', '" + s.CreationDate + "')");
 
