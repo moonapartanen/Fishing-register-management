@@ -11,8 +11,8 @@ using MySql.Data.MySqlClient;
 
 namespace Kalavale {
     public partial class AddSurveyForm : Form {
-        private DBHelper _dbh = new DBHelper();
-        private List<Question> _questions = new List<Question>();
+        DBHelper _dbh = new DBHelper();
+        BindingList<Question> _questions = new BindingList<Question>();
 
         public AddSurveyForm() {
             InitializeComponent();
@@ -20,9 +20,7 @@ namespace Kalavale {
 
         private void AddSurveyForm_Load(object sender, EventArgs e) {
             cboQuestionTypeSelector.DataSource = _dbh.getQuestionTypes();
-            BindingList<Question> bl = new BindingList<Question>(_questions);
-            lbvAddedQuestions.DataSource = bl;
-            lbvAddedQuestions.DisplayMember = "Type";
+            lbvAddedQuestions.DataSource = _questions;
         }
 
         //TODO: parempi ratkaisu
@@ -38,12 +36,13 @@ namespace Kalavale {
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
                     break;
                 case 6:
+                case 7:
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
                     break;
-                case 7:
+                case 8:
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(1);
                     break;
-                case 8:
+                case 9:
                     lbvRowOptions.DataSource = _dbh.getResourcesByType(3);
                     break;
                 default:
@@ -63,11 +62,23 @@ namespace Kalavale {
             if (q.Type == 5) {
                 q.Columns = GetSelectedItems(lbvColumnOptions);
                 q.Rows = GetSelectedItems(lbvRowOptions);
-            }else if(q.Type <= 8) {
+            }else if(q.Type <= 9) {
                 q.Rows = GetSelectedItems(lbvRowOptions);
             }
 
             _questions.Add(q);
+        }
+
+
+        private void btnSaveSurvey_Click(object sender, EventArgs e) {
+            // TODO: validaatio
+            Survey s = new Survey {
+                Name = txtSurveyName.Text,
+                Questions = _questions.ToList(),
+                CreationDate = dtpCreationDate.Value.ToString("yyyy-MM-dd")
+            };
+
+            _dbh.saveSurvey(s);
         }
 
         private List<int> GetSelectedItems(ListBox lb) {
@@ -80,7 +91,7 @@ namespace Kalavale {
             return list;
         }
 
-        // ...
+        // TODO: parempi ratkaisu
         private void ResetQuestionFields() {
             lbvColumnOptions.DataSource = null;
             lbvRowOptions.DataSource = null;

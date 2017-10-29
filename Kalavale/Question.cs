@@ -18,6 +18,7 @@ namespace Kalavale
 
         public override string ToString()
         {
+            //TODO: parempi lyhyt kuvaus kysymyksestä
             return string.Format("Kysymys {0}, Tyyppi {1}", Number, Type);
         }
     }
