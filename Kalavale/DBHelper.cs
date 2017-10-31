@@ -33,7 +33,7 @@ namespace Kalavale {
             }
         }
 
-        private void Insert(string query) {
+        private void ExecNonQuery(string query) {
             using (MySqlConnection conn = new MySqlConnection(connString)) 
             using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
                 try {
@@ -59,12 +59,20 @@ namespace Kalavale {
             }
         }
 
-        public DataTable getUsers() {
-            return Select("SELECT id, nimi, osoite, postinumero, toimipaikka");
-        }
-
         public DataTable getResourcesByType(int type) {
             return _resources.Select("resurssityyppi_id = " + type).CopyToDataTable();
+        }
+
+        public DataTable getSurveys() {
+            return Select("SELECT id, nimi, luontipvm FROM kyselyt");
+        }
+
+        public DataTable getResearchAreas() {
+            return Select("SELECT id, nimi FROM tutkimusalueet");
+        }
+
+        public void deleteFrom() {
+
         }
 
         public DataTable getQuestionTypes() {
@@ -82,13 +90,13 @@ namespace Kalavale {
                 if (q.Type == 5) {
                     foreach (int i in q.Rows) {
                         foreach (int j in q.Columns) {
-                            Insert("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id, rivi_resurssi_id)" +
+                            ExecNonQuery("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id, rivi_resurssi_id)" +
                                 " VALUES (" + questionId + ", " + j + ", " + i + ")");
                         }
                     }
                 } else if (q.Type <= 9) {
                     foreach (int i in q.Rows) {
-                        Insert("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id)" +
+                        ExecNonQuery("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id)" +
                                 " VALUES (" + questionId + ", " + i + ")");
                     }
                 }

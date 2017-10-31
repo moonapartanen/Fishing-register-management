@@ -11,8 +11,7 @@ namespace Kalavale {
         public string CreationDate { get; set; }
 
         public override string ToString() {
-            //TODO: kyselyn formaatti listassa näytettynä
-            throw new NotImplementedException();
+            return string.Format("{0}, {1}, {2} kysymystä", Name, CreationDate, Questions.Count);
         }
     }
 }
