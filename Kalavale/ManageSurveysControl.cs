@@ -22,9 +22,11 @@ namespace Kalavale {
         }
 
         private void ManageSurveysControl_Load(object sender, EventArgs e) {
-            dgvSurveys.DataSource = _dbh.getSurveys();
-            cboSurveySelector.DataSource = _dbh.getSurveys();
-            cboResearchAreaSelector.DataSource = _dbh.getResearchAreas();
+            if(_dbh != null) {
+                dgvSurveys.DataSource = _dbh.getSurveys();
+                cboSurveySelector.DataSource = _dbh.getSurveys();
+                cboResearchAreaSelector.DataSource = _dbh.getResearchAreas();
+            }
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {
