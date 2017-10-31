@@ -25,6 +25,7 @@
         private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.dtpCreationDate = new System.Windows.Forms.DateTimePicker();
             this.txtSurveyName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -44,7 +45,6 @@
             this.lbvAddedQuestions = new System.Windows.Forms.ListBox();
             this.btnSaveSurvey = new System.Windows.Forms.Button();
             this.grpQuestions = new System.Windows.Forms.GroupBox();
-            this.dtpCreationDate = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestionOrderNumber)).BeginInit();
@@ -73,6 +73,13 @@
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Päivämäärä:";
+            // 
+            // dtpCreationDate
+            // 
+            this.dtpCreationDate.Location = new System.Drawing.Point(327, 28);
+            this.dtpCreationDate.Name = "dtpCreationDate";
+            this.dtpCreationDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpCreationDate.TabIndex = 2;
             // 
             // txtSurveyName
             // 
@@ -261,13 +268,6 @@
             this.grpQuestions.TabStop = false;
             this.grpQuestions.Text = "Lisätyt kysymykset";
             // 
-            // dtpCreationDate
-            // 
-            this.dtpCreationDate.Location = new System.Drawing.Point(327, 28);
-            this.dtpCreationDate.Name = "dtpCreationDate";
-            this.dtpCreationDate.Size = new System.Drawing.Size(200, 20);
-            this.dtpCreationDate.TabIndex = 2;
-            // 
             // AddSurveyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,7 +278,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "AddSurveyForm";
-            this.Text = "Kyselyn lisäys";
+            this.Text = "Kysely";
             this.Load += new System.EventHandler(this.AddSurveyForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

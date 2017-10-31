@@ -11,12 +11,13 @@ using System.Data;
 namespace Kalavale {
     class DBHelper {
         //connectionstring app.configissa
+
+        // TODO: kaikki kyselyt pitää parametrisoida!!
+        // TODO: pitää kehittää ORM tyylinen ratkaisu datatablen palauttamisen sijasta
+
         string connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
-        DataTable _resources, _questionTypes;
 
         public DBHelper() {
-            _resources = Select("SELECT id, nimi, resurssityyppi_id FROM resurssit");
-            _questionTypes = Select("SELECT id, nimi FROM kysymystyypit");
         }
 
         private DataTable Select(string query) {
@@ -59,24 +60,41 @@ namespace Kalavale {
             }
         }
 
-        public DataTable getResourcesByType(int type) {
-            return _resources.Select("resurssityyppi_id = " + type).CopyToDataTable();
-        }
-
-        public DataTable getSurveys() {
-            return Select("SELECT id, nimi, luontipvm FROM kyselyt");
+        public DataTable getResources() {
+            return Select("SELECT id, nimi, resurssityyppi_id FROM resurssit");
         }
 
         public DataTable getResearchAreas() {
             return Select("SELECT id, nimi FROM tutkimusalueet");
         }
 
-        public void deleteFrom() {
-
+        public DataTable getQuestionTypes() {
+            return Select("SELECT id, nimi FROM kysymystyypit");
         }
 
-        public DataTable getQuestionTypes() {
-            return _questionTypes;
+        public DataTable getSurveys() {
+            return Select("SELECT id, nimi, luontipvm FROM kyselyt");
+        }
+
+        public DataTable getSurveysByRAId(int id) {
+            return Select("SELECT id, nimi FROM kyselyt k" +
+                " INNER JOIN tutkimusalue_kyselyt tk ON k.id = tk.kysely_id" + 
+                " WHERE tk.tutkimusalue_id = " + id);
+        }
+
+        public void deleteSurveyById(int id) {
+            // TODO: pitää poistaa kyselyyn liittyvät kysymykset ja vastaukset
+            ExecNonQuery("DELETE FROM kyselyt WHERE id = " + id);
+        }
+
+        public void deleteRASurvey(int surveyId, int researchAreaId) {
+            // TODO: pitääko poistaa tähän kalastusaluekohtaiseen kyselyyn liittyvät vastaukset?
+            ExecNonQuery("DELETE FROM tutkimusalue_kyselyt WHERE kysely_id = " + surveyId + " AND tutkimusalue_id = " + researchAreaId);
+        }
+
+        public void addSurveyToRA(int researchAreaId, int surveyId, string date) {
+            ExecNonQuery("INSERT INTO tutkimusalue_kyselyt (tutkimusalue_id, kysely_id, kyselypvm)" +
+                            " VALUES (" + researchAreaId + ", " + surveyId + ", '" + date + "')");
         }
 
         //TODO: tämä viritys

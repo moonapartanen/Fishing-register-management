@@ -16,7 +16,6 @@ Z:\Kalavale\Kalavale\Kalavale\bin\Debug\MySql.Data.xml
 D:\Projects\Fishing-register-management\Kalavale\bin\Debug\Kalavale.exe.config
 D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.exe
 D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.pdb
-D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csprojResolveAssemblyReference.cache
 D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.MainForm.resources
 D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.Properties.Resources.resources
 D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.GenerateResource.Cache
@@ -58,3 +57,7 @@ Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.Gener
 Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csproj.CoreCompileInputs.cache
 Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.exe
 Z:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.pdb
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.ManageDbControl.resources
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.AnalyzeDataControl.resources
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.ManageSurveysControl.resources
+D:\Projects\Fishing-register-management\Kalavale\obj\Debug\Kalavale.csprojResolveAssemblyReference.cache

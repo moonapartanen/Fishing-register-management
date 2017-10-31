@@ -13,9 +13,11 @@ namespace Kalavale {
     public partial class AddSurveyForm : Form {
         DBHelper _dbh = new DBHelper();
         BindingList<Question> _questions = new BindingList<Question>();
+        DataTable _resources;
 
         public AddSurveyForm() {
             InitializeComponent();
+            _resources = _dbh.getResources();
         }
 
         private void AddSurveyForm_Load(object sender, EventArgs e) {
@@ -31,18 +33,18 @@ namespace Kalavale {
 
             switch (questionType) {
                 case 5:
-                    lbvColumnOptions.DataSource = _dbh.getResourcesByType(1);
-                    lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
+                    lbvRowOptions.DataSource = SelectFromResourcesById(2);
+                    lbvColumnOptions.DataSource = SelectFromResourcesById(1);
                     break;
                 case 6:
                 case 7:
-                    lbvRowOptions.DataSource = _dbh.getResourcesByType(2);
+                    lbvRowOptions.DataSource = SelectFromResourcesById(2);
                     break;
                 case 8:
-                    lbvRowOptions.DataSource = _dbh.getResourcesByType(1);
+                    lbvRowOptions.DataSource = SelectFromResourcesById(1);
                     break;
                 case 9:
-                    lbvRowOptions.DataSource = _dbh.getResourcesByType(3);
+                    lbvRowOptions.DataSource = SelectFromResourcesById(3);
                     break;
             }
         }
@@ -75,6 +77,10 @@ namespace Kalavale {
             };
 
             _dbh.saveSurvey(s);
+        }
+
+        private DataTable SelectFromResourcesById(int id) {
+            return _resources.Select("resurssityyppi_id = " + id).CopyToDataTable();
         }
 
         private List<int> SelectedItemsToList(ListBox lb) {
