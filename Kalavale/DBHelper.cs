@@ -11,53 +11,114 @@ using System.Data;
 namespace Kalavale {
     class DBHelper {
         //connectionstring app.configissa
-        private string connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
+
+        // TODO: kaikki kyselyt pitää parametrisoida!!
+        // TODO: pitää kehittää ORM tyylinen ratkaisu datatablen palauttamisen sijasta
+
+        string connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
 
         public DBHelper() {
         }
 
         private DataTable Select(string query) {
-            DataTable dt = new DataTable();
-
-            try {
-                using (MySqlConnection conn = new MySqlConnection(connString)) {
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn)) {
-                        adapter.Fill(dt);
-                    }
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
+            using(DataTable dt = new DataTable()) {
+                try {
+                    adapter.Fill(dt);
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
                 }
-            } catch (MySqlException e) {
-                MessageBox.Show(e.Message);
+
+                return dt;
             }
-
-            return dt;
         }
 
-        public DataTable getResourcesByType(int type) {
-
-            switch (type)
-            {
-                case 4: 
-                    return Select("SELECT kayttajat.id, kayttajat.username, kayttajat.password, kayttajat.osoite, kayttajat.toimipaikka, kayttajat.postinumero, kalastusalueet.nimi FROM kayttajat INNER JOIN kalastusalueet ON kayttajat.kalastusalue_id = kalastusalueet.id");
-                case 5:
-                    return getWaterSystems();
-                case 6:
-                    return Select("SELECT kalastusalueet.id, kalastusalueet.nimi, vesistot.nimi FROM kalastusalueet INNER JOIN vesistot ON kalastusalueet.vesisto_id = vesistot.id");
-                default:
-                    return Select("SELECT * FROM resurssit INNER JOIN tyypit ON resurssit.tyyppi_id = tyypit.id WHERE tyypit.id ='" + type + "'");
+        private void ExecNonQuery(string query) {
+            using (MySqlConnection conn = new MySqlConnection(connString)) 
+            using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
+                try {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
+                }
             }
-           
         }
 
-        public DataTable getWaterSystems() {
-            return Select("SELECT * FROM vesistot");
+        private long InsertWithOutput(string query) {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlCommand cmd = new MySqlCommand(query, conn)) {
+                try {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                } catch (MySqlException e) {
+                    MessageBox.Show(e.Message);
+                }
+
+                return cmd.LastInsertedId;
+            }
         }
 
-        public DataTable getFishingAreas(int id) {
-            return Select("SELECT * FROM kalastusalueet WHERE vesisto_id = '" + id + "'");
+        public DataTable getResources() {
+            return Select("SELECT id, nimi, resurssityyppi_id FROM resurssit");
+        }
+
+        public DataTable getResearchAreas() {
+            return Select("SELECT id, nimi FROM tutkimusalueet");
         }
 
         public DataTable getQuestionTypes() {
-            return Select("SELECT * FROM kysymystyypit");
+            return Select("SELECT id, nimi FROM kysymystyypit");
+        }
+
+        public DataTable getSurveys() {
+            return Select("SELECT id, nimi, luontipvm FROM kyselyt");
+        }
+
+        public DataTable getSurveysByRAId(int id) {
+            return Select("SELECT id, nimi FROM kyselyt k" +
+                " INNER JOIN tutkimusalue_kyselyt tk ON k.id = tk.kysely_id" + 
+                " WHERE tk.tutkimusalue_id = " + id);
+        }
+
+        public void deleteSurveyById(int id) {
+            // TODO: pitää poistaa kyselyyn liittyvät kysymykset ja vastaukset
+            ExecNonQuery("DELETE FROM kyselyt WHERE id = " + id);
+        }
+
+        public void deleteRASurvey(int surveyId, int researchAreaId) {
+            // TODO: pitääko poistaa tähän kalastusaluekohtaiseen kyselyyn liittyvät vastaukset?
+            ExecNonQuery("DELETE FROM tutkimusalue_kyselyt WHERE kysely_id = " + surveyId + " AND tutkimusalue_id = " + researchAreaId);
+        }
+
+        public void addSurveyToRA(int researchAreaId, int surveyId, string date) {
+            ExecNonQuery("INSERT INTO tutkimusalue_kyselyt (tutkimusalue_id, kysely_id, kyselypvm)" +
+                            " VALUES (" + researchAreaId + ", " + surveyId + ", '" + date + "')");
+        }
+
+        //TODO: tämä viritys
+        public void saveSurvey(Survey s) {
+            long surveyId = InsertWithOutput("INSERT INTO kyselyt (nimi, luontipvm) VALUES ('" + s.Name + "', '" + s.CreationDate + "')");
+
+            foreach(Question q in s.Questions) {
+                long questionId = InsertWithOutput("INSERT INTO kysymykset (kysely_id, kysymystyyppi_id, kysymysnro, kysymysotsikko)" +
+                    " VALUES (" + surveyId + ", " + q.Type + ", " + q.Number + ", '" + q.Title + "')");
+
+                if (q.Type == 5) {
+                    foreach (int i in q.Rows) {
+                        foreach (int j in q.Columns) {
+                            ExecNonQuery("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id, rivi_resurssi_id)" +
+                                " VALUES (" + questionId + ", " + j + ", " + i + ")");
+                        }
+                    }
+                } else if (q.Type <= 9) {
+                    foreach (int i in q.Rows) {
+                        ExecNonQuery("INSERT INTO kysymys_kentat (kysymys_id, sarake_resurssi_id)" +
+                                " VALUES (" + questionId + ", " + i + ")");
+                    }
+                }
+            }
         }
     }
 }
