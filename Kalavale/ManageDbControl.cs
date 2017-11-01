@@ -31,7 +31,7 @@ namespace Kalavale {
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int index = cboItemTypeSelector.SelectedIndex;
-            dgvItems.DataSource = _dbh.getResourcesByType(index + 1);
+            dgvItems.DataSource = SelectFromResourcesById(index + 1);
 
             // viedään kaikki tietokannan hallinta-komponentit luokalle
             _dh.SelectAllLayoutRefs(ref this.lblName, ref this.lblAddress, ref this.lblPostalCode, 
@@ -74,6 +74,27 @@ namespace Kalavale {
         private void btnAddSurvey_Click(object sender, EventArgs e) {
             AddSurveyForm form = new AddSurveyForm();
             form.Show();
-        }         
+        }
+
+        private DataTable SelectFromResourcesById(int type) {
+            DataTable dt = new DataTable();
+
+            switch (type) {
+                case 3:
+                    //dt = _dbh.getUsers();
+                    break;
+                case 4:
+                    dt = _dbh.getWaterSystems();
+                    break;
+                case 5:
+                    //dt = _dbh.getFishingAreas()
+                    break;
+                default:
+                    dt = _resources.Select("resurssityyppi_id = " + type).CopyToDataTable();
+                    break;
+            }
+
+            return dt;
+        }
     }
 }

@@ -60,6 +60,11 @@ namespace Kalavale {
             }
         }
 
+        public DataTable getWaterSystems()
+        {
+            return Select("Select id, nimi FROM vesistot");
+        }
+
         public DataTable getResources() {
             return Select("SELECT id, nimi, resurssityyppi_id FROM resurssit");
         }

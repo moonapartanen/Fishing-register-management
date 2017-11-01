@@ -62,16 +62,13 @@
     <Compile Include="AddSurveyForm.designer.cs">
       <DependentUpon>AddSurveyForm.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="DesignHelper.cs" />
-=======
     <Compile Include="AnalyzeDataControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AnalyzeDataControl.Designer.cs">
       <DependentUpon>AnalyzeDataControl.cs</DependentUpon>
     </Compile>
->>>>>>> lomakkeen-lisäys
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

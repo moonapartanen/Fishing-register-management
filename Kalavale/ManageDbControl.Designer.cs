@@ -23,16 +23,28 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dgvItems = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cboResearchAreas = new System.Windows.Forms.ComboBox();
+            this.lblResearchArea = new System.Windows.Forms.Label();
+            this.lblCity = new System.Windows.Forms.Label();
+            this.lblPostalCode = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
+            this.tbCity = new System.Windows.Forms.TextBox();
+            this.tbPostalCode = new System.Windows.Forms.TextBox();
+            this.tbAddress = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAddSurvey = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ManageDbControl
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "ManageDbControl";
-            this.Size = new System.Drawing.Size(524, 337);
-            this.ResumeLayout(false);
-			// 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(340, 338);
@@ -53,7 +65,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(502, 338);
+            this.button1.Location = new System.Drawing.Point(1, 1);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 23);
             this.button1.TabIndex = 2;
@@ -94,7 +106,6 @@
             this.cboResearchAreas.Name = "cboResearchAreas";
             this.cboResearchAreas.Size = new System.Drawing.Size(191, 21);
             this.cboResearchAreas.TabIndex = 12;
-            this.cboResearchAreas.Visible = false;
             // 
             // lblResearchArea
             // 
@@ -104,7 +115,6 @@
             this.lblResearchArea.Size = new System.Drawing.Size(67, 13);
             this.lblResearchArea.TabIndex = 11;
             this.lblResearchArea.Text = "Kalastusalue";
-            this.lblResearchArea.Visible = false;
             // 
             // lblCity
             // 
@@ -185,7 +195,7 @@
             this.cboItemTypeSelector.Name = "cboItemTypeSelector";
             this.cboItemTypeSelector.Size = new System.Drawing.Size(121, 21);
             this.cboItemTypeSelector.TabIndex = 1;
-            this.cboItemTypeSelector.SelectedIndexChanged += new System.EventHandler(this.cmbDBM_SelectedIndexChanged);
+            this.cboItemTypeSelector.SelectedIndexChanged += new System.EventHandler(this.cboItemTypeSelector_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -195,6 +205,25 @@
             this.label1.Size = new System.Drawing.Size(97, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Valitse muokattava";
+            // 
+            // btnAddSurvey
+            // 
+            this.btnAddSurvey.Location = new System.Drawing.Point(0, 0);
+            this.btnAddSurvey.Name = "btnAddSurvey";
+            this.btnAddSurvey.Size = new System.Drawing.Size(75, 23);
+            this.btnAddSurvey.TabIndex = 0;
+            // 
+            // ManageDbControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "ManageDbControl";
+            this.Size = new System.Drawing.Size(842, 473);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
