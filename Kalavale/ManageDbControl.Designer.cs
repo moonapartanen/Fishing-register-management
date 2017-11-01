@@ -23,9 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboResearchAreas = new System.Windows.Forms.ComboBox();
@@ -45,44 +42,18 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(340, 338);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Lisää";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(421, 338);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Muokkaa";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1, 1);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Poista";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // dgvItems
             // 
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItems.Location = new System.Drawing.Point(340, 4);
+            this.dgvItems.Location = new System.Drawing.Point(309, 16);
             this.dgvItems.Name = "dgvItems";
-            this.dgvItems.Size = new System.Drawing.Size(629, 328);
+            this.dgvItems.Size = new System.Drawing.Size(510, 328);
             this.dgvItems.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.cboResearchAreas);
+            this.panel1.Controls.Add(this.dgvItems);
             this.panel1.Controls.Add(this.lblResearchArea);
             this.panel1.Controls.Add(this.lblCity);
             this.panel1.Controls.Add(this.lblPostalCode);
@@ -96,7 +67,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(310, 328);
+            this.panel1.Size = new System.Drawing.Size(835, 466);
             this.panel1.TabIndex = 0;
             // 
             // cboResearchAreas
@@ -124,7 +95,6 @@
             this.lblCity.Size = new System.Drawing.Size(64, 13);
             this.lblCity.TabIndex = 10;
             this.lblCity.Text = "Toimipaikka";
-            this.lblCity.Visible = false;
             // 
             // lblPostalCode
             // 
@@ -134,7 +104,6 @@
             this.lblPostalCode.Size = new System.Drawing.Size(68, 13);
             this.lblPostalCode.TabIndex = 9;
             this.lblPostalCode.Text = "Postinumero:";
-            this.lblPostalCode.Visible = false;
             // 
             // lblAddress
             // 
@@ -144,7 +113,6 @@
             this.lblAddress.Size = new System.Drawing.Size(40, 13);
             this.lblAddress.TabIndex = 8;
             this.lblAddress.Text = "Osoite:";
-            this.lblAddress.Visible = false;
             // 
             // lblName
             // 
@@ -154,7 +122,6 @@
             this.lblName.Size = new System.Drawing.Size(30, 13);
             this.lblName.TabIndex = 7;
             this.lblName.Text = "Nimi:";
-            this.lblName.Visible = false;
             // 
             // tbCity
             // 
@@ -162,7 +129,6 @@
             this.tbCity.Name = "tbCity";
             this.tbCity.Size = new System.Drawing.Size(191, 20);
             this.tbCity.TabIndex = 5;
-            this.tbCity.Visible = false;
             // 
             // tbPostalCode
             // 
@@ -170,7 +136,6 @@
             this.tbPostalCode.Name = "tbPostalCode";
             this.tbPostalCode.Size = new System.Drawing.Size(191, 20);
             this.tbPostalCode.TabIndex = 4;
-            this.tbPostalCode.Visible = false;
             // 
             // tbAddress
             // 
@@ -178,7 +143,6 @@
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(191, 20);
             this.tbAddress.TabIndex = 3;
-            this.tbAddress.Visible = false;
             // 
             // tbName
             // 
@@ -186,7 +150,6 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(191, 20);
             this.tbName.TabIndex = 2;
-            this.tbName.Visible = false;
             // 
             // cboItemTypeSelector
             // 
@@ -217,6 +180,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel1);
             this.Name = "ManageDbControl";
             this.Size = new System.Drawing.Size(842, 473);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
@@ -227,10 +191,6 @@
         }
 
         #endregion
-		
-		private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cboItemTypeSelector;
