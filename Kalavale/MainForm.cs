@@ -32,7 +32,7 @@ namespace Kalavale {
             // viedään kaikki tietokannan hallinta-komponentit luokalle
             _dh.SelectAllLayoutRefs(ref this.lblName, ref this.lblAddress, ref this.lblPostalCode, 
                                     ref this.lblCity, ref this.lblResearchArea, ref this.tbName, ref this.tbAddress,
-                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas);
+                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref dgvItems);
             switch (index)
             {
                 // TODO: HEADERTEKSTIT VOISI TÄÄLLÄ LISÄTÄ
