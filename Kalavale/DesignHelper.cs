@@ -19,8 +19,9 @@ namespace Kalavale
         public static TextBox tbPostalCode;
         public static TextBox tbCity;
         public static ComboBox cboResearchArea;
+        public static DataGridView dgvItems;
 
-        public void SelectAllLayoutRefs(ref Label lblName, ref Label lblAddress, ref Label lblPostalCode, ref Label lblCity, ref Label lblResearchArea, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode, ref TextBox tbCity, ref ComboBox cboResearchArea)
+        public void SelectAllLayoutRefs(ref Label lblName, ref Label lblAddress, ref Label lblPostalCode, ref Label lblCity, ref Label lblResearchArea, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode, ref TextBox tbCity, ref ComboBox cboResearchArea, ref DataGridView dgvItems)
         {
             DesignHelper.lblName = lblName;
             DesignHelper.lblAddress = lblAddress;
@@ -32,6 +33,7 @@ namespace Kalavale
             DesignHelper.tbPostalCode = tbPostalCode;
             DesignHelper.tbCity = tbCity;
             DesignHelper.cboResearchArea = cboResearchArea;
+            DesignHelper.dgvItems = dgvItems;
         }
 
         public void ClearAll()
@@ -46,6 +48,11 @@ namespace Kalavale
             tbPostalCode.Visible = false;
             tbCity.Visible = false;
             cboResearchArea.Visible = false;
+
+            foreach (DataGridViewColumn col in dgvItems.Columns)
+            {
+                col.Visible = false;
+            }
         }
 
         public void FishLayout()
@@ -53,6 +60,9 @@ namespace Kalavale
             lblName.Text = "Kala:";
             lblName.Visible = true;
             tbName.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Kala";
+            dgvItems.Columns[1].Visible = true;
         }
 
         public void MethodsLayout()
@@ -60,6 +70,9 @@ namespace Kalavale
             lblName.Text = "Pyydys:";
             lblName.Visible = true;
             tbName.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Pyydys";
+            dgvItems.Columns[1].Visible = true;
         }
 
         public void AdverseFactorsLayout()
@@ -67,6 +80,9 @@ namespace Kalavale
             lblName.Text = "Haittatekijä:";
             lblName.Visible = true;
             tbName.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Haittatekijä";
+            dgvItems.Columns[1].Visible = true;
         }
 
         public void UsersLayout()
@@ -90,6 +106,17 @@ namespace Kalavale
             lblResearchArea.Text = "Kalastusalue:";
             lblResearchArea.Visible = true;
             cboResearchArea.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Nimi";
+            dgvItems.Columns[1].Visible = true;
+            dgvItems.Columns[2].HeaderText = "Osoite";
+            dgvItems.Columns[2].Visible = true;
+            dgvItems.Columns[3].HeaderText = "Postinumero";
+            dgvItems.Columns[3].Visible = true;
+            dgvItems.Columns[4].HeaderText = "Toimipaikka";
+            dgvItems.Columns[4].Visible = true;
+            dgvItems.Columns[5].HeaderText = "Tutkimusalue";
+            dgvItems.Columns[5].Visible = true;
         }
 
         public void WaterSystemsLayout()
@@ -98,19 +125,34 @@ namespace Kalavale
             lblName.Visible = true;
             tbName.Visible = true;
 
-            // Tähän kuvaus jos tarvitsee olla
+            dgvItems.Columns[1].HeaderText = "Vesistö";
+            dgvItems.Columns[1].Visible = true;
         }
 
         public void FishingAreasLayout()
         {
-            lblName.Text = "Nimi:";
+            lblName.Text = "Kalastusalue:";
             lblName.Visible = true;
             tbName.Visible = true;
 
             lblAddress.Text = "Vesistö:";
             lblAddress.Visible = true;
             tbAddress.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Kalastusalue";
+            dgvItems.Columns[1].Visible = true;
+            dgvItems.Columns[2].HeaderText = "Vesistö";
+            dgvItems.Columns[2].Visible = true;
         }
 
+        public void ResearchAreasLayout()
+        {
+            lblName.Text = "Tutkimusalue:";
+            lblName.Visible = true;
+            tbName.Visible = true;
+
+            dgvItems.Columns[1].HeaderText = "Tutkimusalue";
+            dgvItems.Columns[1].Visible = true;
+        }
     }
 }

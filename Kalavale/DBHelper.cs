@@ -60,6 +60,11 @@ namespace Kalavale {
             }
         }
 
+        public DataTable getUsers()
+        {
+            return Select("Select kayttajat.id, kayttajat.nimi, kayttajat.osoite, kayttajat.postinumero, kayttajat.toimipaikka, tutkimusalueet.nimi FROM kayttajat INNER JOIN tutkimusalueet ON kayttajat.tutkimusalue_id = tutkimusalueet.id");
+        }
+
         public DataTable getWaterSystems()
         {
             return Select("Select id, nimi FROM vesistot");
@@ -71,6 +76,11 @@ namespace Kalavale {
 
         public DataTable getResearchAreas() {
             return Select("SELECT id, nimi FROM tutkimusalueet");
+        }
+
+        public DataTable getFishingAreas()
+        {
+            return Select("Select kalastusalueet.id, kalastusalueet.nimi, tutkimusalueet.nimi FROM kalastusalueet INNER JOIN tutkimusalueet ON kalastusalueet.tutkimusalue_id = tutkimusalueet.id");
         }
 
         public DataTable getQuestionTypes() {
