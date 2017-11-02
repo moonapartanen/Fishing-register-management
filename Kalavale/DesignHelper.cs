@@ -19,9 +19,8 @@ namespace Kalavale
         public static TextBox tbPostalCode;
         public static TextBox tbCity;
         public static ComboBox cboResearchArea;
-        public static DataGridView dgvItems;
 
-        public void SelectAllLayoutRefs(ref Label lblName, ref Label lblAddress, ref Label lblPostalCode, ref Label lblCity, ref Label lblResearchArea, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode, ref TextBox tbCity, ref ComboBox cboResearchArea, ref DataGridView dgvItems)
+        public void SelectAllLayoutRefs(ref Label lblName, ref Label lblAddress, ref Label lblPostalCode, ref Label lblCity, ref Label lblResearchArea, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode, ref TextBox tbCity, ref ComboBox cboResearchArea)
         {
             DesignHelper.lblName = lblName;
             DesignHelper.lblAddress = lblAddress;
@@ -33,7 +32,6 @@ namespace Kalavale
             DesignHelper.tbPostalCode = tbPostalCode;
             DesignHelper.tbCity = tbCity;
             DesignHelper.cboResearchArea = cboResearchArea;
-            DesignHelper.dgvItems = dgvItems;
         }
 
         public void ClearAll()
