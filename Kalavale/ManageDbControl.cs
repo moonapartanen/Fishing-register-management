@@ -37,6 +37,9 @@ namespace Kalavale {
             _dh.SelectAllLayoutRefs(ref this.lblName, ref this.lblAddress, ref this.lblPostalCode, 
                                     ref this.lblCity, ref this.lblResearchArea, ref this.tbName, ref this.tbAddress,
                                     ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref this.dgvItems);
+
+            _dh.EmptyFields();
+
             switch (index)
             {
                 case 0:
@@ -54,6 +57,7 @@ namespace Kalavale {
                 case 3:
                     _dh.ClearAll();
                     _dh.UsersLayout();
+                    // TODO: COMBOBOXIIN TUTKIMUSALUEET
                     break;
                 case 4:
                     _dh.ClearAll();
@@ -62,6 +66,7 @@ namespace Kalavale {
                 case 5:
                     _dh.ClearAll();
                     _dh.FishingAreasLayout();
+                    // TODO: COMBOBOXIIN TUTKIMUSALUEET JA COMBOBOXIN NÄYTTÄMINEN OIKEASSA PAIKASSA
                     break;
                 case 6:
                     _dh.ClearAll();
@@ -100,32 +105,30 @@ namespace Kalavale {
 
         private void dgvItems_SelectionChanged(object sender, EventArgs e)
         {
-            switch (cboItemTypeSelector.SelectedIndex)
+
+            if (dgvItems.SelectedRows.Count > 0)
             {
-                case 0:
-                    // KALA
-                    break;
-                case 1:
-                   // PYYDYS
-                    break;
-                case 2:
-                    // HAITTA
-                    break;
-                case 3:
-                    // USERS
-                    break;
-                case 4:
-                    // VESISTÖ
-                    break;
-                case 5:
-                    // KALASTUSALUEET
-                    break;
-                case 6:
-                   // TUTKIMUSALUEET
-                    break;
-                default:
-                    MessageBox.Show("Jokin meni pieleen, ota yhteyttä ylläpitäjään");
-                    break;
+                if (cboItemTypeSelector.SelectedIndex == 3)
+                {
+                    tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
+                    tbAddress.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
+                    tbPostalCode.Text = dgvItems.SelectedRows[0].Cells[3].Value + String.Empty;
+                    tbCity.Text = dgvItems.SelectedRows[0].Cells[4].Value + String.Empty;
+                    cboResearchAreas.Text = dgvItems.SelectedRows[0].Cells[5].Value + String.Empty;
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 5)
+                {
+                    tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
+                    tbAddress.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
+                }
+                else
+                {
+                    tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
+                }
+            }
+            else
+            {
+                // RIVIÄ EI OLE VALITTUNA
             }
         }
     }

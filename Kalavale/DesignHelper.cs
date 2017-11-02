@@ -154,5 +154,14 @@ namespace Kalavale
             dgvItems.Columns[1].HeaderText = "Tutkimusalue";
             dgvItems.Columns[1].Visible = true;
         }
+
+        public void EmptyFields()
+        {
+            tbName.Text = "";
+            tbAddress.Text = "";
+            tbPostalCode.Text = "";
+            tbCity.Text = "";
+            cboResearchArea.Text = "";
+        }
     }
 }
