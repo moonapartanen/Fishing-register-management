@@ -175,7 +175,7 @@ namespace Kalavale
             tbCity.Text = "";
             cboResearchArea.Text = "";
 
-            // palautetaan researcharean paikka normaaliksi
+            // palautetaan researchArean paikka normaaliksi
             lblResearchArea.Location = new System.Drawing.Point(17, 265);
             cboResearchArea.Location = new System.Drawing.Point(17, 282);
         }

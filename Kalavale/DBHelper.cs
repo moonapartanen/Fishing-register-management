@@ -20,7 +20,7 @@ namespace Kalavale {
         public DBHelper() {
         }
 
-        private DataTable Select(string query) {
+        public DataTable Select(string query) {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
             using(DataTable dt = new DataTable()) {
@@ -62,12 +62,12 @@ namespace Kalavale {
 
         public DataTable getUsers()
         {
-            return Select("Select kayttajat.id, kayttajat.nimi, kayttajat.osoite, kayttajat.postinumero, kayttajat.toimipaikka, tutkimusalueet.nimi FROM kayttajat INNER JOIN tutkimusalueet ON kayttajat.tutkimusalue_id = tutkimusalueet.id");
+            return Select("SELECT kayttajat.id, kayttajat.nimi, kayttajat.osoite, kayttajat.postinumero, kayttajat.toimipaikka, tutkimusalueet.nimi FROM kayttajat INNER JOIN tutkimusalueet ON kayttajat.tutkimusalue_id = tutkimusalueet.id");
         }
 
         public DataTable getWaterSystems()
         {
-            return Select("Select id, nimi FROM vesistot");
+            return Select("SELECT id, nimi FROM vesistot");
         }
 
         public DataTable getResources() {
@@ -80,7 +80,7 @@ namespace Kalavale {
 
         public DataTable getFishingAreas()
         {
-            return Select("Select kalastusalueet.id, kalastusalueet.nimi, tutkimusalueet.nimi FROM kalastusalueet INNER JOIN tutkimusalueet ON kalastusalueet.tutkimusalue_id = tutkimusalueet.id");
+            return Select("SELECT kalastusalueet.id, kalastusalueet.nimi, tutkimusalueet.nimi FROM kalastusalueet INNER JOIN tutkimusalueet ON kalastusalueet.tutkimusalue_id = tutkimusalueet.id");
         }
 
         public DataTable getQuestionTypes() {
@@ -134,6 +134,34 @@ namespace Kalavale {
                     }
                 }
             }
+        }
+
+
+        // TIETOKANNAN HALLINTAA
+
+        public void updateResources(int id, string name)
+        {
+            ExecNonQuery("UPDATE resurssit SET nimi = '" + name + "' WHERE id = " + id);
+        }
+
+        public void updateWaterSystems(int id, string name)
+        {
+            ExecNonQuery("UPDATE vesistot SET nimi = '" + name + "' WHERE id = " + id);
+        }
+
+        public void updateResearchAreas(int id, string name)
+        {
+            ExecNonQuery("UPDATE tutkimusalueet SET nimi = '" + name + "' WHERE id = " + id);
+        }
+
+        public void updateFishingAreas(int id, string name, int researchAreaId)
+        {
+            ExecNonQuery("UPDATE kalastusalueet SET nimi = '" + name + "', tutkimusalue_id = " + researchAreaId + " WHERE id = " + id);
+        }
+
+        public void updateUsers(int id, string name, string address, string postalCode, string city, int researchAreaId)
+        {
+            ExecNonQuery("UPDATE kayttajat SET nimi = '" + name + "', osoite = '" + address + "', postinumero = '" + postalCode + "', toimipaikka = '" + city + "', tutkimusalue_id = " + researchAreaId + " WHERE id = " + id);
         }
     }
 }

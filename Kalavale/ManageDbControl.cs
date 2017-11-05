@@ -14,6 +14,7 @@ namespace Kalavale {
         DesignHelper _dh = new DesignHelper();
 		DBHelper _dbh;
 		DataTable _resources;
+        private static int id;
 		
         public ManageDbControl() {
             InitializeComponent();
@@ -116,6 +117,8 @@ namespace Kalavale {
 
             if (dgvItems.SelectedRows.Count > 0)
             {
+                id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells[0].Value);
+
                 if (cboItemTypeSelector.SelectedIndex == 3)
                 {
                     tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
@@ -137,7 +140,105 @@ namespace Kalavale {
             else
             {
                 // RIVIÄ EI OLE VALITTUNA
+
+                id = 0;
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            _dh.EmptyFields();
+            dgvItems.ClearSelection();
+
+            // poikkeus kalastusalueissa
+            if (cboItemTypeSelector.SelectedIndex == 5)
+            {
+                _dh.FishingAreasLayout();
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // poisto
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            DataTable dt = CheckIfExistsInDatabase();
+
+            // lisätään tai updatetaan riippuen mitä dt palautti
+            if (dt.Rows.Count > 0)
+            {
+                // tietokannan update
+
+                if (cboItemTypeSelector.SelectedIndex == 3)
+                {
+                    _dbh.updateUsers(id, tbName.Text, tbAddress.Text, tbPostalCode.Text, tbCity.Text, Convert.ToInt32(cboResearchAreas.SelectedValue));
+                    dgvItems.DataSource = _dbh.getUsers();
+                    _dh.EmptyFields();
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 4)
+                {
+                    _dbh.updateWaterSystems(id, tbName.Text);
+                    dgvItems.DataSource = _dbh.getWaterSystems();
+                    _dh.EmptyFields();
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 5)
+                {
+                    _dbh.updateFishingAreas(id, tbName.Text, Convert.ToInt32(cboResearchAreas.SelectedValue));
+                    dgvItems.DataSource = _dbh.getFishingAreas();
+                    _dh.EmptyFields();
+                    _dh.FishingAreasLayout();   // pitää kutsua erikseen, koska muuten layout särkyy
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 6)
+                {
+                    _dbh.updateResearchAreas(id, tbName.Text);
+                    dgvItems.DataSource = _dbh.getResearchAreas();
+                    _dh.EmptyFields();
+                }
+                else
+                {
+                    _dbh.updateResources(id, tbName.Text);
+                    //dgvItems.DataSource = SelectFromResourcesById(cboItemTypeSelector.SelectedIndex + 1);
+
+                    // TODO: PÄIVITÄ DATAGRIDVIEW
+
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("INSERTTIÄ");
+            }
+        }
+
+        private DataTable CheckIfExistsInDatabase()
+        {
+            DataTable dt = null;
+
+            // tarkistetaan onko olemassa samalla ID:llä itemiä
+            if (cboItemTypeSelector.SelectedIndex == 3)
+            {
+                dt = _dbh.Select("SELECT * FROM kayttajat WHERE ID = " + id + ";");
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 4)
+            {
+                dt = _dbh.Select("SELECT * FROM vesistot WHERE ID = " + id + ";");
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 5)
+            {
+                dt = _dbh.Select("SELECT * FROM kalastusalueet WHERE ID = " + id + ";");
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 6)
+            {
+                dt = _dbh.Select("SELECT * FROM tutkimusalueet WHERE ID = " + id + ";");
+            }
+            else
+            {
+                dt = _dbh.Select("SELECT * FROM resurssit WHERE ID = " + id + ";");
+            }
+
+            return dt;
         }
     }
 }
