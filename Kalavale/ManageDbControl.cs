@@ -30,13 +30,15 @@ namespace Kalavale {
         }
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
+
+            DataTable dt = new DataTable();
             int index = cboItemTypeSelector.SelectedIndex;
             dgvItems.DataSource = SelectFromResourcesById(index + 1);
 
             // viedään kaikki tietokannan hallinta-komponentit luokalle
             _dh.SelectAllLayoutRefs(ref this.lblName, ref this.lblAddress, ref this.lblPostalCode, 
                                     ref this.lblCity, ref this.lblResearchArea, ref this.tbName, ref this.tbAddress,
-                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref this.dgvItems);
+                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref this.dgvItems, ref this.btnAdd);
 
             _dh.EmptyFields();
 
@@ -56,8 +58,11 @@ namespace Kalavale {
                     break;
                 case 3:
                     _dh.ClearAll();
-                    _dh.UsersLayout();
-                    // TODO: COMBOBOXIIN TUTKIMUSALUEET
+                    _dh.UsersLayout();                    
+                    cboResearchAreas.DataSource = _dbh.getResearchAreas();
+                    cboResearchAreas.DisplayMember = "nimi";
+                    cboResearchAreas.ValueMember = "id";
+                    cboResearchAreas.SelectedIndex = -1;
                     break;
                 case 4:
                     _dh.ClearAll();
@@ -66,7 +71,10 @@ namespace Kalavale {
                 case 5:
                     _dh.ClearAll();
                     _dh.FishingAreasLayout();
-                    // TODO: COMBOBOXIIN TUTKIMUSALUEET JA COMBOBOXIN NÄYTTÄMINEN OIKEASSA PAIKASSA
+                    cboResearchAreas.DataSource = _dbh.getResearchAreas();
+                    cboResearchAreas.DisplayMember = "nimi";
+                    cboResearchAreas.ValueMember = "id";
+                    cboResearchAreas.SelectedIndex = -1;
                     break;
                 case 6:
                     _dh.ClearAll();
@@ -119,7 +127,7 @@ namespace Kalavale {
                 else if (cboItemTypeSelector.SelectedIndex == 5)
                 {
                     tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
-                    tbAddress.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
+                    cboResearchAreas.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
                 }
                 else
                 {
