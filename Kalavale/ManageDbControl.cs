@@ -8,6 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//  TO DO:
+//  - RESURSSIEN LISÄÄMISEN/MUOKKAAMISEN/POISTAMISEN JÄLKEEN DATAGRIDVIEW PÄIVITETTÄVÄ
+//  - TARKASTUS, ONKO KAIKISSA KENTISSÄ ARVOJA JOS LISÄTÄÄN TAI MUOKATAAN
+//  - DATAGRIDVIEW SELLAISEKSI, ETTÄ JOS VALITSEE SOLUN NIIN KOKO RIVI VALIKOITUU
+//  - KORJAA WARNING-TEKSTIT
+//  - PÄIVITÄ DATAGRIDVIEW POISTON JÄLKEEN
+//  - TESTAA POISTON TOIMIVUUS
+
 namespace Kalavale {
     public partial class ManageDbControl : UserControl {
 		string[] _dbItemTypes = { "Kalat", "Pyydykset", "Haittatekijät", "Käyttäjät", "Vesistöt", "Kalastusalueet", "Tutkimusalueet" };
@@ -168,7 +176,39 @@ namespace Kalavale {
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // poisto
+            // TIETOKANNAN DELETET
+
+            string table = "", warning = "";
+
+            if (cboItemTypeSelector.SelectedIndex == 3)
+            {
+                table = "kayttajat";
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 4)
+            {
+                table = "vesistot";
+                warning = "Tähän warning, joka varoittaa cascadesta";
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 5)
+            {
+                table = "kalastusalueet";
+            }
+            else if (cboItemTypeSelector.SelectedIndex == 6)
+            {
+                table = "tutkimusalueet";
+                warning = "Tähän warning, joka varoittaa cascadesta";
+            }
+            else
+            {
+                table = "resurssit";
+            }
+
+            if (MessageBox.Show(warning, "Varoitus", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                _dbh.deleteFromDatabase(id, table);
+
+                // päivitetään datagridview
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -178,7 +218,7 @@ namespace Kalavale {
             // lisätään tai updatetaan riippuen mitä dt palautti
             if (dt.Rows.Count > 0)
             {
-                // tietokannan update
+                // TIETOKANNAN UPDATET
 
                 if (cboItemTypeSelector.SelectedIndex == 3)
                 {
@@ -216,7 +256,7 @@ namespace Kalavale {
             }
             else
             {
-                // tietokannan insert
+                // TIETOKANNAN INSERTIT
 
                 if (cboItemTypeSelector.SelectedIndex == 3)
                 {
@@ -302,7 +342,7 @@ namespace Kalavale {
             }
             catch
             {
-                MessageBox.Show("Salasanan SHA-hashays epäonnitui");
+                MessageBox.Show("Salasanan SHA-hashays epäonnistui");
                 return null;
             }
         }

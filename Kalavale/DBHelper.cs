@@ -188,5 +188,10 @@ namespace Kalavale {
         {
             ExecNonQuery("INSERT INTO kayttajat (nimi, osoite, postinumero, toimipaikka, vastausavain, tutkimusalue_id) VALUES ('" + name + "', '" + address + "', '" + postalCode + "', '" + city + "', '" + key + "', " + researchAreaId + ")");
         }
+
+        public void deleteFromDatabase(int id, string table)
+        {
+            ExecNonQuery("DELETE FROM " + table + " WHERE id = " + id);
+        }
     }
 }
