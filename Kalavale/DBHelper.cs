@@ -184,9 +184,9 @@ namespace Kalavale {
             ExecNonQuery("INSERT INTO tutkimusalueet (nimi, vesisto_id) VALUES ('" + name + "', " + waterSystemsId + ")");
         }
 
-        /*public void insertUsers(string name, )
+        public void insertUsers(string name, string address, string postalCode, string city, int researchAreaId, string key)
         {
-            ExecNonQuery("INSERT INTO tutkimusalueet (nimi, vesisto_id) VALUES ('" + name + "', " + waterSystemsId + ")");
-        }*/
+            ExecNonQuery("INSERT INTO kayttajat (nimi, osoite, postinumero, toimipaikka, vastausavain, tutkimusalue_id) VALUES ('" + name + "', '" + address + "', '" + postalCode + "', '" + city + "', '" + key + "', " + researchAreaId + ")");
+        }
     }
 }

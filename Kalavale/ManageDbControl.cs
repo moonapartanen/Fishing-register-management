@@ -220,7 +220,10 @@ namespace Kalavale {
 
                 if (cboItemTypeSelector.SelectedIndex == 3)
                 {
-                   // _dbh.updateUsers(id, tbName.Text, tbAddress.Text, tbPostalCode.Text, tbCity.Text, Convert.ToInt32(cboResearchAreas.SelectedValue));
+                    Random rnd = new Random();
+                    int key = rnd.Next(1, 25000);
+
+                    _dbh.insertUsers(tbName.Text, tbAddress.Text, tbPostalCode.Text, tbCity.Text, Convert.ToInt32(cboResearchAreas.SelectedValue), SHA1(key.ToString()));
                     dgvItems.DataSource = _dbh.getUsers();
                     _dh.EmptyFields();
                 }
@@ -281,6 +284,27 @@ namespace Kalavale {
             }
 
             return dt;
+        }
+
+        public String SHA1(String plaintext)
+        {
+            try
+            {
+                System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
+                byte[] bytes = System.Text.Encoding.ASCII.GetBytes(plaintext);
+                byte[] hash = sha1.ComputeHash(bytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hash.Length; i++)
+                    sb.Append(hash[i].ToString("x2"));
+
+                return sb.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Salasanan SHA-hashays epäonnitui");
+                return null;
+            }
         }
     }
 }
