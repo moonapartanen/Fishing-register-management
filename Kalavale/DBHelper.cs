@@ -75,7 +75,7 @@ namespace Kalavale {
         }
 
         public DataTable getResearchAreas() {
-            return Select("SELECT id, nimi FROM tutkimusalueet");
+            return Select("SELECT tutkimusalueet.id, tutkimusalueet.nimi, vesistot.nimi FROM tutkimusalueet INNER JOIN vesistot ON tutkimusalueet.vesisto_id = vesistot.id");
         }
 
         public DataTable getFishingAreas()
@@ -149,9 +149,9 @@ namespace Kalavale {
             ExecNonQuery("UPDATE vesistot SET nimi = '" + name + "' WHERE id = " + id);
         }
 
-        public void updateResearchAreas(int id, string name)
+        public void updateResearchAreas(int id, string name, int waterSystemsId)
         {
-            ExecNonQuery("UPDATE tutkimusalueet SET nimi = '" + name + "' WHERE id = " + id);
+            ExecNonQuery("UPDATE tutkimusalueet SET nimi = '" + name + "', vesisto_id = " + waterSystemsId + " WHERE id = " + id);
         }
 
         public void updateFishingAreas(int id, string name, int researchAreaId)
@@ -163,5 +163,30 @@ namespace Kalavale {
         {
             ExecNonQuery("UPDATE kayttajat SET nimi = '" + name + "', osoite = '" + address + "', postinumero = '" + postalCode + "', toimipaikka = '" + city + "', tutkimusalue_id = " + researchAreaId + " WHERE id = " + id);
         }
+
+        public void insertResources(string name, int resourceType)
+        {
+            ExecNonQuery("INSERT INTO resurssit (nimi, resurssityyppi_id) VALUES ('" + name + "'," + resourceType + ")");
+        }
+
+        public void insertWaterSystems(string name)
+        {
+            ExecNonQuery("INSERT INTO vesistot (nimi) VALUES ('" + name + "')");
+        }
+
+        public void insertFishingAreas(string name, int researchAreaId)
+        {
+            ExecNonQuery("INSERT INTO kalastusalueet (nimi, tutkimusalue_id) VALUES ('" + name + "', " + researchAreaId + ")");
+        }
+
+        public void insertResearchAreas(string name, int waterSystemsId)
+        {
+            ExecNonQuery("INSERT INTO tutkimusalueet (nimi, vesisto_id) VALUES ('" + name + "', " + waterSystemsId + ")");
+        }
+
+        /*public void insertUsers(string name, )
+        {
+            ExecNonQuery("INSERT INTO tutkimusalueet (nimi, vesisto_id) VALUES ('" + name + "', " + waterSystemsId + ")");
+        }*/
     }
 }

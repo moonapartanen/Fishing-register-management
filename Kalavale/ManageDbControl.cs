@@ -38,8 +38,8 @@ namespace Kalavale {
 
             // viedään kaikki tietokannan hallinta-komponentit luokalle
             _dh.SelectAllLayoutRefs(ref this.lblName, ref this.lblAddress, ref this.lblPostalCode, 
-                                    ref this.lblCity, ref this.lblResearchArea, ref this.tbName, ref this.tbAddress,
-                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref this.dgvItems, ref this.btnAdd);
+                                    ref this.lblCity, ref this.lblResearchArea, ref this.lblWaterSystems, ref this.tbName, ref this.tbAddress,
+                                    ref this.tbPostalCode, ref this.tbCity, ref this.cboResearchAreas, ref this.cboWaterSystems, ref this.dgvItems, ref this.btnAdd);
 
             _dh.EmptyFields();
 
@@ -80,6 +80,10 @@ namespace Kalavale {
                 case 6:
                     _dh.ClearAll();
                     _dh.ResearchAreasLayout();
+                    cboWaterSystems.DataSource = _dbh.getWaterSystems();
+                    cboWaterSystems.DisplayMember = "nimi";
+                    cboWaterSystems.ValueMember = "id";
+                    cboWaterSystems.SelectedIndex = -1;
                     break;
                 default:
                     MessageBox.Show("Jokin meni pieleen, ota yhteyttä ylläpitäjään");
@@ -131,6 +135,11 @@ namespace Kalavale {
                 {
                     tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
                     cboResearchAreas.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 6)
+                {
+                    tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
+                    cboWaterSystems.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
                 }
                 else
                 {
@@ -192,7 +201,7 @@ namespace Kalavale {
                 }
                 else if (cboItemTypeSelector.SelectedIndex == 6)
                 {
-                    _dbh.updateResearchAreas(id, tbName.Text);
+                    _dbh.updateResearchAreas(id, tbName.Text, Convert.ToInt32(cboWaterSystems.SelectedValue));
                     dgvItems.DataSource = _dbh.getResearchAreas();
                     _dh.EmptyFields();
                 }
@@ -202,13 +211,46 @@ namespace Kalavale {
                     //dgvItems.DataSource = SelectFromResourcesById(cboItemTypeSelector.SelectedIndex + 1);
 
                     // TODO: PÄIVITÄ DATAGRIDVIEW
-
                 }
 
             }
             else
             {
-                MessageBox.Show("INSERTTIÄ");
+                // tietokannan insert
+
+                if (cboItemTypeSelector.SelectedIndex == 3)
+                {
+                   // _dbh.updateUsers(id, tbName.Text, tbAddress.Text, tbPostalCode.Text, tbCity.Text, Convert.ToInt32(cboResearchAreas.SelectedValue));
+                    dgvItems.DataSource = _dbh.getUsers();
+                    _dh.EmptyFields();
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 4)
+                {
+                    _dbh.insertWaterSystems(tbName.Text);
+                    dgvItems.DataSource = _dbh.getWaterSystems();
+                    _dh.EmptyFields();
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 5)
+                {
+                    _dbh.insertFishingAreas(tbName.Text, Convert.ToInt32(cboResearchAreas.SelectedValue));
+                    dgvItems.DataSource = _dbh.getFishingAreas();
+                    _dh.EmptyFields();
+                    _dh.FishingAreasLayout();   // pitää kutsua erikseen, koska muuten layout särkyy
+                }
+                else if (cboItemTypeSelector.SelectedIndex == 6)
+                {
+                    _dbh.insertResearchAreas(tbName.Text, Convert.ToInt32(cboWaterSystems.SelectedValue));
+                    dgvItems.DataSource = _dbh.getResearchAreas();
+                    _dh.EmptyFields();
+                }
+                else
+                {
+                    int resourceType = cboItemTypeSelector.SelectedIndex + 1;
+                    _dbh.insertResources(tbName.Text, resourceType);
+                    //dgvItems.DataSource = SelectFromResourcesById(cboItemTypeSelector.SelectedIndex + 1);
+
+                    // TODO: PÄIVITÄ DATAGRIDVIEW
+                }
             }
         }
 

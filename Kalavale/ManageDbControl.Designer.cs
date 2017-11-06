@@ -42,6 +42,8 @@
             this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddSurvey = new System.Windows.Forms.Button();
+            this.cboWaterSystems = new System.Windows.Forms.ComboBox();
+            this.lblWaterSystems = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -57,6 +59,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblWaterSystems);
+            this.panel1.Controls.Add(this.cboWaterSystems);
             this.panel1.Controls.Add(this.btnAdd);
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnSave);
@@ -224,6 +228,23 @@
             this.btnAddSurvey.Size = new System.Drawing.Size(75, 23);
             this.btnAddSurvey.TabIndex = 0;
             // 
+            // cboWaterSystems
+            // 
+            this.cboWaterSystems.FormattingEnabled = true;
+            this.cboWaterSystems.Location = new System.Drawing.Point(17, 129);
+            this.cboWaterSystems.Name = "cboWaterSystems";
+            this.cboWaterSystems.Size = new System.Drawing.Size(191, 21);
+            this.cboWaterSystems.TabIndex = 17;
+            // 
+            // lblWaterSystems
+            // 
+            this.lblWaterSystems.AutoSize = true;
+            this.lblWaterSystems.Location = new System.Drawing.Point(17, 113);
+            this.lblWaterSystems.Name = "lblWaterSystems";
+            this.lblWaterSystems.Size = new System.Drawing.Size(41, 13);
+            this.lblWaterSystems.TabIndex = 18;
+            this.lblWaterSystems.Text = "Vesistö";
+            // 
             // ManageDbControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,5 +280,7 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label lblWaterSystems;
+        private System.Windows.Forms.ComboBox cboWaterSystems;
     }
 }

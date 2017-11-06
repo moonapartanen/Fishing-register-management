@@ -14,6 +14,7 @@ namespace Kalavale
         public static Label lblPostalCode;
         public static Label lblCity;
         public static Label lblResearchArea;
+        public static Label lblWaterSystems;
         public static TextBox tbName;
         public static TextBox tbAddress;
         public static TextBox tbPostalCode;
@@ -21,10 +22,11 @@ namespace Kalavale
         public static ComboBox cboResearchArea;
         public static DataGridView dgvItems;
         public static Button btnAdd;
+        public static ComboBox cboWaterSystems;
 
         public void SelectAllLayoutRefs(ref Label lblName, ref Label lblAddress, ref Label lblPostalCode, ref Label lblCity, 
-                                        ref Label lblResearchArea, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode,
-                                        ref TextBox tbCity, ref ComboBox cboResearchArea, ref DataGridView dgvItems, ref Button btnAdd)
+                                        ref Label lblResearchArea, ref Label lblWaterSystems, ref TextBox tbName, ref TextBox tbAddress, ref TextBox tbPostalCode,
+                                        ref TextBox tbCity, ref ComboBox cboResearchArea, ref ComboBox cboWaterSystems, ref DataGridView dgvItems, ref Button btnAdd)
         {
             DesignHelper.lblName = lblName;
             DesignHelper.lblAddress = lblAddress;
@@ -38,7 +40,9 @@ namespace Kalavale
             DesignHelper.cboResearchArea = cboResearchArea;
             DesignHelper.dgvItems = dgvItems;
             DesignHelper.btnAdd = btnAdd;
-        }
+            DesignHelper.cboWaterSystems = cboWaterSystems;
+            DesignHelper.lblWaterSystems = lblWaterSystems;
+    }
 
         public void ClearAll()
         {
@@ -53,6 +57,8 @@ namespace Kalavale
             tbCity.Visible = false;
             cboResearchArea.Visible = false;
             btnAdd.Visible = false;
+            cboWaterSystems.Visible = false;
+            lblWaterSystems.Visible = false;
 
             foreach (DataGridViewColumn col in dgvItems.Columns)
             {
@@ -163,8 +169,14 @@ namespace Kalavale
             lblName.Visible = true;
             tbName.Visible = true;
 
+            lblWaterSystems.Visible = true;
+            cboWaterSystems.Visible = true;
+
             dgvItems.Columns[1].HeaderText = "Tutkimusalue";
             dgvItems.Columns[1].Visible = true;
+
+            dgvItems.Columns[2].HeaderText = "Vesistö";
+            dgvItems.Columns[2].Visible = true;
         }
 
         public void EmptyFields()
@@ -174,6 +186,7 @@ namespace Kalavale
             tbPostalCode.Text = "";
             tbCity.Text = "";
             cboResearchArea.Text = "";
+            cboWaterSystems.Text = "";
 
             // palautetaan researchArean paikka normaaliksi
             lblResearchArea.Location = new System.Drawing.Point(17, 265);
