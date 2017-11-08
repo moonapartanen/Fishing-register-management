@@ -32,16 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.10.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -57,13 +48,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesignHelper.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\Field.cs" />
+    <Compile Include="Entities\FishingArea.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\ResearchArea.cs" />
+    <Compile Include="Entities\Resource.cs" />
+    <Compile Include="Entities\Survey.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\WaterSystem.cs" />
+    <Compile Include="Forms\AddSurveyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddSurveyForm.designer.cs">
+      <DependentUpon>AddSurveyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\FishingAreaRepository.cs" />
+    <Compile Include="Repositories\QuestionRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\ResearchAreaRepository.cs" />
+    <Compile Include="Repositories\ResourceRepository.cs" />
+    <Compile Include="Repositories\SurveyRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\WaterSystemRepository.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DBHelper.cs" />
     <Compile Include="UserControls\ManageDbControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +90,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ManageDbControl.resx">
       <DependentUpon>ManageDbControl.cs</DependentUpon>
+    <Compile Include="UserControls\ManageSurveysControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ManageSurveysControl.Designer.cs">
+      <DependentUpon>ManageSurveysControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\AddSurveyForm.resx">
+      <DependentUpon>AddSurveyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ManageSurveysControl.resx">
+      <DependentUpon>ManageSurveysControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,7 +111,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -100,10 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

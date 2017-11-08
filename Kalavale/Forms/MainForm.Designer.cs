@@ -1,5 +1,4 @@
-﻿namespace Kalavale
-{
+﻿namespace Kalavale.Forms {
     partial class MainForm
     {
         /// <summary>
@@ -32,10 +31,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.manageDbControl1 = new Kalavale.ManageDbControl();
+            this.manageSurveysControl1 = new Kalavale.ManageSurveysControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -77,9 +76,15 @@
             this.manageDbControl1.TabIndex = 0;
             // 
             // 
+            // manageSurveysControl1
+            // 
+            this.manageSurveysControl1.Location = new System.Drawing.Point(3, 4);
+            this.manageSurveysControl1.Name = "manageSurveysControl1";
+            this.manageSurveysControl1.Size = new System.Drawing.Size(631, 560);
+            this.manageSurveysControl1.TabIndex = 0;
+            // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.manageDbControl1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(972, 570);
@@ -97,7 +102,6 @@
             this.Text = "KalaVale 1.0";
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -109,6 +113,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private ManageDbControl manageDbControl1;
+        private ManageSurveysControl manageSurveysControl1;
     }
 }
 
