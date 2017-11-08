@@ -13,32 +13,18 @@ namespace Kalavale.Repositories {
 
         public void Add(User user) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO kayttajat (nimi, osoite, postinumero, toimipaikka, vastausavain, tutkimusalue_id) " +
-                    "VALUES (@name, @address, @zip, @city, @key, @researchAreaId)";
+                cmd.CommandText = "INSERT INTO kayttajat (id, nimi, osoite, postinumero, toimipaikka, vastausavain, tutkimusalue_id) " +
+                    "VALUES (@id, @name, @address, @zip, @city, @key, @researchAreaId) " +
+                    "ON DUPLICATE KEY UPDATE nimi = @name, osoite = @address, postinumero = @zip, " +
+                    "toimipaikka = @city, vastausavain = @key, tutkimusalue_id = @ researchAreaId ";
 
-                cmd.Parameters.AddWithValue("name", user.Name);
-                cmd.Parameters.AddWithValue("address", user.Address);
-                cmd.Parameters.AddWithValue("zip", user.Zip);
-                cmd.Parameters.AddWithValue("city", user.City);
-                cmd.Parameters.AddWithValue("key", user.Key);
-                cmd.Parameters.AddWithValue("researchAreaId", user.ResearchAreaId);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Update(User user) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "UPDATE kayttajat SET nimi = @name, osoite = @address, postinumero = @zip, "
-                    + "toimipaikka = @city, tutkimusalue_id = @researchAreaId WHERE id = @id";
-
-                cmd.Parameters.AddWithValue("name", user.Name);
-                cmd.Parameters.AddWithValue("address", user.Address);
-                cmd.Parameters.AddWithValue("zip", user.Zip);
-                cmd.Parameters.AddWithValue("city", user.City);
-                cmd.Parameters.AddWithValue("key", user.Key);
-                cmd.Parameters.AddWithValue("researchAreaId", user.ResearchAreaId);
                 cmd.Parameters.AddWithValue("id", user.Id);
+                cmd.Parameters.AddWithValue("name", user.Name);
+                cmd.Parameters.AddWithValue("address", user.Address);
+                cmd.Parameters.AddWithValue("zip", user.Zip);
+                cmd.Parameters.AddWithValue("city", user.City);
+                cmd.Parameters.AddWithValue("key", user.Key);
+                cmd.Parameters.AddWithValue("researchAreaId", user.ResearchAreaId);
 
                 cmd.ExecuteNonQuery();
             }

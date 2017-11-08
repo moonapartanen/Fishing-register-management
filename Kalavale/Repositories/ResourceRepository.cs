@@ -40,6 +40,15 @@ namespace Kalavale.Repositories {
             }
         }
 
+        public DataTable GetByTypeAsDataTable(int type) {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "SELECT * FROM resurssit WHERE resurssityyppi_id = @type";
+                cmd.Parameters.AddWithValue("type", type);
+
+                return ToDataTable(cmd);
+            }
+        }
+
         protected override void Map(IDataRecord record, Resource entity) {
             entity.Id = (int)record["id"];
             entity.Name = (string)record["nimi"];

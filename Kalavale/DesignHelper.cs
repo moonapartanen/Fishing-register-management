@@ -44,7 +44,7 @@ namespace Kalavale
             DesignHelper.lblWaterSystems = lblWaterSystems;
     }
 
-        public void ClearAll()
+        private void ClearAll()
         {
             lblName.Visible = false;
             lblAddress.Visible = false;

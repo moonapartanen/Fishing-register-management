@@ -39,6 +39,15 @@ namespace Kalavale.Repositories {
             }
         }
 
+        protected virtual DataTable ToDataTable(MySqlCommand cmd) {
+            using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+            using (DataTable dt = new DataTable()) {
+                adapter.Fill(dt);
+
+                return dt;
+            }
+        }
+
         public void Remove(int id) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
                 cmd.CommandText = "DELETE FROM @tableName WHERE id = @id";
@@ -72,6 +81,15 @@ namespace Kalavale.Repositories {
                 cmd.Parameters.AddWithValue("tableName", _tableName);
 
                 return ToList(cmd);
+            }
+        }
+
+        public virtual DataTable GetAllAsDataTable() {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "SELECT * FROM @tableName";
+                cmd.Parameters.AddWithValue("tableName", _tableName);
+
+                return ToDataTable(cmd);
             }
         }
 

@@ -25,6 +25,8 @@
         private void InitializeComponent() {
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblWaterSystems = new System.Windows.Forms.Label();
+            this.cboWaterSystems = new System.Windows.Forms.ComboBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -42,8 +44,6 @@
             this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddSurvey = new System.Windows.Forms.Button();
-            this.cboWaterSystems = new System.Windows.Forms.ComboBox();
-            this.lblWaterSystems = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +52,10 @@
             // 
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Location = new System.Drawing.Point(227, 16);
+            this.dgvItems.MultiSelect = false;
             this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvItems.Size = new System.Drawing.Size(338, 428);
             this.dgvItems.TabIndex = 1;
             this.dgvItems.SelectionChanged += new System.EventHandler(this.dgvItems_SelectionChanged);
@@ -82,6 +85,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(589, 466);
             this.panel1.TabIndex = 0;
+            // 
+            // lblWaterSystems
+            // 
+            this.lblWaterSystems.AutoSize = true;
+            this.lblWaterSystems.Location = new System.Drawing.Point(17, 113);
+            this.lblWaterSystems.Name = "lblWaterSystems";
+            this.lblWaterSystems.Size = new System.Drawing.Size(41, 13);
+            this.lblWaterSystems.TabIndex = 18;
+            this.lblWaterSystems.Text = "Vesistö";
+            // 
+            // cboWaterSystems
+            // 
+            this.cboWaterSystems.FormattingEnabled = true;
+            this.cboWaterSystems.Location = new System.Drawing.Point(17, 129);
+            this.cboWaterSystems.Name = "cboWaterSystems";
+            this.cboWaterSystems.Size = new System.Drawing.Size(191, 21);
+            this.cboWaterSystems.TabIndex = 17;
             // 
             // btnAdd
             // 
@@ -228,30 +248,13 @@
             this.btnAddSurvey.Size = new System.Drawing.Size(75, 23);
             this.btnAddSurvey.TabIndex = 0;
             // 
-            // cboWaterSystems
-            // 
-            this.cboWaterSystems.FormattingEnabled = true;
-            this.cboWaterSystems.Location = new System.Drawing.Point(17, 129);
-            this.cboWaterSystems.Name = "cboWaterSystems";
-            this.cboWaterSystems.Size = new System.Drawing.Size(191, 21);
-            this.cboWaterSystems.TabIndex = 17;
-            // 
-            // lblWaterSystems
-            // 
-            this.lblWaterSystems.AutoSize = true;
-            this.lblWaterSystems.Location = new System.Drawing.Point(17, 113);
-            this.lblWaterSystems.Name = "lblWaterSystems";
-            this.lblWaterSystems.Size = new System.Drawing.Size(41, 13);
-            this.lblWaterSystems.TabIndex = 18;
-            this.lblWaterSystems.Text = "Vesistö";
-            // 
             // ManageDbControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Name = "ManageDbControl";
-            this.Size = new System.Drawing.Size(594, 473);
+            this.Size = new System.Drawing.Size(630, 473);
             this.Load += new System.EventHandler(this.ManageDbControl1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.panel1.ResumeLayout(false);
