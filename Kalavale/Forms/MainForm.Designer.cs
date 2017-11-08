@@ -31,7 +31,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.manageSurveysControl1 = new Kalavale.ManageSurveysControl();
             this.manageDbControl1 = new Kalavale.ManageDbControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
@@ -62,7 +61,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.manageSurveysControl1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -70,13 +68,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Lomakkeiden hallinta";
             this.tabPage2.UseVisualStyleBackColor = true;
-			//
-            // manageSurveysControl1
-            // 
-            this.manageSurveysControl1.Location = new System.Drawing.Point(3, 4);
-            this.manageSurveysControl1.Name = "manageSurveysControl1";
-            this.manageSurveysControl1.Size = new System.Drawing.Size(631, 560);
-            this.manageSurveysControl1.TabIndex = 0;
             //
             // manageDbControl1
             // 
@@ -117,7 +108,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private ManageSurveysControl manageSurveysControl1;
         private ManageDbControl manageDbControl1;
     }
 }
