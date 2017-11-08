@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Kalavale;
 
-namespace Kalavale {
-    public partial class AnalyzeDataControl : UserControl {
-        public AnalyzeDataControl() {
+namespace Kalavale.Forms {
+    public partial class MainForm : Form {
+        public MainForm() {
             InitializeComponent();
         }
     }

@@ -47,55 +47,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddSurveyForm.cs">
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\Field.cs" />
+    <Compile Include="Entities\FishingArea.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\ResearchArea.cs" />
+    <Compile Include="Entities\Resource.cs" />
+    <Compile Include="Entities\Survey.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\WaterSystem.cs" />
+    <Compile Include="Forms\AddSurveyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddSurveyForm.designer.cs">
+    <Compile Include="Forms\AddSurveyForm.designer.cs">
       <DependentUpon>AddSurveyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DesignHelper.cs" />
-    <Compile Include="AnalyzeDataControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="AnalyzeDataControl.Designer.cs">
-      <DependentUpon>AnalyzeDataControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Repositories\FishingAreaRepository.cs" />
+    <Compile Include="Repositories\QuestionRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\ResearchAreaRepository.cs" />
+    <Compile Include="Repositories\ResourceRepository.cs" />
+    <Compile Include="Repositories\SurveyRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\WaterSystemRepository.cs" />
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DBHelper.cs" />
-    <Compile Include="ManageDbControl.cs">
+    <Compile Include="UserControls\ManageSurveysControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ManageDbControl.Designer.cs">
-      <DependentUpon>ManageDbControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ManageSurveysControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ManageSurveysControl.Designer.cs">
+    <Compile Include="UserControls\ManageSurveysControl.Designer.cs">
       <DependentUpon>ManageSurveysControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question.cs" />
-    <Compile Include="Survey.cs" />
-    <EmbeddedResource Include="AddSurveyForm.resx">
+    <EmbeddedResource Include="Forms\AddSurveyForm.resx">
       <DependentUpon>AddSurveyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AnalyzeDataControl.resx">
-      <DependentUpon>AnalyzeDataControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ManageDbControl.resx">
-      <DependentUpon>ManageDbControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ManageSurveysControl.resx">
+    <EmbeddedResource Include="UserControls\ManageSurveysControl.resx">
       <DependentUpon>ManageSurveysControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -120,5 +115,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Kalavale {
+﻿namespace Kalavale.Forms {
     partial class AddSurveyForm {
         /// <summary>
         /// Required designer variable.
@@ -24,8 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpCreationDate = new System.Windows.Forms.DateTimePicker();
             this.txtSurveyName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -54,8 +52,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.dtpCreationDate);
             this.groupBox1.Controls.Add(this.txtSurveyName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -64,22 +60,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Perusasetukset";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(255, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Päivämäärä:";
-            // 
-            // dtpCreationDate
-            // 
-            this.dtpCreationDate.Location = new System.Drawing.Point(327, 28);
-            this.dtpCreationDate.Name = "dtpCreationDate";
-            this.dtpCreationDate.Size = new System.Drawing.Size(200, 20);
-            this.dtpCreationDate.TabIndex = 2;
             // 
             // txtSurveyName
             // 
@@ -313,8 +293,6 @@
         private System.Windows.Forms.ListBox lbvAddedQuestions;
         private System.Windows.Forms.GroupBox grpQuestions;
         private System.Windows.Forms.NumericUpDown numQuestionOrderNumber;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtpCreationDate;
     }
 }
 

@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dgvSurveys = new System.Windows.Forms.DataGridView();
             this.btnDeleteSurvey = new System.Windows.Forms.Button();
             this.btnEditSurvey = new System.Windows.Forms.Button();
             this.btnAddSurvey = new System.Windows.Forms.Button();
@@ -41,15 +40,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbvRASurveys = new System.Windows.Forms.ListBox();
             this.btnDeleteSurveyFromRA = new System.Windows.Forms.Button();
+            this.lbvSurveys = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSurveys)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dgvSurveys);
+            this.groupBox1.Controls.Add(this.lbvSurveys);
             this.groupBox1.Controls.Add(this.btnDeleteSurvey);
             this.groupBox1.Controls.Add(this.btnEditSurvey);
             this.groupBox1.Controls.Add(this.btnAddSurvey);
@@ -59,18 +58,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Luodut kyselyt";
-            // 
-            // dgvSurveys
-            // 
-            this.dgvSurveys.AllowUserToAddRows = false;
-            this.dgvSurveys.AllowUserToDeleteRows = false;
-            this.dgvSurveys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSurveys.Location = new System.Drawing.Point(156, 16);
-            this.dgvSurveys.Name = "dgvSurveys";
-            this.dgvSurveys.ReadOnly = true;
-            this.dgvSurveys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSurveys.Size = new System.Drawing.Size(446, 185);
-            this.dgvSurveys.TabIndex = 3;
             // 
             // btnDeleteSurvey
             // 
@@ -235,6 +222,14 @@
             this.btnDeleteSurveyFromRA.UseVisualStyleBackColor = true;
             this.btnDeleteSurveyFromRA.Click += new System.EventHandler(this.btnDeleteSurveyFromRA_Click);
             // 
+            // lbvSurveys
+            // 
+            this.lbvSurveys.FormattingEnabled = true;
+            this.lbvSurveys.Location = new System.Drawing.Point(157, 19);
+            this.lbvSurveys.Name = "lbvSurveys";
+            this.lbvSurveys.Size = new System.Drawing.Size(448, 186);
+            this.lbvSurveys.TabIndex = 3;
+            // 
             // ManageSurveysControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,7 +240,6 @@
             this.Size = new System.Drawing.Size(631, 560);
             this.Load += new System.EventHandler(this.ManageSurveysControl_Load);
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSurveys)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -257,7 +251,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dgvSurveys;
         private System.Windows.Forms.Button btnDeleteSurvey;
         private System.Windows.Forms.Button btnEditSurvey;
         private System.Windows.Forms.Button btnAddSurvey;
@@ -274,5 +267,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lbvRASurveys;
         private System.Windows.Forms.Button btnDeleteSurveyFromRA;
+        private System.Windows.Forms.ListBox lbvSurveys;
     }
 }

@@ -7,49 +7,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Kalavale.Forms;
+using Kalavale.Repositories;
+using Kalavale.Entities;
 
 namespace Kalavale {
     public partial class ManageSurveysControl : UserControl {
-        DBHelper _dbh;
+        SurveyRepository sRepository = new SurveyRepository();
+        ResearchAreaRepository raRepository = new ResearchAreaRepository();
 
         public ManageSurveysControl() {
             InitializeComponent();
-
-            // varmistaa ettei usercontrol tavoittele ajonaikaisia resursseja design modessa
-            if (LicenseManager.UsageMode == LicenseUsageMode.Runtime) {
-                _dbh = new DBHelper();
-            }
         }
 
         private void ManageSurveysControl_Load(object sender, EventArgs e) {
-            if(_dbh != null) {
-                dgvSurveys.DataSource = _dbh.getSurveys();
-                cboSurveySelector.DataSource = _dbh.getSurveys();
-                cboResearchAreaSelector.DataSource = _dbh.getResearchAreas();
-            }
+            lbvSurveys.DataSource = sRepository.GetAll();
+            cboSurveySelector.DataSource = sRepository.GetAll();
+            cboResearchAreaSelector.DataSource = raRepository.GetAll();
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {
             AddSurveyForm form = new AddSurveyForm();
             form.Show();
-            form.FormClosed += this.AddSurveyForm_FormClosed;
+
+            form.FormClosed += AddSurveyForm_FormClosed;
         }
 
         private void btnEditSurvey_Click(object sender, EventArgs e) {
-            int selectedSurveyId = (int)dgvSurveys.SelectedRows[0].Cells["id"].Value;
+            Survey survey = lbvSurveys.SelectedItem as Survey;
 
-            MessageBox.Show(selectedSurveyId.ToString());
+            MessageBox.Show(survey.Id.ToString());
         }
 
         public void AddSurveyForm_FormClosed(object sender, FormClosedEventArgs e) {
-            dgvSurveys.DataSource = _dbh.getSurveys();
-            cboSurveySelector.DataSource = _dbh.getSurveys();
+            lbvSurveys.DataSource = sRepository.GetAll();
+            cboSurveySelector.DataSource = sRepository.GetAll();
         }
 
         private void btnDeleteSurvey_Click(object sender, EventArgs e) {
-            int selectedSurveyId = (int)dgvSurveys.SelectedRows[0].Cells["id"].Value;
+            Survey survey = lbvSurveys.SelectedItem as Survey;
 
-            MessageBox.Show(selectedSurveyId.ToString());
+            MessageBox.Show(survey.Id.ToString());
         }
 
         private void btnAddSurveyToRA_Click(object sender, EventArgs e) {
@@ -68,7 +66,7 @@ namespace Kalavale {
         private void cboResearchAreaSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int selectedResearchAreaId = (int)cboResearchAreaSelector.SelectedValue;
 
-            lbvRASurveys.DataSource = _dbh.getSurveysByRAId(selectedResearchAreaId);
+            lbvRASurveys.DataSource = sRepository.GetByResearchArea(selectedResearchAreaId);
         }
     }
 }
