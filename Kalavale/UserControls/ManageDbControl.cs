@@ -224,7 +224,6 @@ namespace Kalavale {
         // tällä hetkellä kaikkiin kenttiin vaaditaan jotain
         private bool ValidateFields() {
             if (currentLayout != null) {
-                MessageBox.Show(currentLayout.Name);
                 foreach (Control c in currentLayout.Controls)
                     if (c.Text.Length < 1) return false;
             }
