@@ -13,18 +13,11 @@ namespace Kalavale.Repositories {
 
         public void Add(WaterSystem ws) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO vesistot (nimi) VALUES (@name)";
-                cmd.Parameters.AddWithValue("name", ws.Name);
+                cmd.CommandText = "INSERT INTO vesistot (id, nimi) VALUES (@id, @name) " +
+                    "ON DUPLICATE KEY UPDATE nimi=@name";
 
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Update(WaterSystem ws) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "UPDATE vesistot SET nimi = @name WHERE id = @id";
-                cmd.Parameters.AddWithValue("name", ws.Name);
                 cmd.Parameters.AddWithValue("id", ws.Id);
+                cmd.Parameters.AddWithValue("name", ws.Name);
 
                 cmd.ExecuteNonQuery();
             }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ using Kalavale.Entities;
 using MySql.Data.MySqlClient;
 
 namespace Kalavale.Repositories {
-    abstract class Repository<T> where T : EntityBase, new() {
+    class Repository<T> where T : EntityBase, new() {
         private readonly string _tableName;
 
         internal MySqlConnection Connection {
@@ -25,34 +25,19 @@ namespace Kalavale.Repositories {
             _tableName = tableName;
         }
 
-        protected virtual IEnumerable<T> ToList(MySqlCommand cmd) {
-            using(MySqlDataReader reader = cmd.ExecuteReader()) {
-                List<T> items = new List<T>();
-
-                while (reader.Read()) {
-                    var item = new T();
-                    Map(reader, item);
-                    items.Add(item);
-                }
-
-                return items;
-            }
-        }
-
-        protected virtual DataTable ToDataTable(MySqlCommand cmd) {
-            using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
-            using (DataTable dt = new DataTable()) {
-                adapter.Fill(dt);
-
-                return dt;
-            }
-        }
-
-        public void Remove(int id) {
+        public virtual void Remove(int id) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "DELETE FROM @tableName WHERE id = @id";
+                cmd.CommandText = "DELETE FROM " + _tableName + " WHERE id = @id";
                 cmd.Parameters.AddWithValue("id", id);
-                cmd.Parameters.AddWithValue("tableName", _tableName);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public virtual void Remove(T entity) {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "DELETE FROM " + _tableName + " WHERE id = @id";
+                cmd.Parameters.AddWithValue("id", entity.Id);
 
                 cmd.ExecuteNonQuery();
             }
@@ -60,9 +45,8 @@ namespace Kalavale.Repositories {
 
         public virtual T GetById(int id) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "SELECT * FROM @tableName WHERE id = @id";
+                cmd.CommandText = "SELECT * FROM " + _tableName + " WHERE id = @id";
                 cmd.Parameters.AddWithValue("id", id);
-                cmd.Parameters.AddWithValue("tableName", _tableName);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -77,22 +61,26 @@ namespace Kalavale.Repositories {
 
         public virtual IEnumerable<T> GetAll() {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "SELECT * FROM @tableName";
-                cmd.Parameters.AddWithValue("tableName", _tableName);
+                cmd.CommandText = "SELECT * FROM " + _tableName;
 
                 return ToList(cmd);
             }
         }
 
-        public virtual DataTable GetAllAsDataTable() {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "SELECT * FROM @tableName";
-                cmd.Parameters.AddWithValue("tableName", _tableName);
+        protected virtual IEnumerable<T> ToList(MySqlCommand cmd) {
+            using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                List<T> items = new List<T>();
 
-                return ToDataTable(cmd);
+                while (reader.Read()) {
+                    var item = new T();
+                    Map(reader, item);
+                    items.Add(item);
+                }
+
+                return items;
             }
         }
 
-        protected abstract void Map(IDataRecord record, T entity);
+        protected virtual void Map(IDataRecord record, T entity) { }
     }
 }

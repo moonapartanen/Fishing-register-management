@@ -92,7 +92,7 @@ namespace Kalavale.Forms {
             };
 
             _sRepository.Add(survey);
-            _qRepository.AddRange(_questions.ToList(), survey.Id);
+            _qRepository.AddRange(_questions.ToList(), (int)survey.Id);
         }
     }
 }

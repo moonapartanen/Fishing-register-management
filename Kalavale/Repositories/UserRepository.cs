@@ -16,7 +16,7 @@ namespace Kalavale.Repositories {
                 cmd.CommandText = "INSERT INTO kayttajat (id, nimi, osoite, postinumero, toimipaikka, vastausavain, tutkimusalue_id) " +
                     "VALUES (@id, @name, @address, @zip, @city, @key, @researchAreaId) " +
                     "ON DUPLICATE KEY UPDATE nimi = @name, osoite = @address, postinumero = @zip, " +
-                    "toimipaikka = @city, vastausavain = @key, tutkimusalue_id = @ researchAreaId ";
+                    "toimipaikka = @city, vastausavain = @key, tutkimusalue_id = @researchAreaId ";
 
                 cmd.Parameters.AddWithValue("id", user.Id);
                 cmd.Parameters.AddWithValue("name", user.Name);

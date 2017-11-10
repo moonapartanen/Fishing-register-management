@@ -13,20 +13,12 @@ namespace Kalavale.Repositories {
 
         public void Add(ResearchArea rs) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO tutkimusalueet (nimi, vesisto_id) VALUES (@name, @waterSystemId)";
-                cmd.Parameters.AddWithValue("name", rs.Name);
-                cmd.Parameters.AddWithValue("waterSystemId", rs.WaterSystemId);
+                cmd.CommandText = "INSERT INTO tutkimusalueet (id, nimi, vesisto_id) VALUES (@id, @name, @waterSystemId) " +
+                    "ON DUPLICATE KEY UPDATE nimi=@name, vesisto_id=@waterSystemId";
 
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Update(ResearchArea rs) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "UPDATE tutkimusalueet SET nimi = @name, vesisto_id = @WaterSystemId WHERE id = @id";
-                cmd.Parameters.AddWithValue("name", rs.Name);
-                cmd.Parameters.AddWithValue("waterSystemId", rs.WaterSystemId);
                 cmd.Parameters.AddWithValue("id", rs.Id);
+                cmd.Parameters.AddWithValue("name", rs.Name);
+                cmd.Parameters.AddWithValue("waterSystemId", rs.WaterSystemId);
 
                 cmd.ExecuteNonQuery();
             }

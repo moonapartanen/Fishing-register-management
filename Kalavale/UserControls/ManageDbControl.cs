@@ -11,11 +11,7 @@ using Kalavale.Repositories;
 using Kalavale.Entities;
 
 //  TO DO:
-//  - RESURSSIEN LISÄÄMISEN/MUOKKAAMISEN/POISTAMISEN JÄLKEEN DATAGRIDVIEW PÄIVITETTÄVÄ
-//  - TARKASTUS, ONKO KAIKISSA KENTISSÄ ARVOJA JOS LISÄTÄÄN TAI MUOKATAAN
-//  - DATAGRIDVIEW SELLAISEKSI, ETTÄ JOS VALITSEE SOLUN NIIN KOKO RIVI VALIKOITUU
 //  - KORJAA WARNING-TEKSTIT
-//  - PÄIVITÄ DATAGRIDVIEW POISTON JÄLKEEN
 //  - TESTAA POISTON TOIMIVUUS
 
 namespace Kalavale {
@@ -28,318 +24,251 @@ namespace Kalavale {
         UserRepository uRepository = new UserRepository();
         WaterSystemRepository wsRepository = new WaterSystemRepository();
 
-        DesignHelper _dh = new DesignHelper();
+        // täytettävät kentät ovat omissa paneeleissaan päällekkäin alustettu näkymättömiksi
+        // itemTypen vaihtuessa näytetään/piilotetaan oikea layout
+        Panel currentLayout;
+        bool editMode;
 		
         public ManageDbControl() {
             InitializeComponent();
         }
 
-        //cbo = combobox, dgv = datagridview
         private void ManageDbControl1_Load(object sender, EventArgs e) {
             cboItemTypeSelector.DataSource = _dbItemTypes;
+            SetEditMode(false);
         }
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
-            int index = cboItemTypeSelector.SelectedIndex;
+            int type = cboItemTypeSelector.SelectedIndex;
+            ClearLayoutFields();
 
-            dgvItems.DataSource = rRepository.GetByTypeAsDataTable(1);
-            //SwitchLayout(index);
+            if(currentLayout != null) {
+                currentLayout.Visible = false;
+                currentLayout = null;
+            }
 
-            switch (index) {
+            btnAdd.Enabled = false;
+
+            switch (type) {
                 case 0:
-                    dgvItems.DataSource = rRepository.GetByTypeAsDataTable(1);
-                    break;
                 case 1:
-                    dgvItems.DataSource = rRepository.GetByTypeAsDataTable(2);
-                    break;
                 case 2:
-                    dgvItems.DataSource = rRepository.GetByTypeAsDataTable(3);
+                    dgvItems.DataSource = rRepository.GetByType(type + 1);
                     break;
                 case 3:
-                    dgvItems.DataSource = uRepository.GetAllAsDataTable();
-                    cboResearchAreas.DataSource = raRepository.GetAllAsDataTable(); ;
+                    dgvItems.DataSource = uRepository.GetAll();
+                    cboUserResearchArea.DataSource = raRepository.GetAll();
+                    pnUserLayout.Visible = true;
+                    btnAdd.Enabled = true;
+                    currentLayout = pnUserLayout;
                     break;
                 case 4:
-                    dgvItems.DataSource = wsRepository.GetAllAsDataTable();
+                    dgvItems.DataSource = wsRepository.GetAll();
                     break;
                 case 5:
-                    dgvItems.DataSource = faRepository.GetAllAsDataTable();
-                    cboResearchAreas.DataSource = raRepository.GetAllAsDataTable();
+                    dgvItems.DataSource = faRepository.GetAll();
+                    cboFishingAreaResearchArea.DataSource = raRepository.GetAll();
+                    pnFishingAreaLayout.Visible = true;
+                    currentLayout = pnFishingAreaLayout;
                     break;
                 case 6:
-                    dgvItems.DataSource = raRepository.GetAllAsDataTable();
-                    cboWaterSystems.DataSource = wsRepository.GetAllAsDataTable();
-                    break;
-                default:
-                    MessageBox.Show("Jokin meni pieleen, ota yhteyttä ylläpitäjään");
+                    dgvItems.DataSource = raRepository.GetAll();
+                    cboResearchAreaWaterSystem.DataSource = wsRepository.GetAll();
+                    pnResearchAreaLayout.Visible = true;
+                    currentLayout = pnResearchAreaLayout;
                     break;
             }
         }
 
-        private void dgvItems_SelectionChanged(object sender, EventArgs e) {
-            //MessageBox.Show(dgvItems.SelectedRows[0].Cells[0].Value);
-
-           /* if (cboItemTypeSelector.SelectedIndex == 3)
-            {
-                tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
-                tbAddress.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
-                tbPostalCode.Text = dgvItems.SelectedRows[0].Cells[3].Value + String.Empty;
-                tbCity.Text = dgvItems.SelectedRows[0].Cells[4].Value + String.Empty;
-                cboResearchAreas.Text = dgvItems.SelectedRows[0].Cells[5].Value + String.Empty;
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 5)
-            {
-                tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
-                cboResearchAreas.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 6)
-            {
-                tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
-                cboWaterSystems.Text = dgvItems.SelectedRows[0].Cells[2].Value + String.Empty;
-            }
-            else
-            {
-                tbName.Text = dgvItems.SelectedRows[0].Cells[1].Value + String.Empty;
-            }*/
+        // keskeytetään editmode ja palataan alkutilaan
+        private void btnAbort_Click(object sender, EventArgs e) {
+            ClearLayoutFields();
+            SetEditMode(false);
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            _dh.EmptyFields();
-            dgvItems.ClearSelection();
+        // TODO: parempi validaatio
+        // kantaan tallennus ja update samassa sql tasolla
+        private void btnSave_Click(object sender, EventArgs e) {
+            int selectedItemType = cboItemTypeSelector.SelectedIndex;
+            EntityBase selectedItem = (EntityBase)dgvItems.SelectedRows[0].DataBoundItem;
 
-            // poikkeus kalastusalueissa
-            if (cboItemTypeSelector.SelectedIndex == 5)
-            {
-                _dh.FishingAreasLayout();
+            if (ValidateFields()) {
+                switch (selectedItemType) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        rRepository.Add(new Resource {
+                            Id = editMode ? selectedItem.Id : default(int?),    //editmodessa id valitusta rivistä, muuten null
+                            Name = tbItemName.Text,
+                            Type = cboItemTypeSelector.SelectedIndex + 1
+                        });
+                        break;
+                    case 3:
+                        uRepository.Add(new User {
+                            Id = editMode ? selectedItem.Id : default(int?),
+                            Name = tbItemName.Text,
+                            Address = tbUserAddress.Text,
+                            Zip = tbUserZip.Text,
+                            City = tbUserCity.Text,
+                            ResearchAreaId = (int)cboUserResearchArea.SelectedValue,
+                            Key = tbUserKey.Text
+                        });
+                        break;
+                    case 4:
+                        wsRepository.Add(new WaterSystem {
+                            Id = editMode ? selectedItem.Id : default(int?),
+                            Name = tbItemName.Text
+                        });
+                        break;
+                    case 5:
+                        faRepository.Add(new FishingArea {
+                            Id = editMode ? selectedItem.Id : default(int?),
+                            Name = tbItemName.Text,
+                            ResearchAreaId = (int)cboFishingAreaResearchArea.SelectedValue
+                        });
+                        break;
+                    case 6:
+                        raRepository.Add(new ResearchArea {
+                            Id = editMode ? selectedItem.Id : default(int?),
+                            Name = tbItemName.Text,
+                            WaterSystemId = (int)cboResearchAreaWaterSystem.SelectedValue
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
+                ClearLayoutFields();
+                SetEditMode(false);
+                cboItemTypeSelector_SelectedIndexChanged(null, null);
+            } else {
+                MessageBox.Show("Täytä kaikki kentät!");
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e) {
-            // TIETOKANNAN DELETET
-            int selectedEntityId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells[0].Value);
+            int selectedItemType = cboItemTypeSelector.SelectedIndex;
+            int selectedItemId = (int)dgvItems.SelectedRows[0].Cells["Id"].Value;
 
-            if (cboItemTypeSelector.SelectedIndex == 3) {
-                uRepository.Remove(selectedEntityId);
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 4) {
-                if (MessageBox.Show("Tähän warning, joka varoittaa cascadesta", "Varoitus",
-                    MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            // TODO: TÄRKEÄ!!
+            // poistot cascadee koko kannan laajuudelta jos esim. vaikka vesistö tai tutkimusalue poistetaan :D
+            // pitää määritellä esto joko sovelluksen tai kannan tasolla
 
-                    wsRepository.Remove(selectedEntityId);
-                }
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 5) {
-                faRepository.Remove(selectedEntityId);
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 6) {
-                if (MessageBox.Show("Tähän warning, joka varoittaa cascadesta", "Varoitus",
-                    MessageBoxButtons.YesNo) == DialogResult.Yes) {
-
-                    raRepository.Remove(selectedEntityId);
-                }
-            } else {
-                rRepository.Remove(selectedEntityId);
-            }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e) {
-            int selectedEntityId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells[0].Value);
-
-            if (cboItemTypeSelector.SelectedIndex == 3) {
-                uRepository.Add(new User {
-                    Id = selectedEntityId,
-                    Name = tbName.Text,
-                    Address = tbAddress.Text,
-                    Zip = tbPostalCode.Text,
-                    City = tbCity.Text,
-                    ResearchAreaId = Convert.ToInt32(cboResearchAreas.SelectedValue)
-                });
-
-                dgvItems.DataSource = uRepository.GetAllAsDataTable(); ;
-                _dh.EmptyFields();
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 4) {
-
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 5) {
-
-                _dh.FishingAreasLayout();   // pitää kutsua erikseen, koska muuten layout särkyy
-            }
-            else if (cboItemTypeSelector.SelectedIndex == 6)
-            {
-
-                _dh.EmptyFields();
-            }
-            else
-            {
-
-                //dgvItems.DataSource = SelectFromResourcesById(cboItemTypeSelector.SelectedIndex + 1);
-
-                // TODO: PÄIVITÄ DATAGRIDVIEW
-            }
-        }
-
-        private void SwitchLayout(int id) {
-            ClearAll();
-            EmptyFields();
-
-            switch (id) {
+            switch (selectedItemType) {
                 case 0:
-                    lblName.Text = "Kala:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Kala";
-                    dgvItems.Columns[1].Visible = true;
-                    break;
                 case 1:
-                    lblName.Text = "Pyydys:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Pyydys";
-                    dgvItems.Columns[1].Visible = true;
-                    break;
                 case 2:
-                    lblName.Text = "Haittatekijä:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Haittatekijä";
-                    dgvItems.Columns[1].Visible = true;
+                    rRepository.Remove(selectedItemId);
                     break;
                 case 3:
-                    lblName.Text = "Nimi:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    lblAddress.Text = "Osoite:";
-                    lblAddress.Visible = true;
-                    tbAddress.Visible = true;
-
-                    lblPostalCode.Text = "Postinumero:";
-                    lblPostalCode.Visible = true;
-                    tbPostalCode.Visible = true;
-
-                    lblCity.Text = "Toimipaikka:";
-                    lblCity.Visible = true;
-                    tbCity.Visible = true;
-
-                    lblResearchArea.Text = "Tutkimusalue:";
-                    lblResearchArea.Visible = true;
-                    cboResearchAreas.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Nimi";
-                    dgvItems.Columns[1].Visible = true;
-                    dgvItems.Columns[2].HeaderText = "Osoite";
-                    dgvItems.Columns[2].Visible = true;
-                    dgvItems.Columns[3].HeaderText = "Postinumero";
-                    dgvItems.Columns[3].Visible = true;
-                    dgvItems.Columns[4].HeaderText = "Toimipaikka";
-                    dgvItems.Columns[4].Visible = true;
-                    dgvItems.Columns[5].HeaderText = "Tutkimusalue";
-                    dgvItems.Columns[5].Visible = true;
-
-                    // massalisäys-nappi näkyy ainoastaan kun käyttäjiä muokataan
-                    btnAdd.Visible = true;
+                    uRepository.Remove(selectedItemId);
                     break;
                 case 4:
-                    lblName.Text = "Vesistö:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Vesistö";
-                    dgvItems.Columns[1].Visible = true;
+                    wsRepository.Remove(selectedItemId);
                     break;
                 case 5:
-                    lblName.Text = "Kalastusalue:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
-
-                    // muutetaan cbon paikkaa
-                    lblResearchArea.Location = new System.Drawing.Point(17, 113);
-                    cboResearchAreas.Location = new System.Drawing.Point(17, 129);
-
-                    lblResearchArea.Text = "Tutkimusalue:";
-                    lblResearchArea.Visible = true;
-                    cboResearchAreas.Visible = true;
-
-                    dgvItems.Columns[1].HeaderText = "Kalastusalue";
-                    dgvItems.Columns[1].Visible = true;
-                    dgvItems.Columns[2].HeaderText = "Tutkimusalue";
-                    dgvItems.Columns[2].Visible = true;
+                    faRepository.Remove(selectedItemId);
                     break;
                 case 6:
-                    lblName.Text = "Tutkimusalue:";
-                    lblName.Visible = true;
-                    tbName.Visible = true;
+                    raRepository.Remove(selectedItemId);
+                    break;
+            }
 
-                    lblWaterSystems.Visible = true;
-                    cboWaterSystems.Visible = true;
+            cboItemTypeSelector_SelectedIndexChanged(null, null);
+        }
 
-                    dgvItems.Columns[1].HeaderText = "Tutkimusalue";
-                    dgvItems.Columns[1].Visible = true;
+        // objektien sidonta vastaaviin kenttiin
+        private void cbEditItem_Click(object sender, EventArgs e) {
+            int selectedItemType = cboItemTypeSelector.SelectedIndex;
+            object selectedItem = dgvItems.SelectedRows[0].DataBoundItem;
 
-                    dgvItems.Columns[2].HeaderText = "Vesistö";
-                    dgvItems.Columns[2].Visible = true;
+            ClearLayoutFields();
+            SetEditMode(!editMode);
+
+            switch (selectedItemType) {
+                case 0:
+                case 1:
+                case 2:
+                    Resource r = (Resource)selectedItem;
+                    tbItemName.Text = r.Name;
+                    break;
+                case 3:
+                    User u = (User)selectedItem;
+                    tbItemName.Text = u.Name;
+                    tbUserAddress.Text = u.Address;
+                    tbUserCity.Text = u.City;
+                    tbUserKey.Text = u.Key;
+                    tbUserZip.Text = u.Zip;
+                    cboUserResearchArea.SelectedValue = u.ResearchAreaId;
+                    break;
+                case 4:
+                    WaterSystem ws = (WaterSystem)selectedItem;
+                    tbItemName.Text = ws.Name;
+                    break;
+                case 5:
+                    FishingArea fa = (FishingArea)selectedItem;
+                    tbItemName.Text = fa.Name;
+                    break;
+                case 6:
+                    ResearchArea ra = (ResearchArea)selectedItem;
+                    tbItemName.Text = ra.Name;
                     break;
             }
         }
 
-        private void ClearAll() {
-            lblName.Visible = false;
-            lblAddress.Visible = false;
-            lblPostalCode.Visible = false;
-            lblCity.Visible = false;
-            lblResearchArea.Visible = false;
-            tbName.Visible = false;
-            tbAddress.Visible = false;
-            tbPostalCode.Visible = false;
-            tbCity.Visible = false;
-            cboResearchAreas.Visible = false;
-            btnAdd.Visible = false;
-            cboWaterSystems.Visible = false;
-            lblWaterSystems.Visible = false;
-
-            foreach (DataGridViewColumn col in dgvItems.Columns)
-            {
-                col.Visible = false;
-            }
+        // tämän voisi automatisoida, vaikka onkin hauskaa generoida itse
+        private void btnGenerateKey_Click(object sender, EventArgs e) {
+            tbUserKey.Text = GenerateId(10);
         }
 
-        private void EmptyFields() {
-            tbName.Text = "";
-            tbAddress.Text = "";
-            tbPostalCode.Text = "";
-            tbCity.Text = "";
-            cboResearchAreas.Text = "";
-            cboWaterSystems.Text = "";
+        // tällä hetkellä kaikkiin kenttiin vaaditaan jotain
+        private bool ValidateFields() {
+            if (currentLayout != null) {
+                MessageBox.Show(currentLayout.Name);
+                foreach (Control c in currentLayout.Controls)
+                    if (c.Text.Length < 1) return false;
+            }
 
-            // palautetaan researchArean paikka normaaliksi
-            lblResearchArea.Location = new System.Drawing.Point(17, 265);
-            cboResearchAreas.Location = new System.Drawing.Point(17, 282);
+            return tbItemName.Text.Length < 1 ? false : true;
         }
 
-        private String SHA1(String plaintext)
-        {
-            try
-            {
-                System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
-                byte[] bytes = Encoding.ASCII.GetBytes(plaintext);
-                byte[] hash = sha1.ComputeHash(bytes);
+        // editmode = false; tietyt kontrollit disabloidaan editoinnin ajaksi
+        private void SetEditMode(bool mode) {
+            editMode = mode;
+            cbEditItem.Checked = mode;
+            btnDelete.Enabled = !mode;
+            cboItemTypeSelector.Enabled = !mode;
+            dgvItems.Enabled = !mode;
+        }
 
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hash.Length; i++)
-                    sb.Append(hash[i].ToString("x2"));
+        // tyhjentää täytettävät kentät
+        private void ClearLayoutFields() {
+            Action<ControlCollection> ClearTexts = null;
 
-                return sb.ToString();
-            }
-            catch
-            {
-                MessageBox.Show("Salasanan SHA-hashays epäonnistui");
-                return null;
-            }
+            ClearTexts = (controls) => {
+                foreach (Control control in controls)
+                    if (control is TextBox)
+                        control.Text = "";
+                    else
+                        ClearTexts(control.Controls);
+            };
+
+            ClearTexts(Controls);
+        }
+
+        // generoi halutun pituisen "uniikin" id:n esim; z5k7e2o4, l35d8hd3 jne...
+        // vokaalit voisi ottaa poikkeen tai saattaa tulla tuhmia sanoja :D
+        // jos halutaan kaikille käyttäjille uniikki, tarkastetaan kantaan lisätessä
+        private string GenerateId(int length) {
+            char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
+
+            StringBuilder sb = new StringBuilder(length);
+            Random rnd = new Random();
+
+            for (int i = 0; i < length; i++)
+                sb.Append(chars[rnd.Next(36)]);
+
+            return sb.ToString();
         }
     }
 }

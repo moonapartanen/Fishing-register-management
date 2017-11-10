@@ -13,7 +13,10 @@ namespace Kalavale.Repositories {
 
         public void Add(Survey survey) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO kyselyt (nimi, luontipvm) VALUES (@name, @creationDate)";
+                cmd.CommandText = "INSERT INTO kyselyt (id, nimi, luontipvm) VALUES (@id, @name, @creationDate) " +
+                    "ON DUPLICATE KEY UPDATE nimi=@name, luontipvm=@creationDate";
+
+                cmd.Parameters.AddWithValue("id", survey.Id);
                 cmd.Parameters.AddWithValue("name", survey.Name);
                 cmd.Parameters.AddWithValue("creationDate", survey.CreationDate);
 
@@ -30,17 +33,6 @@ namespace Kalavale.Repositories {
                 cmd.Parameters.AddWithValue("id", id);
 
                 return ToList(cmd);
-            }
-        }
-
-        public void Update(Survey survey) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "UPDATE kyselyt SET nimi = @name, luontipvm = @creationDate WHERE id = @id";
-                cmd.Parameters.AddWithValue("name", survey.Name);
-                cmd.Parameters.AddWithValue("creationDate", survey.CreationDate);
-                cmd.Parameters.AddWithValue("id", survey.Id);
-
-                cmd.ExecuteNonQuery();
             }
         }
 

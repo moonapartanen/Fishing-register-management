@@ -9,7 +9,7 @@ namespace Kalavale.Entities {
         public List<Field> Fields { get; set; }
 
         public override string ToString() {
-            return string.Format("{0}. {1}...", Number, Title);
+            return string.Format("{0}. {1}", Number, Title);
         }
     }
 }

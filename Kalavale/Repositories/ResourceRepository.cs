@@ -13,19 +13,12 @@ namespace Kalavale.Repositories {
 
         public void Add(Resource resource) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO resurssit (nimi, resurssityyppi_id) VALUES (@name, @type)";
+                cmd.CommandText = "INSERT INTO resurssit (id, nimi, resurssityyppi_id) VALUES (@id, @name, @type) "+
+                    "ON DUPLICATE KEY UPDATE nimi=@name, resurssityyppi_id=@type";
+
+                cmd.Parameters.AddWithValue("id", resource.Id);
                 cmd.Parameters.AddWithValue("name", resource.Name);
                 cmd.Parameters.AddWithValue("type", resource.Type);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Update(Resource resource) {
-            using(MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "UPDATE resurssit SET nimi = @name WHERE id = @id";
-                cmd.Parameters.AddWithValue("name", resource.Name);
-                cmd.Parameters.AddWithValue("id", resource.Id);
 
                 cmd.ExecuteNonQuery();
             }
@@ -37,15 +30,6 @@ namespace Kalavale.Repositories {
                 cmd.Parameters.AddWithValue("type", type);
 
                 return ToList(cmd);
-            }
-        }
-
-        public DataTable GetByTypeAsDataTable(int type) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "SELECT * FROM resurssit WHERE resurssityyppi_id = @type";
-                cmd.Parameters.AddWithValue("type", type);
-
-                return ToDataTable(cmd);
             }
         }
 
