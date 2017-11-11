@@ -1,15 +1,11 @@
-﻿using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using Kalavale.Entities;
 using MySql.Data.MySqlClient;
 
 namespace Kalavale.Repositories {
-    class Repository<T> where T : EntityBase, new() {
+    abstract class Repository<T> where T : EntityBase, new() {
         private readonly string _tableName;
 
         internal MySqlConnection Connection {

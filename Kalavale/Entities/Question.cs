@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Kalavale.Entities {
-    class Question : EntityBase {
+    public class Question : EntityBase {
         public int SurveyId { get; set; }
         public int Type { get; set; }
         public int Number { get; set; }

@@ -31,7 +31,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.manageDbControl1 = new Kalavale.ManageDbControl();
+            this.manageDbControl1 = new ManageDbControl();
+            this.manageSurveysControl1 = new ManageSurveysControl();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +59,8 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
-            // 
+            //
+            this.tabPage2.Controls.Add(this.manageSurveysControl1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -84,6 +86,13 @@
             this.manageDbControl1.Size = new System.Drawing.Size(805, 484);
             this.manageDbControl1.TabIndex = 0;
             // 
+            // manageSurveysControl1
+            // 
+            this.manageSurveysControl1.Location = new System.Drawing.Point(3, 4);
+            this.manageSurveysControl1.Name = "manageSurveysControl1";
+            this.manageSurveysControl1.Size = new System.Drawing.Size(805, 484);
+            this.manageSurveysControl1.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +114,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private ManageDbControl manageDbControl1;
+        private ManageSurveysControl manageSurveysControl1;
         //private ManageSurveysControl manageSurveysControl1;
     }
 }

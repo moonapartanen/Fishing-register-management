@@ -16,8 +16,8 @@ namespace Kalavale.Forms {
             "Lajien yleistyminen/vähentyminen", "Kalastuksen haittatekijät", "Alueen merkitys kalojen lisääntymisalueena"};
 
         BindingList<Question> _questions = new BindingList<Question>();
+
         SurveyRepository _sRepository = new SurveyRepository();
-        QuestionRepository _qRepository = new QuestionRepository();
         ResourceRepository _rRepository = new ResourceRepository();
 
         public AddSurveyForm() {
@@ -88,11 +88,11 @@ namespace Kalavale.Forms {
             // TODO: validaatio
             Survey survey = new Survey {
                 Name = txtSurveyName.Text,
-                CreationDate = DateTime.Now.ToString("yyyy-MM-dd")
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                Questions = _questions.ToList()
             };
 
             _sRepository.Add(survey);
-            _qRepository.AddRange(_questions.ToList(), (int)survey.Id);
         }
     }
 }

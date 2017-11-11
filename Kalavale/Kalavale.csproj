@@ -63,11 +63,10 @@
       <DependentUpon>AddSurveyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositories\FishingAreaRepository.cs" />
-    <Compile Include="Repositories\QuestionRepository.cs" />
+    <Compile Include="Repositories\SurveyRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\ResearchAreaRepository.cs" />
     <Compile Include="Repositories\ResourceRepository.cs" />
-    <Compile Include="Repositories\SurveyRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\WaterSystemRepository.cs" />
     <Compile Include="Forms\MainForm.cs">

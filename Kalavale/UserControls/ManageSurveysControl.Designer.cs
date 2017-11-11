@@ -24,6 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbvSurveys = new System.Windows.Forms.ListBox();
             this.btnDeleteSurvey = new System.Windows.Forms.Button();
             this.btnEditSurvey = new System.Windows.Forms.Button();
             this.btnAddSurvey = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbvRASurveys = new System.Windows.Forms.ListBox();
             this.btnDeleteSurveyFromRA = new System.Windows.Forms.Button();
-            this.lbvSurveys = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -58,6 +58,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Luodut kyselyt";
+            // 
+            // lbvSurveys
+            // 
+            this.lbvSurveys.FormattingEnabled = true;
+            this.lbvSurveys.Location = new System.Drawing.Point(157, 19);
+            this.lbvSurveys.Name = "lbvSurveys";
+            this.lbvSurveys.Size = new System.Drawing.Size(448, 186);
+            this.lbvSurveys.TabIndex = 3;
+            this.lbvSurveys.DisplayMember = "Name";
+            this.lbvSurveys.ValueMember = "Id";
             // 
             // btnDeleteSurvey
             // 
@@ -106,13 +116,13 @@
             // 
             // cboResearchAreaSelector
             // 
-            this.cboResearchAreaSelector.DisplayMember = "nimi";
+            this.cboResearchAreaSelector.DisplayMember = "Name";
             this.cboResearchAreaSelector.FormattingEnabled = true;
             this.cboResearchAreaSelector.Location = new System.Drawing.Point(87, 32);
             this.cboResearchAreaSelector.Name = "cboResearchAreaSelector";
             this.cboResearchAreaSelector.Size = new System.Drawing.Size(184, 21);
             this.cboResearchAreaSelector.TabIndex = 6;
-            this.cboResearchAreaSelector.ValueMember = "id";
+            this.cboResearchAreaSelector.ValueMember = "Id";
             this.cboResearchAreaSelector.SelectedIndexChanged += new System.EventHandler(this.cboResearchAreaSelector_SelectedIndexChanged);
             // 
             // label1
@@ -166,13 +176,13 @@
             // 
             // cboSurveySelector
             // 
-            this.cboSurveySelector.DisplayMember = "nimi";
+            this.cboSurveySelector.DisplayMember = "Name";
             this.cboSurveySelector.FormattingEnabled = true;
             this.cboSurveySelector.Location = new System.Drawing.Point(81, 25);
             this.cboSurveySelector.Name = "cboSurveySelector";
             this.cboSurveySelector.Size = new System.Drawing.Size(178, 21);
             this.cboSurveySelector.TabIndex = 10;
-            this.cboSurveySelector.ValueMember = "id";
+            this.cboSurveySelector.ValueMember = "Id";
             // 
             // label4
             // 
@@ -203,13 +213,13 @@
             // 
             // lbvRASurveys
             // 
-            this.lbvRASurveys.DisplayMember = "nimi";
+            this.lbvRASurveys.DisplayMember = "Name";
             this.lbvRASurveys.FormattingEnabled = true;
             this.lbvRASurveys.Location = new System.Drawing.Point(277, 19);
             this.lbvRASurveys.Name = "lbvRASurveys";
             this.lbvRASurveys.Size = new System.Drawing.Size(184, 199);
             this.lbvRASurveys.TabIndex = 3;
-            this.lbvRASurveys.ValueMember = "id";
+            this.lbvRASurveys.ValueMember = "Id";
             // 
             // btnDeleteSurveyFromRA
             // 
@@ -221,14 +231,6 @@
             this.btnDeleteSurveyFromRA.Text = "Poista valittu kysely";
             this.btnDeleteSurveyFromRA.UseVisualStyleBackColor = true;
             this.btnDeleteSurveyFromRA.Click += new System.EventHandler(this.btnDeleteSurveyFromRA_Click);
-            // 
-            // lbvSurveys
-            // 
-            this.lbvSurveys.FormattingEnabled = true;
-            this.lbvSurveys.Location = new System.Drawing.Point(157, 19);
-            this.lbvSurveys.Name = "lbvSurveys";
-            this.lbvSurveys.Size = new System.Drawing.Size(448, 186);
-            this.lbvSurveys.TabIndex = 3;
             // 
             // ManageSurveysControl
             // 
