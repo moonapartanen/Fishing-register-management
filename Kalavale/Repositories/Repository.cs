@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 using Kalavale.Entities;
 using MySql.Data.MySqlClient;
 
@@ -44,14 +45,7 @@ namespace Kalavale.Repositories {
                 cmd.CommandText = "SELECT * FROM " + _tableName + " WHERE id = @id";
                 cmd.Parameters.AddWithValue("id", id);
 
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                var item = new T();
-
-                reader.Read();
-                Map(reader, item);
-
-                return item;
+                return ToList(cmd).FirstOrDefault();
             }
         }
 
