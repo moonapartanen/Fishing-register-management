@@ -32,11 +32,11 @@ namespace Kalavale.Repositories {
 
         protected override void Map(IDataRecord record, User entity) {
             entity.Id = (int)record["id"];
-            entity.Name = (string)record["nimi"];
-            entity.Address = (string)record["osoite"];
-            entity.Zip = (string)record["postinumero"];
-            entity.City = (string)record["toimipaikka"];
-            entity.Key = (string)record["vastausavain"];
+            entity.Name = record["nimi"].ToString();
+            entity.Address = record["osoite"].ToString();
+            entity.Zip = record["postinumero"].ToString();
+            entity.City = record["toimipaikka"].ToString();
+            entity.Key = record["vastausavain"].ToString();
             entity.ResearchAreaId = (int)record["tutkimusalue_id"];
         }
     }

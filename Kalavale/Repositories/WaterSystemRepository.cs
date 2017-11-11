@@ -25,7 +25,7 @@ namespace Kalavale.Repositories {
 
         protected override void Map(IDataRecord record, WaterSystem entity) {
             entity.Id = (int)record["id"];
-            entity.Name = (string)record["nimi"];
+            entity.Name = record["nimi"].ToString();
         }
     }
 }

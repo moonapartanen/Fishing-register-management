@@ -35,7 +35,7 @@ namespace Kalavale.Repositories {
 
         protected override void Map(IDataRecord record, Resource entity) {
             entity.Id = (int)record["id"];
-            entity.Name = (string)record["nimi"];
+            entity.Name = record["nimi"].ToString();
             entity.Type = (int)record["resurssityyppi_id"];
         }
     }

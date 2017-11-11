@@ -59,7 +59,7 @@ namespace Kalavale.Repositories {
             entity.SurveyId = (int)record["kysely_id"];
             entity.Type = (int)record["kysymystyyppi_id"];
             entity.Number = (int)record["kysymysnro"];
-            entity.Title = (string)record["kysymysotsikko"];
+            entity.Title = record["kysymysotsikko"].ToString();
         }
     }
 }

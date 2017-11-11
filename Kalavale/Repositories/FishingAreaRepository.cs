@@ -26,7 +26,7 @@ namespace Kalavale.Repositories {
 
         protected override void Map(IDataRecord record, FishingArea entity) {
             entity.Id = (int)record["id"];
-            entity.Name = (string)record["nimi"];
+            entity.Name = record["nimi"].ToString();
             entity.ResearchAreaId = (int)record["tutkimusalue_id"];
         }
     }
