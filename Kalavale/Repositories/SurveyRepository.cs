@@ -108,6 +108,8 @@ namespace Kalavale.Repositories {
                     qCmd.Parameters.AddWithValue("id", survey.Id);
 
                     using (MySqlDataReader reader = qCmd.ExecuteReader()) {
+                        survey.Questions = new List<Question>();
+
                         while (reader.Read()) {
                             Question question = new Question();
                             Map(reader, question);
@@ -123,6 +125,8 @@ namespace Kalavale.Repositories {
                             fCmd.Parameters.AddWithValue("id", question.Id);
 
                             using (MySqlDataReader reader = fCmd.ExecuteReader()) {
+                                question.Fields = new List<Field>();
+
                                 while (reader.Read()) {
                                     Field field = new Field();
                                     Map(reader, field);
@@ -148,13 +152,13 @@ namespace Kalavale.Repositories {
             question.SurveyId = (int)record["kysely_id"];
             question.Number = (int)record["kysymysnro"];
             question.Title = record["kysymysotsikko"].ToString();
-            question.Type = (int)record["kysymystyyppi"];
+            question.Type = (int)record["kysymystyyppi_id"];
         }
 
         protected void Map(IDataRecord record, Field field) {
             field.QuestionId = (int)record["kysymys_id"];
-            field.RowResourceId = (int)record["rivi_resurssi_id"];
-            field.ColumnResourceId = (int)record["sarake_resurssi_id"];
+            field.ColumnResourceId = record.IsDBNull(2) ? default(int?) : (int)record["sarake_resurssi_id"];
+            field.RowResourceId = record.IsDBNull(3) ? default(int?) : (int)record["rivi_resurssi_id"];
         }
     }
 }

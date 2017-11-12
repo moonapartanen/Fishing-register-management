@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Kalavale.Entities;
 using MySql.Data.MySqlClient;
+using System.Windows.Forms;
 
 namespace Kalavale.Repositories {
     abstract class Repository<T> where T : EntityBase, new() {
