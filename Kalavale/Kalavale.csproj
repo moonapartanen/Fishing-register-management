@@ -56,6 +56,7 @@
     <Compile Include="Entities\Survey.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\WaterSystem.cs" />
+    <Compile Include="FormHelper.cs" />
     <Compile Include="Forms\AddSurveyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,10 +76,10 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ManageDbControl.cs">
+    <Compile Include="Controls\ManageDbControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ManageDbControl.Designer.cs">
+    <Compile Include="Controls\ManageDbControl.Designer.cs">
       <DependentUpon>ManageDbControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -86,19 +87,19 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ManageDbControl.resx">
+    <EmbeddedResource Include="Controls\ManageDbControl.resx">
       <DependentUpon>ManageDbControl.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="UserControls\ManageSurveysControl.cs">
+    <Compile Include="Controls\ManageSurveysControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ManageSurveysControl.Designer.cs">
+    <Compile Include="Controls\ManageSurveysControl.Designer.cs">
       <DependentUpon>ManageSurveysControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\AddSurveyForm.resx">
       <DependentUpon>AddSurveyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ManageSurveysControl.resx">
+    <EmbeddedResource Include="Controls\ManageSurveysControl.resx">
       <DependentUpon>ManageSurveysControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

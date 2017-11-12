@@ -1,4 +1,4 @@
-﻿namespace Kalavale {
+﻿namespace Kalavale.Controls {
     partial class ManageSurveysControl {
         /// <summary> 
         /// Required designer variable.

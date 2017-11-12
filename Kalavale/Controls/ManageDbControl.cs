@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kalavale.Repositories;
 using Kalavale.Entities;
@@ -14,7 +8,7 @@ using Kalavale.Entities;
 //  - KORJAA WARNING-TEKSTIT
 //  - TESTAA POISTON TOIMIVUUS
 
-namespace Kalavale {
+namespace Kalavale.Controls {
     public partial class ManageDbControl : UserControl {
 		string[] _dbItemTypes = { "Kalat", "Pyydykset", "Haittatekijät", "Käyttäjät", "Vesistöt", "Kalastusalueet", "Tutkimusalueet" };
 
@@ -40,9 +34,9 @@ namespace Kalavale {
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int type = cboItemTypeSelector.SelectedIndex;
-            ClearLayoutFields();
+            FormHelper.ClearFields(this);
 
-            if(currentLayout != null) {
+            if (currentLayout != null) {
                 currentLayout.Visible = false;
                 currentLayout = null;
             }
@@ -82,7 +76,7 @@ namespace Kalavale {
 
         // keskeytetään editmode ja palataan alkutilaan
         private void btnAbort_Click(object sender, EventArgs e) {
-            ClearLayoutFields();
+            FormHelper.ClearFields(this);
             SetEditMode(false);
         }
 
@@ -92,7 +86,7 @@ namespace Kalavale {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             EntityBase selectedItem = (EntityBase)dgvItems.SelectedRows[0].DataBoundItem;
 
-            if (ValidateFields()) {
+            if (FormHelper.ValidateFields(currentLayout) && tbItemName.Text.Length > 0) {
                 switch (selectedItemType) {
                     case 0:
                     case 1:
@@ -138,7 +132,7 @@ namespace Kalavale {
                         break;
                 }
 
-                ClearLayoutFields();
+                FormHelper.ClearFields(this);
                 SetEditMode(false);
                 cboItemTypeSelector_SelectedIndexChanged(null, null);
             } else {
@@ -182,7 +176,7 @@ namespace Kalavale {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             object selectedItem = dgvItems.SelectedRows[0].DataBoundItem;
 
-            ClearLayoutFields();
+            FormHelper.ClearFields(this);
             SetEditMode(!editMode);
 
             switch (selectedItemType) {
@@ -221,38 +215,14 @@ namespace Kalavale {
             tbUserKey.Text = GenerateId(10);
         }
 
-        // tällä hetkellä kaikkiin kenttiin vaaditaan jotain
-        private bool ValidateFields() {
-            if (currentLayout != null) {
-                foreach (Control c in currentLayout.Controls)
-                    if (c.Text.Length < 1) return false;
-            }
-
-            return tbItemName.Text.Length < 1 ? false : true;
-        }
-
         // editmode = false; tietyt kontrollit disabloidaan editoinnin ajaksi
         private void SetEditMode(bool mode) {
             editMode = mode;
             cbEditItem.Checked = mode;
+            cbEditItem.Enabled = !mode;
             btnDelete.Enabled = !mode;
             cboItemTypeSelector.Enabled = !mode;
             dgvItems.Enabled = !mode;
-        }
-
-        // tyhjentää täytettävät kentät
-        private void ClearLayoutFields() {
-            Action<ControlCollection> ClearTexts = null;
-
-            ClearTexts = (controls) => {
-                foreach (Control control in controls)
-                    if (control is TextBox)
-                        control.Text = "";
-                    else
-                        ClearTexts(control.Controls);
-            };
-
-            ClearTexts(Controls);
         }
 
         // generoi halutun pituisen "uniikin" id:n esim; z5k7e2o4, l35d8hd3 jne...

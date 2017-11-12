@@ -4,7 +4,7 @@ using Kalavale.Forms;
 using Kalavale.Repositories;
 using Kalavale.Entities;
 
-namespace Kalavale {
+namespace Kalavale.Controls {
     public partial class ManageSurveysControl : UserControl {
         SurveyRepository sRepository = new SurveyRepository();
         ResearchAreaRepository raRepository = new ResearchAreaRepository();

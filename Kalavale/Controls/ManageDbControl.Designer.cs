@@ -1,4 +1,4 @@
-﻿namespace Kalavale {
+﻿namespace Kalavale.Controls {
     partial class ManageDbControl {
         /// <summary> 
         /// Required designer variable.

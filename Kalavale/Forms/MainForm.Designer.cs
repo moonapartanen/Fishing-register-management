@@ -1,4 +1,6 @@
-﻿namespace Kalavale.Forms {
+﻿using Kalavale.Controls;
+
+namespace Kalavale.Forms {
     partial class MainForm
     {
         /// <summary>
