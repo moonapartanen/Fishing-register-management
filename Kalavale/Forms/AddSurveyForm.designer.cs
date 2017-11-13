@@ -26,7 +26,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtSurveyName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpAddQuestion = new System.Windows.Forms.GroupBox();
+            this.btnAbortQuestion = new System.Windows.Forms.Button();
             this.numQuestionOrderNumber = new System.Windows.Forms.NumericUpDown();
             this.btnSaveQuestion = new System.Windows.Forms.Button();
             this.grpQuestionSettings = new System.Windows.Forms.GroupBox();
@@ -43,8 +44,11 @@
             this.lbvAddedQuestions = new System.Windows.Forms.ListBox();
             this.btnSaveSurvey = new System.Windows.Forms.Button();
             this.grpQuestions = new System.Windows.Forms.GroupBox();
+            this.btnEditQuestion = new System.Windows.Forms.Button();
+            this.btnDeleteQuestion = new System.Windows.Forms.Button();
+            this.btnAbortSurvey = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.grpAddQuestion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestionOrderNumber)).BeginInit();
             this.grpQuestionSettings.SuspendLayout();
             this.grpQuestions.SuspendLayout();
@@ -56,7 +60,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(545, 65);
+            this.groupBox1.Size = new System.Drawing.Size(338, 65);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Perusasetukset";
@@ -77,37 +81,63 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Kyselyn nimi:";
             // 
-            // groupBox2
+            // grpAddQuestion
             // 
-            this.groupBox2.Controls.Add(this.numQuestionOrderNumber);
-            this.groupBox2.Controls.Add(this.btnSaveQuestion);
-            this.groupBox2.Controls.Add(this.grpQuestionSettings);
-            this.groupBox2.Controls.Add(this.cboQuestionTypeSelector);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.txtQuestionTitle);
-            this.groupBox2.Location = new System.Drawing.Point(12, 83);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(338, 364);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Kysymyksen lisäys";
+            this.grpAddQuestion.Controls.Add(this.btnAbortQuestion);
+            this.grpAddQuestion.Controls.Add(this.numQuestionOrderNumber);
+            this.grpAddQuestion.Controls.Add(this.btnSaveQuestion);
+            this.grpAddQuestion.Controls.Add(this.grpQuestionSettings);
+            this.grpAddQuestion.Controls.Add(this.cboQuestionTypeSelector);
+            this.grpAddQuestion.Controls.Add(this.label7);
+            this.grpAddQuestion.Controls.Add(this.label6);
+            this.grpAddQuestion.Controls.Add(this.label5);
+            this.grpAddQuestion.Controls.Add(this.txtQuestionTitle);
+            this.grpAddQuestion.Location = new System.Drawing.Point(356, 12);
+            this.grpAddQuestion.Name = "grpAddQuestion";
+            this.grpAddQuestion.Size = new System.Drawing.Size(338, 319);
+            this.grpAddQuestion.TabIndex = 2;
+            this.grpAddQuestion.TabStop = false;
+            this.grpAddQuestion.Text = "Kysymyksen lisäys";
+            // 
+            // btnAbortQuestion
+            // 
+            this.btnAbortQuestion.Location = new System.Drawing.Point(177, 291);
+            this.btnAbortQuestion.Name = "btnAbortQuestion";
+            this.btnAbortQuestion.Size = new System.Drawing.Size(67, 22);
+            this.btnAbortQuestion.TabIndex = 10;
+            this.btnAbortQuestion.Text = "Peruuta";
+            this.btnAbortQuestion.UseVisualStyleBackColor = true;
+            this.btnAbortQuestion.Click += new System.EventHandler(this.btnAbortQuestion_Click);
             // 
             // numQuestionOrderNumber
             // 
             this.numQuestionOrderNumber.Location = new System.Drawing.Point(119, 20);
+            this.numQuestionOrderNumber.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numQuestionOrderNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numQuestionOrderNumber.Name = "numQuestionOrderNumber";
             this.numQuestionOrderNumber.Size = new System.Drawing.Size(41, 20);
             this.numQuestionOrderNumber.TabIndex = 9;
+            this.numQuestionOrderNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnSaveQuestion
             // 
-            this.btnSaveQuestion.Location = new System.Drawing.Point(118, 332);
+            this.btnSaveQuestion.Location = new System.Drawing.Point(93, 291);
             this.btnSaveQuestion.Name = "btnSaveQuestion";
-            this.btnSaveQuestion.Size = new System.Drawing.Size(101, 22);
+            this.btnSaveQuestion.Size = new System.Drawing.Size(67, 22);
             this.btnSaveQuestion.TabIndex = 8;
-            this.btnSaveQuestion.Text = "Tallenna kysymys";
+            this.btnSaveQuestion.Text = "Tallenna";
             this.btnSaveQuestion.UseVisualStyleBackColor = true;
             this.btnSaveQuestion.Click += new System.EventHandler(this.btnSaveQuestion_Click);
             // 
@@ -119,7 +149,7 @@
             this.grpQuestionSettings.Controls.Add(this.label8);
             this.grpQuestionSettings.Location = new System.Drawing.Point(9, 135);
             this.grpQuestionSettings.Name = "grpQuestionSettings";
-            this.grpQuestionSettings.Size = new System.Drawing.Size(319, 191);
+            this.grpQuestionSettings.Size = new System.Drawing.Size(319, 152);
             this.grpQuestionSettings.TabIndex = 7;
             this.grpQuestionSettings.TabStop = false;
             this.grpQuestionSettings.Text = "Monivalinta- ja matriisivaihtoehdot";
@@ -131,7 +161,7 @@
             this.lbvRowOptions.Location = new System.Drawing.Point(6, 38);
             this.lbvRowOptions.Name = "lbvRowOptions";
             this.lbvRowOptions.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbvRowOptions.Size = new System.Drawing.Size(145, 147);
+            this.lbvRowOptions.Size = new System.Drawing.Size(145, 108);
             this.lbvRowOptions.TabIndex = 3;
             this.lbvRowOptions.ValueMember = "id";
             // 
@@ -151,7 +181,7 @@
             this.lbvColumnOptions.Location = new System.Drawing.Point(168, 38);
             this.lbvColumnOptions.Name = "lbvColumnOptions";
             this.lbvColumnOptions.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbvColumnOptions.Size = new System.Drawing.Size(145, 147);
+            this.lbvColumnOptions.Size = new System.Drawing.Size(145, 108);
             this.lbvColumnOptions.TabIndex = 1;
             this.lbvColumnOptions.ValueMember = "id";
             // 
@@ -167,6 +197,7 @@
             // cboQuestionTypeSelector
             // 
             this.cboQuestionTypeSelector.DisplayMember = "nimi";
+            this.cboQuestionTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboQuestionTypeSelector.FormattingEnabled = true;
             this.cboQuestionTypeSelector.Location = new System.Drawing.Point(118, 45);
             this.cboQuestionTypeSelector.Name = "cboQuestionTypeSelector";
@@ -207,6 +238,7 @@
             this.txtQuestionTitle.Location = new System.Drawing.Point(118, 72);
             this.txtQuestionTitle.Multiline = true;
             this.txtQuestionTitle.Name = "txtQuestionTitle";
+            this.txtQuestionTitle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtQuestionTitle.Size = new System.Drawing.Size(210, 57);
             this.txtQuestionTitle.TabIndex = 0;
             // 
@@ -222,16 +254,16 @@
             // lbvAddedQuestions
             // 
             this.lbvAddedQuestions.FormattingEnabled = true;
-            this.lbvAddedQuestions.Location = new System.Drawing.Point(6, 18);
+            this.lbvAddedQuestions.Location = new System.Drawing.Point(6, 20);
             this.lbvAddedQuestions.Name = "lbvAddedQuestions";
-            this.lbvAddedQuestions.Size = new System.Drawing.Size(188, 303);
+            this.lbvAddedQuestions.Size = new System.Drawing.Size(322, 186);
             this.lbvAddedQuestions.TabIndex = 11;
             // 
             // btnSaveSurvey
             // 
-            this.btnSaveSurvey.Location = new System.Drawing.Point(225, 461);
+            this.btnSaveSurvey.Location = new System.Drawing.Point(12, 356);
             this.btnSaveSurvey.Name = "btnSaveSurvey";
-            this.btnSaveSurvey.Size = new System.Drawing.Size(125, 37);
+            this.btnSaveSurvey.Size = new System.Drawing.Size(97, 24);
             this.btnSaveSurvey.TabIndex = 3;
             this.btnSaveSurvey.Text = "Tallenna kysely";
             this.btnSaveSurvey.UseVisualStyleBackColor = true;
@@ -239,31 +271,64 @@
             // 
             // grpQuestions
             // 
+            this.grpQuestions.Controls.Add(this.btnEditQuestion);
+            this.grpQuestions.Controls.Add(this.btnDeleteQuestion);
             this.grpQuestions.Controls.Add(this.button4);
             this.grpQuestions.Controls.Add(this.lbvAddedQuestions);
-            this.grpQuestions.Location = new System.Drawing.Point(357, 84);
+            this.grpQuestions.Location = new System.Drawing.Point(12, 87);
             this.grpQuestions.Name = "grpQuestions";
-            this.grpQuestions.Size = new System.Drawing.Size(200, 363);
+            this.grpQuestions.Size = new System.Drawing.Size(338, 244);
             this.grpQuestions.TabIndex = 4;
             this.grpQuestions.TabStop = false;
-            this.grpQuestions.Text = "Lisätyt kysymykset";
+            this.grpQuestions.Text = "Kysymykset";
+            // 
+            // btnEditQuestion
+            // 
+            this.btnEditQuestion.Location = new System.Drawing.Point(6, 212);
+            this.btnEditQuestion.Name = "btnEditQuestion";
+            this.btnEditQuestion.Size = new System.Drawing.Size(67, 22);
+            this.btnEditQuestion.TabIndex = 11;
+            this.btnEditQuestion.Text = "Muokkaa";
+            this.btnEditQuestion.UseVisualStyleBackColor = true;
+            this.btnEditQuestion.Click += new System.EventHandler(this.btnEditQuestion_Click);
+            // 
+            // btnDeleteQuestion
+            // 
+            this.btnDeleteQuestion.Location = new System.Drawing.Point(79, 212);
+            this.btnDeleteQuestion.Name = "btnDeleteQuestion";
+            this.btnDeleteQuestion.Size = new System.Drawing.Size(67, 22);
+            this.btnDeleteQuestion.TabIndex = 11;
+            this.btnDeleteQuestion.Text = "Poista";
+            this.btnDeleteQuestion.UseVisualStyleBackColor = true;
+            this.btnDeleteQuestion.Click += new System.EventHandler(this.btnDeleteQuestion_Click);
+            // 
+            // btnAbortSurvey
+            // 
+            this.btnAbortSurvey.Location = new System.Drawing.Point(115, 356);
+            this.btnAbortSurvey.Name = "btnAbortSurvey";
+            this.btnAbortSurvey.Size = new System.Drawing.Size(97, 24);
+            this.btnAbortSurvey.TabIndex = 5;
+            this.btnAbortSurvey.Text = "Peruuta";
+            this.btnAbortSurvey.UseVisualStyleBackColor = true;
+            this.btnAbortSurvey.Click += new System.EventHandler(this.btnAbortSurvey_Click);
             // 
             // AddSurveyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 510);
+            this.ClientSize = new System.Drawing.Size(709, 392);
+            this.Controls.Add(this.btnAbortSurvey);
             this.Controls.Add(this.grpQuestions);
             this.Controls.Add(this.btnSaveSurvey);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpAddQuestion);
             this.Controls.Add(this.groupBox1);
             this.Name = "AddSurveyForm";
             this.Text = "Kysely";
             this.Load += new System.EventHandler(this.AddSurveyForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.grpAddQuestion.ResumeLayout(false);
+            this.grpAddQuestion.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuestionOrderNumber)).EndInit();
             this.grpQuestionSettings.ResumeLayout(false);
             this.grpQuestionSettings.PerformLayout();
@@ -276,7 +341,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtSurveyName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpAddQuestion;
         private System.Windows.Forms.Button btnSaveQuestion;
         private System.Windows.Forms.GroupBox grpQuestionSettings;
         private System.Windows.Forms.ListBox lbvRowOptions;
@@ -292,7 +357,11 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ListBox lbvAddedQuestions;
         private System.Windows.Forms.GroupBox grpQuestions;
+        private System.Windows.Forms.Button btnAbortQuestion;
+        private System.Windows.Forms.Button btnAbortSurvey;
+        private System.Windows.Forms.Button btnDeleteQuestion;
         private System.Windows.Forms.NumericUpDown numQuestionOrderNumber;
+        private System.Windows.Forms.Button btnEditQuestion;
     }
 }
 

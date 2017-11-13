@@ -8,19 +8,22 @@ namespace Kalavale.Controls {
     public partial class ManageSurveysControl : UserControl {
         SurveyRepository sRepository = new SurveyRepository();
         ResearchAreaRepository raRepository = new ResearchAreaRepository();
+        WaterSystemRepository wsRepository = new WaterSystemRepository();
 
         public ManageSurveysControl() {
             InitializeComponent();
         }
 
         private void ManageSurveysControl_Load(object sender, EventArgs e) {
-            lbvSurveys.DataSource = sRepository.GetAll();
-            cboSurveySelector.DataSource = sRepository.GetAll();
-            cboResearchAreaSelector.DataSource = raRepository.GetAll();
+            if (!DesignMode) {
+                lbvSurveys.DataSource = sRepository.GetAll();
+                cboSurveySelector.DataSource = sRepository.GetAll();
+                cboWaterSystem.DataSource = wsRepository.GetAll();
+            }
         }
 
         private void btnAddSurvey_Click(object sender, EventArgs e) {
-            AddSurveyForm form = new AddSurveyForm();
+            AddSurveyForm form = new AddSurveyForm(null);
             form.Show();
 
             form.FormClosed += AddSurveyForm_FormClosed;
@@ -28,38 +31,52 @@ namespace Kalavale.Controls {
 
         private void btnEditSurvey_Click(object sender, EventArgs e) {
             Survey survey = lbvSurveys.SelectedItem as Survey;
+            AddSurveyForm form = new AddSurveyForm(survey);
+            form.Show();
 
-            MessageBox.Show(survey.Id.ToString());
-        }
-
-        public void AddSurveyForm_FormClosed(object sender, FormClosedEventArgs e) {
-            lbvSurveys.DataSource = sRepository.GetAll();
-            cboSurveySelector.DataSource = sRepository.GetAll();
+            form.FormClosed += AddSurveyForm_FormClosed;
         }
 
         private void btnDeleteSurvey_Click(object sender, EventArgs e) {
             Survey survey = lbvSurveys.SelectedItem as Survey;
 
-            MessageBox.Show(survey.Id.ToString());
+            sRepository.Remove(survey);
+            lbvSurveys.DataSource = sRepository.GetAll();
         }
 
-        private void btnAddSurveyToRA_Click(object sender, EventArgs e) {
-            int selectedSurveyId = (int)cboSurveySelector.SelectedValue;
+        private void btnAddSurveyToResearchArea_Click(object sender, EventArgs e) {
+            Survey survey = cboSurveySelector.SelectedItem as Survey;
+            ResearchArea researchArea = cboResearchArea.SelectedItem as ResearchArea;
+            string start = dtpBeginDate.Value.ToString("yyyy-MM-dd");
+            string end = dtpEndDate.Value.ToString("yyyy-MM-dd");
 
-            MessageBox.Show(selectedSurveyId.ToString());
+            sRepository.AddToResearchArea(survey, researchArea, start, end);
+            cboResearchArea_SelectedIndexChanged(null, null);
         }
 
         private void btnDeleteSurveyFromRA_Click(object sender, EventArgs e) {
-            int selectedSurveyId = (int)lbvRASurveys.SelectedValue;
-            int selectedResearchAreaId = (int)cboResearchAreaSelector.SelectedValue;
+            Survey survey = lbvResearchAreaSurveys.SelectedItem as Survey;
+            ResearchArea researchArea = cboResearchArea.SelectedItem as ResearchArea;
 
-            MessageBox.Show(selectedSurveyId.ToString());
+            sRepository.RemoveFromResearchArea(survey, researchArea);
+            cboResearchArea_SelectedIndexChanged(null, null);
         }
 
-        private void cboResearchAreaSelector_SelectedIndexChanged(object sender, EventArgs e) {
-            int selectedResearchAreaId = (int)cboResearchAreaSelector.SelectedValue;
+        private void cboWaterSystem_SelectedIndexChanged(object sender, EventArgs e) {
+            WaterSystem ws = cboWaterSystem.SelectedItem as WaterSystem;
 
-            lbvRASurveys.DataSource = sRepository.GetByResearchArea(selectedResearchAreaId);
+            cboResearchArea.DataSource = raRepository.GetByWaterSystem(ws);
+        }
+
+        private void cboResearchArea_SelectedIndexChanged(object sender, EventArgs e) {
+            ResearchArea rs = cboResearchArea.SelectedItem as ResearchArea;
+
+            lbvResearchAreaSurveys.DataSource = sRepository.GetByResearchArea(rs);
+        }
+
+        public void AddSurveyForm_FormClosed(object sender, FormClosedEventArgs e) {
+            lbvSurveys.DataSource = sRepository.GetAll();
+            cboSurveySelector.DataSource = sRepository.GetAll();
         }
     }
 }

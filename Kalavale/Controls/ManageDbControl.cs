@@ -34,30 +34,30 @@ namespace Kalavale.Controls {
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int type = cboItemTypeSelector.SelectedIndex;
-            FormHelper.ClearFields(this);
 
             if (currentLayout != null) {
                 currentLayout.Visible = false;
                 currentLayout = null;
             }
 
-            btnAdd.Enabled = false;
-
             switch (type) {
                 case 0:
                 case 1:
                 case 2:
                     dgvItems.DataSource = rRepository.GetByType(type + 1);
+                    pnResourceLayout.Visible = true;
+                    currentLayout = pnResourceLayout;
                     break;
                 case 3:
                     dgvItems.DataSource = uRepository.GetAll();
                     cboUserResearchArea.DataSource = raRepository.GetAll();
                     pnUserLayout.Visible = true;
-                    btnAdd.Enabled = true;
                     currentLayout = pnUserLayout;
                     break;
                 case 4:
                     dgvItems.DataSource = wsRepository.GetAll();
+                    pnResourceLayout.Visible = true;
+                    currentLayout = pnResourceLayout;
                     break;
                 case 5:
                     dgvItems.DataSource = faRepository.GetAll();
@@ -76,7 +76,7 @@ namespace Kalavale.Controls {
 
         // keskeytetään editmode ja palataan alkutilaan
         private void btnAbort_Click(object sender, EventArgs e) {
-            FormHelper.ClearFields(this);
+            FormHelper.ClearFields(currentLayout);
             SetEditMode(false);
         }
 
@@ -86,21 +86,21 @@ namespace Kalavale.Controls {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             EntityBase selectedItem = (EntityBase)dgvItems.SelectedRows[0].DataBoundItem;
 
-            if (FormHelper.ValidateFields(currentLayout) && tbItemName.Text.Length > 0) {
+            if (FormHelper.ValidateTextFields(currentLayout)) {
                 switch (selectedItemType) {
                     case 0:
                     case 1:
                     case 2:
                         rRepository.Add(new Resource {
                             Id = editMode ? selectedItem.Id : default(int?),    //editmodessa id valitusta rivistä, muuten null
-                            Name = tbItemName.Text,
+                            Name = tbResourceName.Text,
                             Type = cboItemTypeSelector.SelectedIndex + 1
                         });
                         break;
                     case 3:
                         uRepository.Add(new User {
                             Id = editMode ? selectedItem.Id : default(int?),
-                            Name = tbItemName.Text,
+                            Name = tbUserName.Text,
                             Address = tbUserAddress.Text,
                             Zip = tbUserZip.Text,
                             City = tbUserCity.Text,
@@ -111,20 +111,20 @@ namespace Kalavale.Controls {
                     case 4:
                         wsRepository.Add(new WaterSystem {
                             Id = editMode ? selectedItem.Id : default(int?),
-                            Name = tbItemName.Text
+                            Name = tbResourceName.Text
                         });
                         break;
                     case 5:
                         faRepository.Add(new FishingArea {
                             Id = editMode ? selectedItem.Id : default(int?),
-                            Name = tbItemName.Text,
+                            Name = tbFishingAreaName.Text,
                             ResearchAreaId = (int)cboFishingAreaResearchArea.SelectedValue
                         });
                         break;
                     case 6:
                         raRepository.Add(new ResearchArea {
                             Id = editMode ? selectedItem.Id : default(int?),
-                            Name = tbItemName.Text,
+                            Name = tbResearchAreaName.Text,
                             WaterSystemId = (int)cboResearchAreaWaterSystem.SelectedValue
                         });
                         break;
@@ -132,21 +132,18 @@ namespace Kalavale.Controls {
                         break;
                 }
 
-                FormHelper.ClearFields(this);
+                FormHelper.ClearFields(currentLayout);
                 SetEditMode(false);
                 cboItemTypeSelector_SelectedIndexChanged(null, null);
             } else {
-                MessageBox.Show("Täytä kaikki kentät!");
+                MessageBox.Show("Täytä kaikki vaaditut kentät ennen tallentamista.", "Virhe",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e) {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             int selectedItemId = (int)dgvItems.SelectedRows[0].Cells["Id"].Value;
-
-            // TODO: TÄRKEÄ!!
-            // poistot cascadee koko kannan laajuudelta jos esim. vaikka vesistö tai tutkimusalue poistetaan :D
-            // pitää määritellä esto joko sovelluksen tai kannan tasolla
 
             switch (selectedItemType) {
                 case 0:
@@ -176,7 +173,7 @@ namespace Kalavale.Controls {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             object selectedItem = dgvItems.SelectedRows[0].DataBoundItem;
 
-            FormHelper.ClearFields(this);
+            FormHelper.ClearFields(currentLayout);
             SetEditMode(!editMode);
 
             switch (selectedItemType) {
@@ -184,11 +181,11 @@ namespace Kalavale.Controls {
                 case 1:
                 case 2:
                     Resource r = (Resource)selectedItem;
-                    tbItemName.Text = r.Name;
+                    tbResourceName.Text = r.Name;
                     break;
                 case 3:
                     User u = (User)selectedItem;
-                    tbItemName.Text = u.Name;
+                    tbUserName.Text = u.Name;
                     tbUserAddress.Text = u.Address;
                     tbUserCity.Text = u.City;
                     tbUserKey.Text = u.Key;
@@ -197,15 +194,17 @@ namespace Kalavale.Controls {
                     break;
                 case 4:
                     WaterSystem ws = (WaterSystem)selectedItem;
-                    tbItemName.Text = ws.Name;
+                    tbResourceName.Text = ws.Name;
                     break;
                 case 5:
                     FishingArea fa = (FishingArea)selectedItem;
-                    tbItemName.Text = fa.Name;
+                    tbFishingAreaName.Text = fa.Name;
+                    cboFishingAreaResearchArea.SelectedValue = fa.ResearchAreaId;
                     break;
                 case 6:
                     ResearchArea ra = (ResearchArea)selectedItem;
-                    tbItemName.Text = ra.Name;
+                    tbResearchAreaName.Text = ra.Name;
+                    cboResearchAreaWaterSystem.SelectedValue = ra.WaterSystemId;
                     break;
             }
         }
@@ -215,7 +214,7 @@ namespace Kalavale.Controls {
             tbUserKey.Text = GenerateId(10);
         }
 
-        // editmode = false; tietyt kontrollit disabloidaan editoinnin ajaksi
+        // editmode = true; tietyt kontrollit disabloidaan editoinnin ajaksi
         private void SetEditMode(bool mode) {
             editMode = mode;
             cbEditItem.Checked = mode;

@@ -14,18 +14,33 @@ namespace Kalavale.Forms {
             "Koentakertojen/Kalastusvuorokausien määrä per pyydys", "Keskimääräinen pyydysten lukumäärä per päivä",
             "Lajien yleistyminen/vähentyminen", "Kalastuksen haittatekijät", "Alueen merkitys kalojen lisääntymisalueena"};
 
+        Survey _survey;
         BindingList<Question> _questions = new BindingList<Question>();
-
         SurveyRepository _sRepository = new SurveyRepository();
         ResourceRepository _rRepository = new ResourceRepository();
+        bool editMode;
 
-        public AddSurveyForm() {
+        public AddSurveyForm(Survey survey) {
             InitializeComponent();
+            _survey = survey;
         }
 
         private void AddSurveyForm_Load(object sender, EventArgs e) {
             cboQuestionTypeSelector.DataSource = _questionTypes;
             lbvAddedQuestions.DataSource = _questions;
+            InitializeSurvey();
+            editMode = false;
+        }
+
+        // alustaa muokattavan kyselyn formiin
+        private void InitializeSurvey() {
+            if (_survey != null) {
+                txtSurveyName.Text = _survey.Name;
+
+                foreach (Question q in _survey.Questions) {
+                    _questions.Add(q);
+                }
+            }
         }
 
         private void cboQuestionTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
@@ -53,45 +68,138 @@ namespace Kalavale.Forms {
         }
 
         private void btnSaveQuestion_Click(object sender, EventArgs e) {
-            // TODO: validaatio
+            Question question = CreateQuestion();
+
+            if (editMode && question.Id != null) {
+                int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Id == question.Id).First());
+                _questions[editedQuestionIndex] = question;
+            } else if(editMode){
+                int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Number == question.Number).First());
+                _questions[editedQuestionIndex] = question;
+            } else {
+                _questions.Add(question);
+            }
+
+            FormHelper.ClearFields(grpAddQuestion);
+            SetEditMode(false);
+        }
+
+        private void btnEditQuestion_Click(object sender, EventArgs e) {
+            if(lbvAddedQuestions.SelectedItem != null) {
+                Question question = lbvAddedQuestions.SelectedItem as Question;
+
+                numQuestionOrderNumber.Value = question.Number;
+                cboQuestionTypeSelector.SelectedIndex = question.Type - 1;
+                txtQuestionTitle.Text = question.Title;
+
+                if (question.Type >= 5 && question.Type <= 9)
+                    SetQuestionFields(question.Fields);
+
+
+                SetEditMode(true);
+            }
+        }
+
+        private void btnDeleteQuestion_Click(object sender, EventArgs e) {
+            if (lbvAddedQuestions.SelectedItem != null)
+                _questions.RemoveAt(lbvAddedQuestions.SelectedIndex);
+        }
+
+        private void btnSaveSurvey_Click(object sender, EventArgs e) {
+            Survey survey = CreateSurvey();
+
+            _sRepository.Add(survey);
+            Close();
+        }
+
+        private void btnAbortQuestion_Click(object sender, EventArgs e) {
+            FormHelper.ClearFields(grpAddQuestion);
+            SetEditMode(false);
+        }
+
+        private void btnAbortSurvey_Click(object sender, EventArgs e) {
+            Close();
+        }
+
+        // luo kysymyksen id:llä tai ilman riippuen ollaanko muokkaustilassa
+        private Question CreateQuestion() {
             Question question = new Question {
                 Number = (int)numQuestionOrderNumber.Value,
                 Type = cboQuestionTypeSelector.SelectedIndex + 1,
-                Title = txtQuestionTitle.Text
+                Title = txtQuestionTitle.Text,
+                Fields = GetQuestionFields()
             };
 
-            question.Fields = new List<Field>();
-
-            if (question.Type == 5){
-                foreach(Resource rowItem in lbvRowOptions.SelectedItems)
-                foreach(Resource colItem in lbvColumnOptions.SelectedItems) {
-                    question.Fields.Add(new Field {
-                        RowResourceId = rowItem.Id,
-                        ColumnResourceId = colItem.Id
-                    });
-                }
-            } else if(question.Type <= 9) {
-                foreach (Resource rowItem in lbvRowOptions.SelectedItems) {
-                    question.Fields.Add(new Field {
-                        RowResourceId = rowItem.Id,
-                        ColumnResourceId = null
-                    });
-                }
+            if (editMode) {
+                Question editedQuestion = lbvAddedQuestions.SelectedItem as Question;
+                question.Id = editedQuestion.Id;
             }
 
-            _questions.Add(question);
+            return question;
         }
 
-
-        private void btnSaveSurvey_Click(object sender, EventArgs e) {
-            // TODO: validaatio
-            Survey survey = new Survey {
+        // luo kyselyn id:llä tai ilman riippuen ollaanko muokkaustilassa
+        private Survey CreateSurvey() {
+            return new Survey {
+                Id = _survey != null ? _survey.Id : null,
                 Name = txtSurveyName.Text,
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd"),
                 Questions = _questions.ToList()
             };
+        }
 
-            _sRepository.Add(survey);
+        // palauttaa kentät tietyn tyyppisille kysymyksille, muuten null
+        private List<Field> GetQuestionFields() {
+            int questionType = cboQuestionTypeSelector.SelectedIndex + 1;
+            List<Field> fields = null;
+
+            if(questionType >= 5 && questionType <= 9) {
+                fields = new List<Field>();
+
+                foreach (Resource rowItem in lbvRowOptions.SelectedItems)
+                    if (questionType == 5)
+                        foreach (Resource colItem in lbvColumnOptions.SelectedItems)
+                            fields.Add(new Field {
+                                RowResourceId = rowItem.Id,
+                                ColumnResourceId = colItem.Id
+                            });
+                    else
+                        fields.Add(new Field {
+                            RowResourceId = rowItem.Id
+                        });
+            }
+
+            return fields;
+        }
+
+        // asettaa kysymyksen kentät valituiksi
+        private void SetQuestionFields(List<Field> fields) {
+            int questionType = cboQuestionTypeSelector.SelectedIndex + 1;
+
+            lbvColumnOptions.ClearSelected();
+            lbvRowOptions.ClearSelected();
+
+            foreach (Field field in fields) {
+                if (field.RowResourceId != null)
+                    lbvRowOptions.SetSelected(lbvRowOptions
+                        .FindStringExact((lbvRowOptions.DataSource as List<Resource>)
+                        .Where(entity => entity.Id == field.RowResourceId)
+                        .FirstOrDefault().Name), true);
+
+                if (field.ColumnResourceId != null)
+                    lbvColumnOptions.SetSelected(lbvColumnOptions
+                        .FindStringExact((lbvColumnOptions.DataSource as List<Resource>)
+                        .Where(entity => entity.Id == field.ColumnResourceId)
+                        .FirstOrDefault().Name), true);
+            }
+        }
+
+        private void SetEditMode(bool mode) {
+            editMode = mode;
+
+            lbvAddedQuestions.Enabled = !mode;
+            btnDeleteQuestion.Enabled = !mode;
+            btnEditQuestion.Enabled = !mode;
         }
     }
 }

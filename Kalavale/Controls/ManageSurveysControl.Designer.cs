@@ -29,17 +29,19 @@
             this.btnEditSurvey = new System.Windows.Forms.Button();
             this.btnAddSurvey = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cboResearchAreaSelector = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cboWaterSystem = new System.Windows.Forms.ComboBox();
+            this.cboResearchArea = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnAddSurveyToRA = new System.Windows.Forms.Button();
+            this.btnAddSurveyToResearchArea = new System.Windows.Forms.Button();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dtpBeginDate = new System.Windows.Forms.DateTimePicker();
             this.cboSurveySelector = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lbvRASurveys = new System.Windows.Forms.ListBox();
+            this.lbvResearchAreaSurveys = new System.Windows.Forms.ListBox();
             this.btnDeleteSurveyFromRA = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -61,12 +63,12 @@
             // 
             // lbvSurveys
             // 
+            this.lbvSurveys.DisplayMember = "Name";
             this.lbvSurveys.FormattingEnabled = true;
             this.lbvSurveys.Location = new System.Drawing.Point(157, 19);
             this.lbvSurveys.Name = "lbvSurveys";
             this.lbvSurveys.Size = new System.Drawing.Size(448, 186);
             this.lbvSurveys.TabIndex = 3;
-            this.lbvSurveys.DisplayMember = "Name";
             this.lbvSurveys.ValueMember = "Id";
             // 
             // btnDeleteSurvey
@@ -102,10 +104,12 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.cboResearchAreaSelector);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.cboWaterSystem);
+            this.groupBox2.Controls.Add(this.cboResearchArea);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.lbvRASurveys);
+            this.groupBox2.Controls.Add(this.lbvResearchAreaSurveys);
             this.groupBox2.Controls.Add(this.btnDeleteSurveyFromRA);
             this.groupBox2.Location = new System.Drawing.Point(80, 242);
             this.groupBox2.Name = "groupBox2";
@@ -114,21 +118,41 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tutkimusalueiden kyselyt";
             // 
-            // cboResearchAreaSelector
+            // label5
             // 
-            this.cboResearchAreaSelector.DisplayMember = "Name";
-            this.cboResearchAreaSelector.FormattingEnabled = true;
-            this.cboResearchAreaSelector.Location = new System.Drawing.Point(87, 32);
-            this.cboResearchAreaSelector.Name = "cboResearchAreaSelector";
-            this.cboResearchAreaSelector.Size = new System.Drawing.Size(184, 21);
-            this.cboResearchAreaSelector.TabIndex = 6;
-            this.cboResearchAreaSelector.ValueMember = "Id";
-            this.cboResearchAreaSelector.SelectedIndexChanged += new System.EventHandler(this.cboResearchAreaSelector_SelectedIndexChanged);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 31);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Vesistö:";
+            // 
+            // cboWaterSystem
+            // 
+            this.cboWaterSystem.DisplayMember = "Name";
+            this.cboWaterSystem.FormattingEnabled = true;
+            this.cboWaterSystem.Location = new System.Drawing.Point(87, 28);
+            this.cboWaterSystem.Name = "cboWaterSystem";
+            this.cboWaterSystem.Size = new System.Drawing.Size(178, 21);
+            this.cboWaterSystem.TabIndex = 7;
+            this.cboWaterSystem.ValueMember = "Id";
+            this.cboWaterSystem.SelectedIndexChanged += new System.EventHandler(this.cboWaterSystem_SelectedIndexChanged);
+            // 
+            // cboResearchArea
+            // 
+            this.cboResearchArea.DisplayMember = "Name";
+            this.cboResearchArea.FormattingEnabled = true;
+            this.cboResearchArea.Location = new System.Drawing.Point(87, 55);
+            this.cboResearchArea.Name = "cboResearchArea";
+            this.cboResearchArea.Size = new System.Drawing.Size(178, 21);
+            this.cboResearchArea.TabIndex = 6;
+            this.cboResearchArea.ValueMember = "Id";
+            this.cboResearchArea.SelectedIndexChanged += new System.EventHandler(this.cboResearchArea_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 35);
+            this.label1.Location = new System.Drawing.Point(6, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 13);
             this.label1.TabIndex = 5;
@@ -136,29 +160,29 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnAddSurveyToRA);
+            this.groupBox3.Controls.Add(this.btnAddSurveyToResearchArea);
             this.groupBox3.Controls.Add(this.dtpEndDate);
             this.groupBox3.Controls.Add(this.dtpBeginDate);
             this.groupBox3.Controls.Add(this.cboSurveySelector);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Location = new System.Drawing.Point(6, 74);
+            this.groupBox3.Location = new System.Drawing.Point(6, 86);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(265, 173);
+            this.groupBox3.Size = new System.Drawing.Size(265, 161);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Yhdistä kysely valittuun tutkimusalueeseen";
             // 
-            // btnAddSurveyToRA
+            // btnAddSurveyToResearchArea
             // 
-            this.btnAddSurveyToRA.Location = new System.Drawing.Point(94, 130);
-            this.btnAddSurveyToRA.Name = "btnAddSurveyToRA";
-            this.btnAddSurveyToRA.Size = new System.Drawing.Size(75, 23);
-            this.btnAddSurveyToRA.TabIndex = 13;
-            this.btnAddSurveyToRA.Text = "Lisää";
-            this.btnAddSurveyToRA.UseVisualStyleBackColor = true;
-            this.btnAddSurveyToRA.Click += new System.EventHandler(this.btnAddSurveyToRA_Click);
+            this.btnAddSurveyToResearchArea.Location = new System.Drawing.Point(96, 119);
+            this.btnAddSurveyToResearchArea.Name = "btnAddSurveyToResearchArea";
+            this.btnAddSurveyToResearchArea.Size = new System.Drawing.Size(75, 23);
+            this.btnAddSurveyToResearchArea.TabIndex = 13;
+            this.btnAddSurveyToResearchArea.Text = "Lisää";
+            this.btnAddSurveyToResearchArea.UseVisualStyleBackColor = true;
+            this.btnAddSurveyToResearchArea.Click += new System.EventHandler(this.btnAddSurveyToResearchArea_Click);
             // 
             // dtpEndDate
             // 
@@ -211,15 +235,15 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Alkupvm:";
             // 
-            // lbvRASurveys
+            // lbvResearchAreaSurveys
             // 
-            this.lbvRASurveys.DisplayMember = "Name";
-            this.lbvRASurveys.FormattingEnabled = true;
-            this.lbvRASurveys.Location = new System.Drawing.Point(277, 19);
-            this.lbvRASurveys.Name = "lbvRASurveys";
-            this.lbvRASurveys.Size = new System.Drawing.Size(184, 199);
-            this.lbvRASurveys.TabIndex = 3;
-            this.lbvRASurveys.ValueMember = "Id";
+            this.lbvResearchAreaSurveys.DisplayMember = "Name";
+            this.lbvResearchAreaSurveys.FormattingEnabled = true;
+            this.lbvResearchAreaSurveys.Location = new System.Drawing.Point(277, 19);
+            this.lbvResearchAreaSurveys.Name = "lbvResearchAreaSurveys";
+            this.lbvResearchAreaSurveys.Size = new System.Drawing.Size(184, 199);
+            this.lbvResearchAreaSurveys.TabIndex = 3;
+            this.lbvResearchAreaSurveys.ValueMember = "Id";
             // 
             // btnDeleteSurveyFromRA
             // 
@@ -257,18 +281,20 @@
         private System.Windows.Forms.Button btnEditSurvey;
         private System.Windows.Forms.Button btnAddSurvey;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cboResearchAreaSelector;
+        private System.Windows.Forms.ComboBox cboResearchArea;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnAddSurveyToRA;
+        private System.Windows.Forms.Button btnAddSurveyToResearchArea;
         private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.DateTimePicker dtpBeginDate;
         private System.Windows.Forms.ComboBox cboSurveySelector;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox lbvRASurveys;
+        private System.Windows.Forms.ListBox lbvResearchAreaSurveys;
         private System.Windows.Forms.Button btnDeleteSurveyFromRA;
         private System.Windows.Forms.ListBox lbvSurveys;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cboWaterSystem;
     }
 }

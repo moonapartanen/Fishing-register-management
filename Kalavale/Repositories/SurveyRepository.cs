@@ -24,6 +24,13 @@ namespace Kalavale.Repositories {
                     if (survey.Id == null) survey.Id = (int?)cmd.LastInsertedId;
                 }
 
+                using (MySqlCommand cmd = tr.Connection.CreateCommand()) {
+                    cmd.CommandText = "DELETE FROM kysymykset WHERE kysely_id = @id";
+                    cmd.Parameters.AddWithValue("id", survey.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
                 foreach (Question question in survey.Questions) {
                     using (MySqlCommand cmd = tr.Connection.CreateCommand()) {
                         cmd.CommandText = "INSERT INTO kysymykset (id, kysely_id, kysymystyyppi_id, kysymysnro, kysymysotsikko) " +
@@ -43,14 +50,6 @@ namespace Kalavale.Repositories {
                     }
 
                     if (question.Type >= 5 && question.Type <= 9) {
-
-                        using (MySqlCommand cmd = tr.Connection.CreateCommand()) {
-                            cmd.CommandText = "DELETE FROM kysymys_kentat WHERE kysymys_id = @id";
-                            cmd.Parameters.AddWithValue("id", question.Id);
-
-                            cmd.ExecuteNonQuery();
-                        }
-
                         foreach (Field field in question.Fields) {
                             using (MySqlCommand cmd = tr.Connection.CreateCommand()) {
                                 cmd.CommandText = "INSERT INTO kysymys_kentat (kysymys_id, rivi_resurssi_id, sarake_resurssi_id) " +
@@ -71,6 +70,20 @@ namespace Kalavale.Repositories {
             }
         }
 
+        public void AddToResearchArea(Survey survey, ResearchArea researchArea, string startDate, string endDate) {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "INSERT INTO tutkimusalue_kyselyt (kysely_id, tutkimusalue_id, alkupvm, loppupvm) " +
+                    "VALUES (@surveyId, @researchAreaId, @startDate, @endDate)";
+
+                cmd.Parameters.AddWithValue("surveyId", survey.Id);
+                cmd.Parameters.AddWithValue("researchAreaId", researchArea.Id);
+                cmd.Parameters.AddWithValue("startDate", startDate);
+                cmd.Parameters.AddWithValue("endDate", endDate);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public override Survey GetById(int id) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
                 cmd.CommandText = "SELECT * FROM kyselyt WHERE kysely_id = @id";
@@ -80,14 +93,24 @@ namespace Kalavale.Repositories {
             }
         }
 
-        public IEnumerable<Survey> GetByResearchArea(int id) {
+        public IEnumerable<Survey> GetByResearchArea(ResearchArea rs) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
                 cmd.CommandText = "SELECT * FROM kyselyt k INNER JOIN tutkimusalue_kyselyt tk ON k.id = tk.kysely_id " +
                     "WHERE tk.tutkimusalue_id = @id";
 
-                cmd.Parameters.AddWithValue("id", id);
+                cmd.Parameters.AddWithValue("id", rs.Id);
 
                 return ToList(cmd);
+            }
+        }
+
+        public void RemoveFromResearchArea(Survey survey, ResearchArea researchArea) {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "DELETE FROM tutkimusalue_kyselyt WHERE kysely_id = @surveyId AND tutkimusalue_id = @researchAreaId";
+                cmd.Parameters.AddWithValue("surveyId", survey.Id);
+                cmd.Parameters.AddWithValue("researchAreaId", researchArea.Id);
+
+                cmd.ExecuteNonQuery();
             }
         }
 
