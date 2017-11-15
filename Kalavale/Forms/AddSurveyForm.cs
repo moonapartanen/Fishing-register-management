@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Kalavale.Entities;
 using Kalavale.Repositories;
-
+using System.Drawing;
 
 namespace Kalavale.Forms {
     public partial class AddSurveyForm : Form {
@@ -94,7 +94,6 @@ namespace Kalavale.Forms {
 
                 if (question.Type >= 5 && question.Type <= 9)
                     SetQuestionFields(question.Fields);
-
 
                 SetEditMode(true);
             }
@@ -200,6 +199,21 @@ namespace Kalavale.Forms {
             lbvAddedQuestions.Enabled = !mode;
             btnDeleteQuestion.Enabled = !mode;
             btnEditQuestion.Enabled = !mode;
+        }
+
+        private void txtQuestionTitle_Validating(object sender, CancelEventArgs e) {
+
+        }
+
+        private void txtSurveyName_Validating(object sender, CancelEventArgs e) {
+            if(txtSurveyName.Text.Length < 5) {
+                txtSurveyName.BackColor = Color.LightPink;
+                errSurveyName.SetError(txtSurveyName,
+                    "Kyselyn nimen pitää olla vähintään 5 merkkiä");
+            } else {
+                txtSurveyName.BackColor = Color.White;
+                errSurveyName.Clear();
+            }
         }
     }
 }
