@@ -35,6 +35,8 @@ namespace Kalavale.Controls {
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int type = cboItemTypeSelector.SelectedIndex;
 
+            btnAdd.Enabled = false;
+
             if (currentLayout != null) {
                 currentLayout.Visible = false;
                 currentLayout = null;
@@ -53,6 +55,7 @@ namespace Kalavale.Controls {
                     cboUserResearchArea.DataSource = raRepository.GetAll();
                     pnUserLayout.Visible = true;
                     currentLayout = pnUserLayout;
+                    btnAdd.Enabled = true;
                     break;
                 case 4:
                     dgvItems.DataSource = wsRepository.GetAll();
@@ -237,6 +240,49 @@ namespace Kalavale.Controls {
                 sb.Append(chars[rnd.Next(36)]);
 
             return sb.ToString();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (dlgChooseFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DialogResult dr = MessageBox.Show("Painamalla OK, koko valitun tiedoston sisältö lisätään tietokantaan. \nHaluatko jatkaa?",
+                    "Huomio", MessageBoxButtons.YesNo);
+
+                if (dr == DialogResult.Yes)
+                {
+                    using (System.IO.StreamReader sr = new System.IO.StreamReader(dlgChooseFile.FileName))
+                    {
+                        string line = "";
+
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string[] arr = line.Split(';');
+
+                            try
+                            {
+                                User u = new User
+                                {
+                                    Name = arr[0],
+                                    Address = arr[1],
+                                    Zip = arr[2],
+                                    City = arr[3],
+                                    ResearchAreaId = Convert.ToInt32(arr[4]),
+                                    Key = GenerateId(10)
+                                };
+
+                                uRepository.Add(u);
+                            }
+                            catch (FormatException ex)
+                            {
+                                MessageBox.Show("Tiedoston formaatti virheellinen.\n Virheellinen rivi: " + line,
+                                    "Virhe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
+                        }
+                    }
+                }               
+            }
         }
     }
 }
