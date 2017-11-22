@@ -343,6 +343,7 @@
             this.Controls.Add(this.btnSaveSurvey);
             this.Controls.Add(this.grpAddQuestion);
             this.Controls.Add(this.grpBasicSettings);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddSurveyForm";
             this.Text = "Kysely";
             this.Load += new System.EventHandler(this.AddSurveyForm_Load);
