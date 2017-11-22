@@ -25,27 +25,34 @@
         private void InitializeComponent() {
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pnResourceLayout = new System.Windows.Forms.Panel();
+            this.tbResourceName = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.pnUserLayout = new System.Windows.Forms.Panel();
             this.btnGenerateKey = new System.Windows.Forms.Button();
             this.tbUserKey = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cboUserResearchArea = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.tbUserCity = new System.Windows.Forms.TextBox();
-            this.tbUserAddress = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.tbUserCity = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tbUserZip = new System.Windows.Forms.TextBox();
+            this.tbUserAddress = new System.Windows.Forms.TextBox();
+            this.tbUserName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cbEditItem = new System.Windows.Forms.CheckBox();
             this.pnResearchAreaLayout = new System.Windows.Forms.Panel();
+            this.tbResearchAreaName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.cboResearchAreaWaterSystem = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pnFishingAreaLayout = new System.Windows.Forms.Panel();
+            this.tbFishingAreaName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.cboFishingAreaResearchArea = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbUserName = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -53,19 +60,13 @@
             this.cboItemTypeSelector = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddSurvey = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tbResearchAreaName = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.tbFishingAreaName = new System.Windows.Forms.TextBox();
-            this.pnResourceLayout = new System.Windows.Forms.Panel();
-            this.tbResourceName = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.dlgChooseFile = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.panel1.SuspendLayout();
+            this.pnResourceLayout.SuspendLayout();
             this.pnUserLayout.SuspendLayout();
             this.pnResearchAreaLayout.SuspendLayout();
             this.pnFishingAreaLayout.SuspendLayout();
-            this.pnResourceLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvItems
@@ -102,6 +103,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(791, 415);
             this.panel1.TabIndex = 0;
+            // 
+            // pnResourceLayout
+            // 
+            this.pnResourceLayout.Controls.Add(this.tbResourceName);
+            this.pnResourceLayout.Controls.Add(this.label12);
+            this.pnResourceLayout.Location = new System.Drawing.Point(15, 51);
+            this.pnResourceLayout.Name = "pnResourceLayout";
+            this.pnResourceLayout.Size = new System.Drawing.Size(198, 252);
+            this.pnResourceLayout.TabIndex = 15;
+            this.pnResourceLayout.Visible = false;
+            // 
+            // tbResourceName
+            // 
+            this.tbResourceName.Location = new System.Drawing.Point(12, 25);
+            this.tbResourceName.Name = "tbResourceName";
+            this.tbResourceName.Size = new System.Drawing.Size(171, 20);
+            this.tbResourceName.TabIndex = 14;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(9, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 13);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Nimi:";
             // 
             // pnUserLayout
             // 
@@ -171,20 +198,6 @@
             this.label8.TabIndex = 9;
             this.label8.Text = "Tutkimusalue:";
             // 
-            // tbUserCity
-            // 
-            this.tbUserCity.Location = new System.Drawing.Point(12, 142);
-            this.tbUserCity.Name = "tbUserCity";
-            this.tbUserCity.Size = new System.Drawing.Size(171, 20);
-            this.tbUserCity.TabIndex = 8;
-            // 
-            // tbUserAddress
-            // 
-            this.tbUserAddress.Location = new System.Drawing.Point(12, 64);
-            this.tbUserAddress.Name = "tbUserAddress";
-            this.tbUserAddress.Size = new System.Drawing.Size(171, 20);
-            this.tbUserAddress.TabIndex = 7;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -194,12 +207,42 @@
             this.label7.TabIndex = 6;
             this.label7.Text = "Toimipaikka:";
             // 
+            // tbUserCity
+            // 
+            this.tbUserCity.Location = new System.Drawing.Point(12, 142);
+            this.tbUserCity.Name = "tbUserCity";
+            this.tbUserCity.Size = new System.Drawing.Size(171, 20);
+            this.tbUserCity.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Nimi:";
+            // 
             // tbUserZip
             // 
             this.tbUserZip.Location = new System.Drawing.Point(12, 103);
             this.tbUserZip.Name = "tbUserZip";
             this.tbUserZip.Size = new System.Drawing.Size(171, 20);
             this.tbUserZip.TabIndex = 5;
+            // 
+            // tbUserAddress
+            // 
+            this.tbUserAddress.Location = new System.Drawing.Point(12, 64);
+            this.tbUserAddress.Name = "tbUserAddress";
+            this.tbUserAddress.Size = new System.Drawing.Size(171, 20);
+            this.tbUserAddress.TabIndex = 7;
+            // 
+            // tbUserName
+            // 
+            this.tbUserName.Location = new System.Drawing.Point(12, 25);
+            this.tbUserName.Name = "tbUserName";
+            this.tbUserName.Size = new System.Drawing.Size(171, 20);
+            this.tbUserName.TabIndex = 0;
             // 
             // label6
             // 
@@ -243,6 +286,22 @@
             this.pnResearchAreaLayout.TabIndex = 4;
             this.pnResearchAreaLayout.Visible = false;
             // 
+            // tbResearchAreaName
+            // 
+            this.tbResearchAreaName.Location = new System.Drawing.Point(12, 25);
+            this.tbResearchAreaName.Name = "tbResearchAreaName";
+            this.tbResearchAreaName.Size = new System.Drawing.Size(166, 20);
+            this.tbResearchAreaName.TabIndex = 14;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(30, 13);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "Nimi:";
+            // 
             // cboResearchAreaWaterSystem
             // 
             this.cboResearchAreaWaterSystem.DisplayMember = "Name";
@@ -275,6 +334,22 @@
             this.pnFishingAreaLayout.TabIndex = 1;
             this.pnFishingAreaLayout.Visible = false;
             // 
+            // tbFishingAreaName
+            // 
+            this.tbFishingAreaName.Location = new System.Drawing.Point(12, 25);
+            this.tbFishingAreaName.Name = "tbFishingAreaName";
+            this.tbFishingAreaName.Size = new System.Drawing.Size(166, 20);
+            this.tbFishingAreaName.TabIndex = 15;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(30, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Nimi:";
+            // 
             // cboFishingAreaResearchArea
             // 
             this.cboFishingAreaResearchArea.DisplayMember = "Name";
@@ -295,22 +370,6 @@
             this.label4.TabIndex = 2;
             this.label4.Text = "Tutkimusalue:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Nimi:";
-            // 
-            // tbUserName
-            // 
-            this.tbUserName.Location = new System.Drawing.Point(12, 25);
-            this.tbUserName.Name = "tbUserName";
-            this.tbUserName.Size = new System.Drawing.Size(171, 20);
-            this.tbUserName.TabIndex = 0;
-            // 
             // btnAdd
             // 
             this.btnAdd.Enabled = false;
@@ -320,6 +379,7 @@
             this.btnAdd.TabIndex = 16;
             this.btnAdd.Text = "Massalisäys";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDelete
             // 
@@ -376,64 +436,6 @@
             this.btnAddSurvey.Size = new System.Drawing.Size(75, 23);
             this.btnAddSurvey.TabIndex = 0;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 13);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "Nimi:";
-            // 
-            // tbResearchAreaName
-            // 
-            this.tbResearchAreaName.Location = new System.Drawing.Point(12, 25);
-            this.tbResearchAreaName.Name = "tbResearchAreaName";
-            this.tbResearchAreaName.Size = new System.Drawing.Size(166, 20);
-            this.tbResearchAreaName.TabIndex = 14;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(30, 13);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "Nimi:";
-            // 
-            // tbFishingAreaName
-            // 
-            this.tbFishingAreaName.Location = new System.Drawing.Point(12, 25);
-            this.tbFishingAreaName.Name = "tbFishingAreaName";
-            this.tbFishingAreaName.Size = new System.Drawing.Size(166, 20);
-            this.tbFishingAreaName.TabIndex = 15;
-            // 
-            // pnResourceLayout
-            // 
-            this.pnResourceLayout.Controls.Add(this.tbResourceName);
-            this.pnResourceLayout.Controls.Add(this.label12);
-            this.pnResourceLayout.Location = new System.Drawing.Point(15, 51);
-            this.pnResourceLayout.Name = "pnResourceLayout";
-            this.pnResourceLayout.Size = new System.Drawing.Size(198, 252);
-            this.pnResourceLayout.TabIndex = 15;
-            this.pnResourceLayout.Visible = false;
-            // 
-            // tbResourceName
-            // 
-            this.tbResourceName.Location = new System.Drawing.Point(12, 25);
-            this.tbResourceName.Name = "tbResourceName";
-            this.tbResourceName.Size = new System.Drawing.Size(171, 20);
-            this.tbResourceName.TabIndex = 14;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(9, 9);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(30, 13);
-            this.label12.TabIndex = 4;
-            this.label12.Text = "Nimi:";
-            // 
             // ManageDbControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -445,14 +447,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.pnResourceLayout.ResumeLayout(false);
+            this.pnResourceLayout.PerformLayout();
             this.pnUserLayout.ResumeLayout(false);
             this.pnUserLayout.PerformLayout();
             this.pnResearchAreaLayout.ResumeLayout(false);
             this.pnResearchAreaLayout.PerformLayout();
             this.pnFishingAreaLayout.ResumeLayout(false);
             this.pnFishingAreaLayout.PerformLayout();
-            this.pnResourceLayout.ResumeLayout(false);
-            this.pnResourceLayout.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -495,5 +497,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tbFishingAreaName;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.OpenFileDialog dlgChooseFile;
     }
 }
