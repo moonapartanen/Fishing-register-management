@@ -36,6 +36,7 @@ namespace Kalavale.Forms {
             this.manageSurveysControl1 = new Kalavale.Controls.ManageSurveysControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.manageDbControl1 = new Kalavale.Controls.ManageDbControl();
+            this.analyzeDataControl1 = new Kalavale.Controls.AnalyzeDataControl();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -54,6 +55,7 @@ namespace Kalavale.Forms {
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.analyzeDataControl1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -61,6 +63,13 @@ namespace Kalavale.Forms {
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Datan analysointi";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // analyzeDataControl1
+            // 
+            this.analyzeDataControl1.Location = new System.Drawing.Point(3, 4);
+            this.analyzeDataControl1.Name = "analyzeDataControl1";
+            this.analyzeDataControl1.Size = new System.Drawing.Size(805, 484);
+            this.analyzeDataControl1.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -121,6 +130,7 @@ namespace Kalavale.Forms {
         private System.Windows.Forms.TabPage tabPage3;
         private ManageDbControl manageDbControl1;
         private ManageSurveysControl manageSurveysControl1;
+        private AnalyzeDataControl analyzeDataControl1;
     }
 }
 

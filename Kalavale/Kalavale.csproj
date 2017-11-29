@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AnalyzeDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AnalyzeDataControl.Designer.cs">
+      <DependentUpon>AnalyzeDataControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\Field.cs" />
     <Compile Include="Entities\FishingArea.cs" />
@@ -84,6 +90,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\AnalyzeDataControl.resx">
+      <DependentUpon>AnalyzeDataControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
