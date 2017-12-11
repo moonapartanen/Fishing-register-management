@@ -1,34 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Kalavale {
     static class FormHelper {
-        // tyhjentää kontrollin täytettävät kentät
+        // Asetetaan kontrolli ja sen kaikki lapset oletusarvoon rekursiivisesti.
         public static void ClearFields(Control control) {
-            Action<Control.ControlCollection> Clear = null;
-
-            Clear = (controls) => {
-                foreach (Control c in controls)
-                    if (c is TextBox) {
-                        c.Text = "";
-                    } else if (c is ComboBox) {
-                        ComboBox cbo = c as ComboBox;
-
-                        if (cbo.DataSource != null) {
-                            cbo.SelectedIndex = 0;
-                        }
-                    } else if (c is NumericUpDown)
-                        (c as NumericUpDown).Value = (c as NumericUpDown).Minimum;
-                    else
-                        Clear(c.Controls);
-            };
-
-            Clear(control.Controls);
+            foreach (Control c in control.Controls) {
+                if (c is TextBox) {
+                    c.Text = "";
+                } else if (c is ComboBox) {
+                    ComboBox cbo = c as ComboBox;
+                    if (cbo.DataSource != null)
+                        cbo.SelectedIndex = 0;
+                } else if (c is NumericUpDown) {
+                    NumericUpDown num = c as NumericUpDown;
+                    num.Value = num.Minimum;
+                } else {
+                    ClearFields(c);
+                }
+            }
         }
 
-        // true jos kaikki kontrollin tekstikentät on täytetty
+        // Poistetaan kontrollin ja sen kaikkien lapsien virheilmoitukset rekursiivisesti.
+        public static void ClearErrors(Control control, ErrorProvider provider) {
+            foreach (Control c in control.Controls) {
+                provider.SetError(c, string.Empty);
+                ClearErrors(c, provider);
+            }
+        }
+
         public static bool ValidateTextFields(Control control) {
             Action<Control.ControlCollection> Validate = null;
             bool ret = true;

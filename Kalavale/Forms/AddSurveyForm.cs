@@ -18,21 +18,22 @@ namespace Kalavale.Forms {
         BindingList<Question> _questions = new BindingList<Question>();
         SurveyRepository _sRepository = new SurveyRepository();
         ResourceRepository _rRepository = new ResourceRepository();
-        bool editMode;
+        bool _editMode;
 
         public AddSurveyForm(Survey survey) {
             InitializeComponent();
             _survey = survey;
+            _editMode = false;
+
         }
 
         private void AddSurveyForm_Load(object sender, EventArgs e) {
             cboQuestionTypeSelector.DataSource = _questionTypes;
             lbvAddedQuestions.DataSource = _questions;
+            grpAddQuestion.Enabled = false;
             InitializeSurvey();
-            editMode = false;
         }
 
-        // alustaa muokattavan kyselyn formiin
         private void InitializeSurvey() {
             if (_survey != null) {
                 txtSurveyName.Text = _survey.Name;
@@ -69,26 +70,46 @@ namespace Kalavale.Forms {
 
         private void btnSaveQuestion_Click(object sender, EventArgs e) {
             Question question = CreateQuestion();
+            FormHelper.ClearErrors(grpAddQuestion, errorProvider);
 
-            if (editMode && question.Id != null) {
-                int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Id == question.Id).First());
-                _questions[editedQuestionIndex] = question;
-            } else if(editMode){
-                int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Number == question.Number).First());
-                _questions[editedQuestionIndex] = question;
-            } else {
-                _questions.Add(question);
+            if (ValidateQuestion(question)) {
+                grpAddQuestion.Enabled = false;
+
+                if (_editMode && question.Id != null) {
+                    int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Id == question.Id).First());
+                    _questions[editedQuestionIndex] = question;
+                } else if (_editMode) {
+                    int editedQuestionIndex = _questions.IndexOf(_questions.Where(q => q.Number == question.Number).First());
+                    _questions[editedQuestionIndex] = question;
+                } else {
+                    _questions.Add(question);
+                }
+
+                FormHelper.ClearFields(grpAddQuestion);
+                SetEditMode(false);
             }
+        }
 
-            FormHelper.ClearFields(grpAddQuestion);
-            SetEditMode(false);
+        private void btnSaveSurvey_Click(object sender, EventArgs e) {
+            Survey survey = CreateSurvey();
+            FormHelper.ClearErrors(grpSurveySettings, errorProvider);
+
+            if (ValidateSurvey(survey)) {
+                _sRepository.Add(survey);
+                Close();
+            }
+        }
+
+        private void btnAddQuestion_Click(object sender, EventArgs e) {
+            grpAddQuestion.Enabled = true;
         }
 
         private void btnEditQuestion_Click(object sender, EventArgs e) {
             if(lbvAddedQuestions.SelectedItem != null) {
                 Question question = lbvAddedQuestions.SelectedItem as Question;
+                grpAddQuestion.Enabled = true;
 
-                numQuestionOrderNumber.Value = question.Number;
+                numQuestionNumber.Value = question.Number;
                 cboQuestionTypeSelector.SelectedIndex = question.Type - 1;
                 txtQuestionTitle.Text = question.Title;
 
@@ -104,15 +125,10 @@ namespace Kalavale.Forms {
                 _questions.RemoveAt(lbvAddedQuestions.SelectedIndex);
         }
 
-        private void btnSaveSurvey_Click(object sender, EventArgs e) {
-            Survey survey = CreateSurvey();
-
-            _sRepository.Add(survey);
-            Close();
-        }
-
         private void btnAbortQuestion_Click(object sender, EventArgs e) {
             FormHelper.ClearFields(grpAddQuestion);
+            FormHelper.ClearErrors(grpAddQuestion, errorProvider);
+            grpAddQuestion.Enabled = false;
             SetEditMode(false);
         }
 
@@ -120,16 +136,15 @@ namespace Kalavale.Forms {
             Close();
         }
 
-        // luo kysymyksen id:llä tai ilman riippuen ollaanko muokkaustilassa
         private Question CreateQuestion() {
             Question question = new Question {
-                Number = (int)numQuestionOrderNumber.Value,
+                Number = (int)numQuestionNumber.Value,
                 Type = cboQuestionTypeSelector.SelectedIndex + 1,
                 Title = txtQuestionTitle.Text,
                 Fields = GetQuestionFields()
             };
 
-            if (editMode) {
+            if (_editMode) {
                 Question editedQuestion = lbvAddedQuestions.SelectedItem as Question;
                 question.Id = editedQuestion.Id;
             }
@@ -137,17 +152,15 @@ namespace Kalavale.Forms {
             return question;
         }
 
-        // luo kyselyn id:llä tai ilman riippuen ollaanko muokkaustilassa
         private Survey CreateSurvey() {
             return new Survey {
-                Id = _survey != null ? _survey.Id : null,
+                Id = _survey?.Id,
                 Name = txtSurveyName.Text,
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd"),
                 Questions = _questions.ToList()
             };
         }
 
-        // palauttaa kentät tietyn tyyppisille kysymyksille, muuten null
         private List<Field> GetQuestionFields() {
             int questionType = cboQuestionTypeSelector.SelectedIndex + 1;
             List<Field> fields = null;
@@ -171,7 +184,6 @@ namespace Kalavale.Forms {
             return fields;
         }
 
-        // asettaa kysymyksen kentät valituiksi
         private void SetQuestionFields(List<Field> fields) {
             int questionType = cboQuestionTypeSelector.SelectedIndex + 1;
 
@@ -194,26 +206,62 @@ namespace Kalavale.Forms {
         }
 
         private void SetEditMode(bool mode) {
-            editMode = mode;
-
-            lbvAddedQuestions.Enabled = !mode;
-            btnDeleteQuestion.Enabled = !mode;
-            btnEditQuestion.Enabled = !mode;
+            _editMode = mode;
+            grpSurveySettings.Enabled = !mode;
+            btnSaveSurvey.Enabled = !mode;
         }
 
-        private void txtQuestionTitle_Validating(object sender, CancelEventArgs e) {
+        private bool ValidateQuestion(Question question) {
+            bool isValid = true;
 
-        }
-
-        private void txtSurveyName_Validating(object sender, CancelEventArgs e) {
-            if(txtSurveyName.Text.Length < 5) {
-                txtSurveyName.BackColor = Color.LightPink;
-                errSurveyName.SetError(txtSurveyName,
-                    "Kyselyn nimen pitää olla vähintään 5 merkkiä");
-            } else {
-                txtSurveyName.BackColor = Color.White;
-                errSurveyName.Clear();
+            if (!_editMode) {
+                foreach (Question q in _questions) {
+                    if (q.Number == question.Number) {
+                        errorProvider.SetError(numQuestionNumber,
+                            "Kyselyssä ei voi olla kahta kysymystä samalla numerolla.");
+                        isValid = false;
+                        break;
+                    }
+                }
             }
+
+            if (question.Type >= 6 && question.Fields.Count < 1) {
+                errorProvider.SetError(lblRowOptions,
+                    "Tämän tyyppisellä kysymyksellä täytyy olla vähintään yksi rivi.");
+                isValid = false;
+            } else if (question.Type == 5 && question.Fields.Count < 1) {
+                errorProvider.SetError(lblRowOptions,
+                    "Tämän tyyppisellä kysymyksellä täytyy olla vähintään yksi rivi.");
+                errorProvider.SetError(lblColOptions,
+                    "Tämän tyyppisellä kysymyksellä täytyy olla vähintään yksi sarake.");
+                isValid = false;
+            }
+
+            if(txtQuestionTitle.Text.Length <= 10) {
+                errorProvider.SetError(txtQuestionTitle,
+                    "Kysymyksen otsikon täytyy olla vähintään 10 merkkiä pitkä.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateSurvey(Survey survey) {
+            bool isValid = true;
+
+            if(txtSurveyName.Text.Length < 5) {
+                errorProvider.SetError(txtSurveyName,
+                    "Kyselyn nimen täytyy olla vähintään 5 merkkiä pitkä.");
+                isValid = false;
+            }
+
+            if(_questions.Count < 1) {
+                errorProvider.SetError(lblAddedQuestions,
+                    "Kyselyllä täytyy olla vähintään yksi kysymys.");
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }
