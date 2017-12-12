@@ -10,7 +10,7 @@ using Kalavale.Entities;
 
 namespace Kalavale.Controls {
     public partial class ManageDbControl : UserControl {
-		string[] _dbItemTypes = { "Kalat", "Pyydykset", "Haittatekijät", "Käyttäjät", "Vesistöt", "Kalastusalueet", "Tutkimusalueet" };
+		string[] dbItemTypes = { "Kalat", "Pyydykset", "Haittatekijät", "Käyttäjät", "Vesistöt", "Kalastusalueet", "Tutkimusalueet" };
 
         FishingAreaRepository faRepository = new FishingAreaRepository();
         ResearchAreaRepository raRepository = new ResearchAreaRepository();
@@ -28,16 +28,17 @@ namespace Kalavale.Controls {
         }
 
         private void ManageDbControl1_Load(object sender, EventArgs e) {
-            cboItemTypeSelector.DataSource = _dbItemTypes;
+            cboItemTypeSelector.DataSource = dbItemTypes;
             SetEditMode(false);
         }
 
         private void cboItemTypeSelector_SelectedIndexChanged(object sender, EventArgs e) {
             int type = cboItemTypeSelector.SelectedIndex;
-
             btnAdd.Enabled = false;
 
             if (currentLayout != null) {
+                FormHelper.ClearFields(currentLayout);
+                FormHelper.ClearErrors(currentLayout, errorProvider);
                 currentLayout.Visible = false;
                 currentLayout = null;
             }
@@ -80,16 +81,17 @@ namespace Kalavale.Controls {
         // keskeytetään editmode ja palataan alkutilaan
         private void btnAbort_Click(object sender, EventArgs e) {
             FormHelper.ClearFields(currentLayout);
+            FormHelper.ClearErrors(currentLayout, errorProvider);
             SetEditMode(false);
         }
 
-        // TODO: parempi validaatio
         // kantaan tallennus ja update samassa sql tasolla
         private void btnSave_Click(object sender, EventArgs e) {
             int selectedItemType = cboItemTypeSelector.SelectedIndex;
             EntityBase selectedItem = (EntityBase)dgvItems.SelectedRows[0].DataBoundItem;
+            FormHelper.ClearErrors(currentLayout, errorProvider);
 
-            if (FormHelper.ValidateTextFields(currentLayout)) {
+            if (FormHelper.ValidateTextFields(currentLayout, errorProvider)) {
                 switch (selectedItemType) {
                     case 0:
                     case 1:
@@ -138,9 +140,6 @@ namespace Kalavale.Controls {
                 FormHelper.ClearFields(currentLayout);
                 SetEditMode(false);
                 cboItemTypeSelector_SelectedIndexChanged(null, null);
-            } else {
-                MessageBox.Show("Täytä kaikki vaaditut kentät ennen tallentamista.", "Virhe",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -242,43 +241,32 @@ namespace Kalavale.Controls {
             return sb.ToString();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (dlgChooseFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                DialogResult dr = MessageBox.Show("Painamalla OK, koko valitun tiedoston sisältö lisätään tietokantaan. \nHaluatko jatkaa?",
-                    "Huomio", MessageBoxButtons.YesNo);
+        private void btnAdd_Click(object sender, EventArgs e) {
+            if (dlgChooseFile.ShowDialog() == DialogResult.OK) {
+                DialogResult dr = MessageBox.Show("Kaikki tiedoston sisältämät henkilörivit lisätään tietokantaan.\n\nHaluatko jatkaa?",
+                    "Huomio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if (dr == DialogResult.Yes)
-                {
-                    using (System.IO.StreamReader sr = new System.IO.StreamReader(dlgChooseFile.FileName))
-                    {
+                if (dr == DialogResult.Yes) {
+                    using (System.IO.StreamReader sr = new System.IO.StreamReader(dlgChooseFile.FileName)) {
                         string line = "";
 
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            string[] arr = line.Split(';');
-
-                            try
-                            {
-                                User u = new User
-                                {
-                                    Name = arr[0],
-                                    Address = arr[1],
-                                    Zip = arr[2],
-                                    City = arr[3],
-                                    ResearchAreaId = Convert.ToInt32(arr[4]),
+                        try {
+                            while ((line = sr.ReadLine()) != null) {
+                                string[] userRow = line.Split(';');
+                                User u = new User {
+                                    Name = userRow[0],
+                                    Address = userRow[1],
+                                    Zip = userRow[2],
+                                    City = userRow[3],
+                                    ResearchAreaId = Convert.ToInt32(userRow[4]),
                                     Key = GenerateId(10)
                                 };
 
                                 uRepository.Add(u);
                             }
-                            catch (FormatException ex)
-                            {
-                                MessageBox.Show("Tiedoston formaatti virheellinen.\n Virheellinen rivi: " + line,
-                                    "Virhe", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
+                        } catch (Exception ex) {
+                            MessageBox.Show("Tiedoston formaatti virheellinen.\n Virheellinen rivi: " + line,
+                                "Virhe", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }               

@@ -52,6 +52,7 @@
     <Compile Include="Entities\FishingArea.cs" />
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\ResearchArea.cs" />
+    <Compile Include="Entities\ResearchAreaSurvey.cs" />
     <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\Survey.cs" />
     <Compile Include="Entities\User.cs" />

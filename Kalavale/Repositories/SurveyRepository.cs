@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using Kalavale.Entities;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace Kalavale.Repositories {
     class SurveyRepository : Repository<Survey> {
@@ -70,20 +71,6 @@ namespace Kalavale.Repositories {
             }
         }
 
-        public void AddToResearchArea(Survey survey, ResearchArea researchArea, string startDate, string endDate) {
-            using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "INSERT INTO tutkimusalue_kyselyt (kysely_id, tutkimusalue_id, alkupvm, loppupvm) " +
-                    "VALUES (@surveyId, @researchAreaId, @startDate, @endDate)";
-
-                cmd.Parameters.AddWithValue("surveyId", survey.Id);
-                cmd.Parameters.AddWithValue("researchAreaId", researchArea.Id);
-                cmd.Parameters.AddWithValue("startDate", startDate);
-                cmd.Parameters.AddWithValue("endDate", endDate);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         public override Survey GetById(int id) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
                 cmd.CommandText = "SELECT * FROM kyselyt WHERE kysely_id = @id";
@@ -93,22 +80,45 @@ namespace Kalavale.Repositories {
             }
         }
 
-        public IEnumerable<Survey> GetByResearchArea(ResearchArea rs) {
+        public IEnumerable<ResearchAreaSurvey> GetResearchAreaSurveys(ResearchArea rs) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
-                cmd.CommandText = "SELECT * FROM kyselyt k INNER JOIN tutkimusalue_kyselyt tk ON k.id = tk.kysely_id " +
-                    "WHERE tk.tutkimusalue_id = @id";
-
+                cmd.CommandText = "SELECT tk.kysely_id, tk.tutkimusalue_id, tk.alkupvm, tk.loppupvm, k.nimi " +
+                    "FROM tutkimusalue_kyselyt tk INNER JOIN kyselyt k ON k.id = tk.kysely_id WHERE tk.tutkimusalue_id = @id";
                 cmd.Parameters.AddWithValue("id", rs.Id);
 
-                return ToList(cmd);
+                using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                    List<ResearchAreaSurvey> items = new List<ResearchAreaSurvey>();
+
+                    while (reader.Read()) {
+                        ResearchAreaSurvey item = new ResearchAreaSurvey();
+                        Map(reader, item);
+                        items.Add(item);
+                    }
+
+                    return items;
+                }
             }
         }
 
-        public void RemoveFromResearchArea(Survey survey, ResearchArea researchArea) {
+        public void RemoveFromResearchArea(ResearchAreaSurvey rsa) {
             using (MySqlCommand cmd = Connection.CreateCommand()) {
                 cmd.CommandText = "DELETE FROM tutkimusalue_kyselyt WHERE kysely_id = @surveyId AND tutkimusalue_id = @researchAreaId";
+                cmd.Parameters.AddWithValue("surveyId", rsa.SurveyId);
+                cmd.Parameters.AddWithValue("researchAreaId", rsa.ResearchAreaId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void AddToResearchArea(Survey survey, ResearchArea researchArea, DateTime startDate, DateTime endDate) {
+            using (MySqlCommand cmd = Connection.CreateCommand()) {
+                cmd.CommandText = "INSERT INTO tutkimusalue_kyselyt (kysely_id, tutkimusalue_id, alkupvm, loppupvm) " +
+                    "VALUES (@surveyId, @researchAreaId, @startDate, @endDate)";
+
                 cmd.Parameters.AddWithValue("surveyId", survey.Id);
                 cmd.Parameters.AddWithValue("researchAreaId", researchArea.Id);
+                cmd.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd"));
 
                 cmd.ExecuteNonQuery();
             }
@@ -182,6 +192,15 @@ namespace Kalavale.Repositories {
             field.QuestionId = (int)record["kysymys_id"];
             field.ColumnResourceId = record.IsDBNull(2) ? default(int?) : (int)record["sarake_resurssi_id"];
             field.RowResourceId = record.IsDBNull(3) ? default(int?) : (int)record["rivi_resurssi_id"];
+        }
+
+        protected void Map(IDataRecord record, ResearchAreaSurvey survey) {
+            survey.SurveyId = (int)record["kysely_id"];
+            survey.ResearchAreaId = (int)record["tutkimusalue_id"];
+            survey.StartDate = DateTime.Parse(record["alkupvm"].ToString());
+            survey.EndDate = DateTime.Parse(record["loppupvm"].ToString());
+            survey.Name = record["nimi"].ToString() + " (" + survey.StartDate.ToString("dd.MM.yyyy") +
+                " - " + survey.EndDate.ToString("dd.MM.yyyy") + ")";
         }
     }
 }

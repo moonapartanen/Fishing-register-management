@@ -3,7 +3,6 @@ using System.Windows.Forms;
 
 namespace Kalavale {
     static class FormHelper {
-        // Asetetaan kontrolli ja sen kaikki lapset oletusarvoon rekursiivisesti.
         public static void ClearFields(Control control) {
             foreach (Control c in control.Controls) {
                 if (c is TextBox) {
@@ -21,7 +20,6 @@ namespace Kalavale {
             }
         }
 
-        // Poistetaan kontrollin ja sen kaikkien lapsien virheilmoitukset rekursiivisesti.
         public static void ClearErrors(Control control, ErrorProvider provider) {
             foreach (Control c in control.Controls) {
                 provider.SetError(c, string.Empty);
@@ -29,21 +27,26 @@ namespace Kalavale {
             }
         }
 
-        public static bool ValidateTextFields(Control control) {
+        public static bool ValidateTextFields(Control control, ErrorProvider provider) {
             Action<Control.ControlCollection> Validate = null;
-            bool ret = true;
+            bool isValid = true;
 
             Validate = (controls) => {
-                foreach (Control c in controls)
-                    if (c is TextBox && ret == true)
-                        ret = c.Text.Length > 0;
-                    else
+                foreach (Control c in controls) {
+                    if (c is TextBox) {
+                        if (c.Text.Length < 1) {
+                            isValid = false;
+                            provider.SetError(c, "Tämä kenttä on pakollinen");
+                        }
+                    } else {
                         Validate(c.Controls);
+                    }
+                }
             };
 
             Validate(control.Controls);
 
-            return ret;
+            return isValid;
         }
     }
 }

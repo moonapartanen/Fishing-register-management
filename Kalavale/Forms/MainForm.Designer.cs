@@ -49,7 +49,7 @@ namespace Kalavale.Forms {
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(980, 596);
+            this.tabControl1.Size = new System.Drawing.Size(826, 394);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -57,7 +57,7 @@ namespace Kalavale.Forms {
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(972, 570);
+            this.tabPage1.Size = new System.Drawing.Size(818, 368);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Datan analysointi";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -68,16 +68,16 @@ namespace Kalavale.Forms {
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(972, 570);
+            this.tabPage2.Size = new System.Drawing.Size(818, 368);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Lomakkeiden hallinta";
+            this.tabPage2.Text = "Kyselyiden hallinta";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // manageSurveysControl1
             // 
-            this.manageSurveysControl1.Location = new System.Drawing.Point(3, 4);
+            this.manageSurveysControl1.Location = new System.Drawing.Point(6, 6);
             this.manageSurveysControl1.Name = "manageSurveysControl1";
-            this.manageSurveysControl1.Size = new System.Drawing.Size(805, 533);
+            this.manageSurveysControl1.Size = new System.Drawing.Size(806, 359);
             this.manageSurveysControl1.TabIndex = 0;
             // 
             // tabPage3
@@ -85,23 +85,23 @@ namespace Kalavale.Forms {
             this.tabPage3.Controls.Add(this.manageDbControl1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(972, 570);
+            this.tabPage3.Size = new System.Drawing.Size(818, 368);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Tietokannan Hallinta";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // manageDbControl1
             // 
-            this.manageDbControl1.Location = new System.Drawing.Point(3, 4);
+            this.manageDbControl1.Location = new System.Drawing.Point(5, 3);
             this.manageDbControl1.Name = "manageDbControl1";
-            this.manageDbControl1.Size = new System.Drawing.Size(805, 484);
+            this.manageDbControl1.Size = new System.Drawing.Size(809, 357);
             this.manageDbControl1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(982, 599);
+            this.ClientSize = new System.Drawing.Size(831, 400);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
